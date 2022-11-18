@@ -11,6 +11,8 @@ const AdminTable = () => {
   const [search, setSearch] = useState("");
   const [adminData, setAdminData] = useState([]);
   const [filterData, setFilterData] = useState([]);
+
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcmlzaC5nQGFwcGxpZnkuY28iLCJpZCI6ImQzM2RjOGI2LTRjNTItNGI4Zi05NDMwLWI2MzI3YzRjOWFkNCIsInR5cGUiOiJTVVBFUl9BRE1JTiIsImlhdCI6MTY2ODc2OTE2Nn0.YpIp5Hae0Rguu3cO33ln5iOr6spwt_pBOh0WEXe6-fc"
   // const [show, setShow] = useState(false);
 
   // const handleClose = () => {
@@ -25,7 +27,12 @@ const AdminTable = () => {
   const admin = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3002/admin/List?limit=100&skip=0"
+        "http://192.168.0.14:3000/admin/v1/admin/list?limit=10&skip=0",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
       console.log(response);
 
@@ -58,7 +65,7 @@ const AdminTable = () => {
           <b>ID</b>
         </h6>
       ),
-      selector: (row) => row.uId,
+      selector: (row) => row.id,
       sortable: true,
     },
     {
@@ -67,16 +74,16 @@ const AdminTable = () => {
           <b>Name</b>
         </h6>
       ),
-      selector: (row) => row.name,
+      selector: (row) => row.firstName,
       sortable: true,
     },
     {
       name: (
         <h6>
-          <b>Title</b>
+          <b>Last Name</b>
         </h6>
       ),
-      selector: (row) => row.role,
+      selector: (row) => row.lastName,
       sortable: true,
     },
     {
@@ -88,80 +95,80 @@ const AdminTable = () => {
       selector: (row) => row.email,
       sortable: true,
     },
-    {
-      name: (
-        <h6>
-          <b>Image</b>
-        </h6>
-      ),
-      selector: (row) =>
-        row.image ? (
-          <img
-            alt=""
-            width={80}
-            height={50}
-            style={{ objectFit: "cover", border: "1px solid" }}
-            src={`http://localhost:3002/${row.image}`}
-          />
-        ) : (
-          <img
-            alt=""
-            width={80}
-            height={50}
-            style={{ objectFit: "cover", border: "1px solid" }}
-            src=""
-            // src={profilelogo}
-          />
-        ),
-      sortable: true,
-    },
-    {
-      name: (
-        <h6>
-          <b>Access</b>
-        </h6>
-      ),
-      selector: (row) => [
-        row.dashBoardPermission == "1" ? (
-          <span className="badge bg-secondary access">Dashboard</span>
-        ) : (
-          ""
-        ),
-        row.userManagementPermission == "1" ? (
-          <>
-            <span className="badge bg-primary">User</span>
-          </>
-        ) : (
-          ""
-        ),
-        row.AdminPermission == "1" ? (
-          <span className="badge bg-success">Admin</span>
-        ) : (
-          ""
-        ),
-        row.NotificationPermission == "1" ? (
-          <>
-            <span className="badge bg-danger">Notification</span>
-          </>
-        ) : (
-          ""
-        ),
-        row.systemConfigPermission == "1" ? (
-          <span className="badge bg-info access">System</span>
-        ) : (
-          ""
-        ),
-        row.reportPermission == "1" ? (
-          <>
-            <span className="badge bg-warning ">Report</span>
-          </>
-        ) : (
-          ""
-        ),
-      ],
-      grow: 1,
-      sortable: true,
-    },
+    // {
+    //   name: (
+    //     <h6>
+    //       <b>Image</b>
+    //     </h6>
+    //   ),
+    //   selector: (row) =>
+    //     row.image ? (
+    //       <img
+    //         alt=""
+    //         width={80}
+    //         height={50}
+    //         style={{ objectFit: "cover", border: "1px solid" }}
+    //         src={`http://localhost:3002/${row.image}`}
+    //       />
+    //     ) : (
+    //       <img
+    //         alt=""
+    //         width={80}
+    //         height={50}
+    //         style={{ objectFit: "cover", border: "1px solid" }}
+    //         src=""
+    //         // src={profilelogo}
+    //       />
+    //     ),
+    //   sortable: true,
+    // },
+    // {
+    //   name: (
+    //     <h6>
+    //       <b>Access</b>
+    //     </h6>
+    //   ),
+    //   selector: (row) => [
+    //     row.dashBoardPermission == "1" ? (
+    //       <span className="badge bg-secondary access">Dashboard</span>
+    //     ) : (
+    //       ""
+    //     ),
+    //     row.userManagementPermission == "1" ? (
+    //       <>
+    //         <span className="badge bg-primary">User</span>
+    //       </>
+    //     ) : (
+    //       ""
+    //     ),
+    //     row.AdminPermission == "1" ? (
+    //       <span className="badge bg-success">Admin</span>
+    //     ) : (
+    //       ""
+    //     ),
+    //     row.NotificationPermission == "1" ? (
+    //       <>
+    //         <span className="badge bg-danger">Notification</span>
+    //       </>
+    //     ) : (
+    //       ""
+    //     ),
+    //     row.systemConfigPermission == "1" ? (
+    //       <span className="badge bg-info access">System</span>
+    //     ) : (
+    //       ""
+    //     ),
+    //     row.reportPermission == "1" ? (
+    //       <>
+    //         <span className="badge bg-warning ">Report</span>
+    //       </>
+    //     ) : (
+    //       ""
+    //     ),
+    //   ],
+    //   grow: 1,
+    //   sortable: true,
+    // },
     // {
     //   name: (
     //     <h6>
@@ -216,7 +223,7 @@ const AdminTable = () => {
   useEffect(() => {
     const result = adminData.filter((value) => {
       return (
-        value.name.toLowerCase().match(search.toLowerCase()) ||
+        value.firstName.toLowerCase().match(search.toLowerCase()) ||
         value.email.toLowerCase().match(search.toLowerCase())
       );
     });
@@ -249,7 +256,7 @@ const AdminTable = () => {
             className="  form-control"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{ width: "100%", padding: "10px" }}
+            style={{ width: "100%", padding: "10px", border: "1px solid black" }}
           />
         }
       />
