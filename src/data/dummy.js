@@ -541,7 +541,7 @@ export const links = [
       },
 
       {
-        name: "employees",
+        name: "admin",
         title: "Admin",
         icon: <HiUserAdd size={30} />,
       },
