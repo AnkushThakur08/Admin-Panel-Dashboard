@@ -11,6 +11,9 @@ const AdminTable = () => {
   const [search, setSearch] = useState("");
   const [adminData, setAdminData] = useState([]);
   const [filterData, setFilterData] = useState([]);
+  const [adminPermission, setAdminPermission] = useState([])
+  const [individualPermission, setIndividualPermission] = useState([])
+
 
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcmlzaC5nQGFwcGxpZnkuY28iLCJpZCI6ImQzM2RjOGI2LTRjNTItNGI4Zi05NDMwLWI2MzI3YzRjOWFkNCIsInR5cGUiOiJTVVBFUl9BRE1JTiIsImlhdCI6MTY2ODc2OTE2Nn0.YpIp5Hae0Rguu3cO33ln5iOr6spwt_pBOh0WEXe6-fc"
   // const [show, setShow] = useState(false);
@@ -35,6 +38,23 @@ const AdminTable = () => {
         }
       );
       console.log(response);
+      console.log(response.data.data.rows[0]?.admin_permissions[0]?.adminManagement
+
+        );
+
+        adminData.map((individualData, index) => {
+          setAdminPermission(individualData.admin_permissions);
+          // console.log("1", adminPermission);
+
+          adminPermission.map((individualAdminPermisison, index) => {
+              // console.log("adminPermisison", individualAdminPermisison);
+
+              setIndividualPermission(individualAdminPermisison);
+              console.log("FINA:", individualPermission)
+              
+
+            })
+        })
 
       setAdminData(response.data.data.rows);
       setFilterData(response.data.data.rows);
@@ -57,7 +77,7 @@ const AdminTable = () => {
   //     });
   //   });
   // }
-
+  
   const colunms = [
     {
       name: (
@@ -122,53 +142,55 @@ const AdminTable = () => {
     //     ),
     //   sortable: true,
     // },
-    // {
-    //   name: (
-    //     <h6>
-    //       <b>Access</b>
-    //     </h6>
-    //   ),
-    //   selector: (row) => [
-    //     row.dashBoardPermission == "1" ? (
-    //       <span className="badge bg-secondary access">Dashboard</span>
-    //     ) : (
-    //       ""
-    //     ),
-    //     row.userManagementPermission == "1" ? (
-    //       <>
-    //         <span className="badge bg-primary">User</span>
-    //       </>
-    //     ) : (
-    //       ""
-    //     ),
-    //     row.AdminPermission == "1" ? (
-    //       <span className="badge bg-success">Admin</span>
-    //     ) : (
-    //       ""
-    //     ),
-    //     row.NotificationPermission == "1" ? (
-    //       <>
-    //         <span className="badge bg-danger">Notification</span>
-    //       </>
-    //     ) : (
-    //       ""
-    //     ),
-    //     row.systemConfigPermission == "1" ? (
-    //       <span className="badge bg-info access">System</span>
-    //     ) : (
-    //       ""
-    //     ),
-    //     row.reportPermission == "1" ? (
-    //       <>
-    //         <span className="badge bg-warning ">Report</span>
-    //       </>
-    //     ) : (
-    //       ""
-    //     ),
-    //   ],
-    //   grow: 1,
-    //   sortable: true,
-    // },
+    {
+      name: (
+        <h6>
+          <b>Access</b>
+        </h6>
+      ),
+      selector: (row) => [
+        individualPermission.adminManagement == "0"
+        // row?.admin_permissions[0]?.adminManagement == "0" 
+        ? (
+          <span className="badge bg-secondary access">Admin</span>
+        ) : (
+          ""
+        ),
+        individualPermission.dashboard == "1" ? (
+          <>
+            <span className="badge bg-primary">Dashboard</span>
+          </>
+        ) : (
+          ""
+        ),
+        individualPermission.userManagement == "1" ? (
+          <span className="badge bg-success">User</span>
+        ) : (
+          ""
+        ),
+        individualPermission.notificationManagement == "1" ? (
+          <>
+            <span className="badge bg-danger">Notification</span>
+          </>
+        ) : (
+          ""
+        ),
+        individualPermission.systemConfiguration == "1" ? (
+          <span className="badge bg-info access">System</span>
+        ) : (
+          ""
+        ),
+        individualPermission.reportManagement == "1" ? (
+          <>
+            <span className="badge bg-warning ">Report</span>
+          </>
+        ) : (
+          ""
+        ),
+      ],
+      grow: 1,
+      sortable: true,
+    },
     // {
     //   name: (
     //     <h6>
