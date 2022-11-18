@@ -26,6 +26,7 @@ import "./App.css";
 
 import { useStateContext } from "./contexts/ContextProvider";
 import Login from "./pages/Login/Login";
+import AdminTable from "./components/Tables/AdminTable";
 
 const App = () => {
   const {
@@ -95,6 +96,7 @@ const App = () => {
                 {/* pages  */}
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/employees" element={<Employees />} />
+                <Route path="/admin" element={<AdminTable />} />
                 <Route path="/customers" element={<Customers />} />
 
                 {/* apps  */}
@@ -114,7 +116,7 @@ const App = () => {
                 <Route path="/stacked" element={<Stacked />} />
               </Routes>
             </div>
-            <Footer />
+            {/* <Footer /> */}
           </div>
         </div>
       </BrowserRouter>
