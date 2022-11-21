@@ -15,7 +15,7 @@ const AdminTable = () => {
   const [individualPermission, setIndividualPermission] = useState([])
 
 
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhhcmlzaC5nQGFwcGxpZnkuY28iLCJpZCI6ImQzM2RjOGI2LTRjNTItNGI4Zi05NDMwLWI2MzI3YzRjOWFkNCIsInR5cGUiOiJTVVBFUl9BRE1JTiIsImlhdCI6MTY2ODc2OTE2Nn0.YpIp5Hae0Rguu3cO33ln5iOr6spwt_pBOh0WEXe6-fc"
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbmVldDMxNTdAZ21haWwuY29tIiwiaWQiOiI3NzQ0NGU3Zi0zMzFjLTQ3MTYtOTlkNC00YzA5YjQxYTE1NzgiLCJ0eXBlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE2NjkwMDU3Mjl9.G6byYxt04N1bEeA2Hr8QNkKOXIdtX9qi28T-z49fpPo"
   // const [show, setShow] = useState(false);
 
   // const handleClose = () => {
@@ -30,7 +30,7 @@ const AdminTable = () => {
   const admin = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.0.14:3000/admin/v1/admin/list?limit=10&skip=0",
+        "http://192.168.0.202:3000/admin/v1/admin/list?limit=10&skip=0",
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -156,31 +156,31 @@ const AdminTable = () => {
         ) : (
           ""
         ),
-        individualPermission.dashboard == "1" ? (
+        individualPermission.dashboard == "0" ? (
           <>
             <span className="badge bg-primary">Dashboard</span>
           </>
         ) : (
           ""
         ),
-        individualPermission.userManagement == "1" ? (
+        individualPermission.userManagement == "0" ? (
           <span className="badge bg-success">User</span>
         ) : (
           ""
         ),
-        individualPermission.notificationManagement == "1" ? (
+        individualPermission.notificationManagement == "0" ? (
           <>
             <span className="badge bg-danger">Notification</span>
           </>
         ) : (
           ""
         ),
-        individualPermission.systemConfiguration == "1" ? (
+        individualPermission.systemConfiguration == "0" ? (
           <span className="badge bg-info access">System</span>
         ) : (
           ""
         ),
-        individualPermission.reportManagement == "1" ? (
+        individualPermission.reportManagement == "0" ? (
           <>
             <span className="badge bg-warning ">Report</span>
           </>
@@ -191,45 +191,45 @@ const AdminTable = () => {
       grow: 1,
       sortable: true,
     },
-    // {
-    //   name: (
-    //     <h6>
-    //       <b>Action</b>
-    //     </h6>
-    //   ),
-    //   selector: (row) =>
-    //     row.uId === userid ? (
-    //       ""
-    //     ) : (
-    //       <div
-    //         style={{
-    //           display: "flex",
-    //           justifyContent: "space-between",
-    //           width: "110px",
-    //         }}
-    //       >
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => navigate(`/editadmin/${row.uId}`)}
-    //         >
-    //           <i className="fa-solid fa-pen fa-lg"></i>
-    //         </button>
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => deleteAdmin(row.uId)}
-    //           // onClick={() => handleShow(row.uId)}
-    //         >
-    //           <i className="fa-regular fa-trash-can fa-lg"></i>
-    //         </button>
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => blockAdmin(row.uId)}
-    //         >
-    //           <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
-    //         </button>
-    //       </div>
-    //     ),
-    // },
+    {
+      name: (
+        <h6>
+          <b>Action</b>
+        </h6>
+      ),
+      selector: (row) =>
+        row.uId === userid ? (
+          ""
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "110px",
+            }}
+          >
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => navigate(`/editadmin/${row.uId}`)}
+            >
+              <i className="fa-solid fa-pen fa-lg"></i>
+            </button>
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => deleteAdmin(row.uId)}
+              // onClick={() => handleShow(row.uId)}
+            >
+              <i className="fa-regular fa-trash-can fa-lg"></i>
+            </button>
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => blockAdmin(row.uId)}
+            >
+              <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
+            </button>
+          </div>
+        ),
+    },
   ];
 
   const paginationComponentOptions = {
