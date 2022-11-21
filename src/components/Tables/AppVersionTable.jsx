@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 
 import axios from "axios";
 import { Header } from "../../components";
+import {appVersionListData} from "../../Helper/ApiCall"
 
 const AppVersionTable = () => {
   // const navigate = useNavigate();
@@ -22,19 +23,16 @@ const AppVersionTable = () => {
   //   localStorage.setItem("adminId", adminId);
   // };
 
-  const appVersion = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:3002/admin/List?limit=100&skip=0"
-      );
-      console.log(response);
-
-      setAppVersionData(response.data.data.rows);
-      setFilterData(response.data.data.rows);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  appVersionListData()
+  .then((data) => {
+    console.log("responseeee",data);
+    setAppVersionData(data.data.data.rows);
+    setFilterData(data.data.data.rows);
+        console.log("THIS IS DATA", data);
+      })
+  .catch((error) => {
+    console.log(error);
+  });
 
   // async function deleteAdmin() {
   //   let uId = localStorage.getItem("adminId");
@@ -58,7 +56,7 @@ const AppVersionTable = () => {
           <b>ID</b>
         </h6>
       ),
-      selector: (row) => row.uId,
+      selector: (row) => row.id,
       sortable: true,
     },
     {
@@ -73,134 +71,66 @@ const AppVersionTable = () => {
     {
       name: (
         <h6>
-          <b>Title</b>
+          <b>Version</b>
         </h6>
       ),
-      selector: (row) => row.role,
+      selector: (row) => row.version,
       sortable: true,
     },
     {
       name: (
         <h6>
-          <b>Email</b>
+          <b>Minimum Version</b>
         </h6>
       ),
-      selector: (row) => row.email,
+      selector: (row) => row.minimumVersion,
       sortable: true,
     },
     {
       name: (
         <h6>
-          <b>Image</b>
+          <b>CreatedAt</b>
+        </h6>
+      ),
+      selector: (row) => row.createdAt,
+      sortable: true,
+    },
+    {
+      name: (
+        <h6>
+          <b>Action</b>
         </h6>
       ),
       selector: (row) =>
-        row.image ? (
-          <img
-            alt=""
-            width={80}
-            height={50}
-            style={{ objectFit: "cover", border: "1px solid" }}
-            src={`http://localhost:3002/${row.image}`}
-          />
-        ) : (
-          <img
-            alt=""
-            width={80}
-            height={50}
-            style={{ objectFit: "cover", border: "1px solid" }}
-            src=""
-            // src={profilelogo}
-          />
-        ),
-      sortable: true,
+  
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "110px",
+            }}
+          >
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => navigate(`/editadmin/${row.uId}`)}
+            >
+              <i className="fa-solid fa-pen fa-lg"></i>
+            </button>
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => deleteAdmin(row.uId)}
+              // onClick={() => handleShow(row.uId)}
+            >
+              <i className="fa-regular fa-trash-can fa-lg"></i>
+            </button>
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => blockAdmin(row.uId)}
+            >
+              <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
+            </button>
+          </div>
     },
-    {
-      name: (
-        <h6>
-          <b>Access</b>
-        </h6>
-      ),
-      selector: (row) => [
-        row.dashBoardPermission == "1" ? (
-          <span className="badge bg-secondary access">Dashboard</span>
-        ) : (
-          ""
-        ),
-        row.userManagementPermission == "1" ? (
-          <>
-            <span className="badge bg-primary">User</span>
-          </>
-        ) : (
-          ""
-        ),
-        row.AdminPermission == "1" ? (
-          <span className="badge bg-success">Admin</span>
-        ) : (
-          ""
-        ),
-        row.NotificationPermission == "1" ? (
-          <>
-            <span className="badge bg-danger">Notification</span>
-          </>
-        ) : (
-          ""
-        ),
-        row.systemConfigPermission == "1" ? (
-          <span className="badge bg-info access">System</span>
-        ) : (
-          ""
-        ),
-        row.reportPermission == "1" ? (
-          <>
-            <span className="badge bg-warning ">Report</span>
-          </>
-        ) : (
-          ""
-        ),
-      ],
-      grow: 1,
-      sortable: true,
-    },
-    // {
-    //   name: (
-    //     <h6>
-    //       <b>Action</b>
-    //     </h6>
-    //   ),
-    //   selector: (row) =>
-    //     row.uId === userid ? (
-    //       ""
-    //     ) : (
-    //       <div
-    //         style={{
-    //           display: "flex",
-    //           justifyContent: "space-between",
-    //           width: "110px",
-    //         }}
-    //       >
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => navigate(`/editadmin/${row.uId}`)}
-    //         >
-    //           <i className="fa-solid fa-pen fa-lg"></i>
-    //         </button>
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => deleteAdmin(row.uId)}
-    //           // onClick={() => handleShow(row.uId)}
-    //         >
-    //           <i className="fa-regular fa-trash-can fa-lg"></i>
-    //         </button>
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => blockAdmin(row.uId)}
-    //         >
-    //           <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
-    //         </button>
-    //       </div>
-    //     ),
-    // },
   ];
 
   const paginationComponentOptions = {
@@ -210,14 +140,15 @@ const AppVersionTable = () => {
   };
 
   useEffect(() => {
-    appVersion();
+    appVersionListData();
   }, []);
 
   useEffect(() => {
-    const result = adminData.filter((value) => {
+    const result = appVersionData.filter((value) => {
       return (
         value.name.toLowerCase().match(search.toLowerCase()) ||
-        value.email.toLowerCase().match(search.toLowerCase())
+        value.minimumVersion.toLowerCase().match(search.toLowerCase()) ||
+        value.id.toLowerCase().match(search.toLowerCase())
       );
     });
     setFilterData(result);
@@ -249,7 +180,7 @@ const AppVersionTable = () => {
             className="  form-control"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{ width: "100%", padding: "10px" }}
+            style={{ width: "100%", padding: "10px", border: "1px solid black" }}
           />
         }
       />

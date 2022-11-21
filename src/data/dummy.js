@@ -558,13 +558,13 @@ export const links = [
     title: "System Configuration",
     links: [
       {
-        name: "kanban",
+        name: "category",
         title: "Categories",
         icon: <BiCategory size={25} />,
       },
 
       {
-        name: "editor",
+        name: "appVersion",
         title: "App Versions",
         icon: <VscVersions size={25} />,
       },

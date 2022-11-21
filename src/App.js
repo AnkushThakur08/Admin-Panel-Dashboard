@@ -1,4 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { FiSettings } from "react-icons/fi";
+import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+// import Login from "./pages/Login/Login";
 
 // React Router
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -34,9 +38,11 @@ import {
 } from './pages';
 import './App.css';
 
-import { useStateContext } from './contexts/ContextProvider';
-import Login from './pages/Login/Login';
-import AdminTable from './components/Tables/AdminTable';
+import { useStateContext } from "./contexts/ContextProvider";
+import Login from "./pages/Login/Login";
+import AdminTable from "./components/Tables/AdminTable";
+import AppVersionTable from "./components/Tables/AppVersionTable";
+import Category from "./components/Tables/Category"
 
 const App = () => {
   const {
@@ -105,22 +111,24 @@ const App = () => {
               <div>
                 {themeSettings && <ThemeSettings />}
 
-                <Routes>
-                  {/* dashboard  */}
-                  <Route path="/" element={<Ecommerce />} />
-                  <Route exact path="/ecommerce" element={<Ecommerce />} />
+              <Routes>
+                {/* dashboard  */}
+                {/* <Route path="/dashboard" element={<Ecommerce />} /> */}
+                <Route path="/ecommerce" element={<Ecommerce />} />
 
-                  {/* pages  */}
-                  <Route path="/orders" element={<Orders />} />
-                  <Route path="/employees" element={<Employees />} />
-                  <Route path="/admin" element={<AdminTable />} />
-                  <Route path="/customers" element={<Customers />} />
+                {/* pages  */}
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/employees" element={<Employees />} />
+                <Route path="/admin" element={<AdminTable />} />
+                <Route path="/appVersion" element={<AppVersionTable />} />
+                <Route path="/category" element={<Category/>} />
+                <Route path="/customers" element={<Customers />} />
 
-                  {/* apps  */}
-                  <Route path="/kanban" element={<Kanban />} />
-                  <Route path="/editor" element={<Editor />} />
-                  <Route path="/calendar" element={<Calendar />} />
-                  <Route path="/color-picker" element={<ColorPicker />} />
+                {/* apps  */}
+                {/* <Route path="/kanban" element={<Kanban />} /> */}
+                <Route path="/editor" element={<Editor />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/color-picker" element={<ColorPicker />} />
 
                   {/* charts  */}
                   <Route path="/line" element={<Line />} />

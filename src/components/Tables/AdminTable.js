@@ -8,6 +8,9 @@ import { Header } from '../../components';
 
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
+// import axios from "axios";
+import { Header } from "../../components";
+import {adminListData} from "../../Helper/ApiCall"
 
 const AdminTable = () => {
   const { data, token } = isAuthenticated();
@@ -25,6 +28,11 @@ const AdminTable = () => {
 
   // const token =
   //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbmVldDMxNTdAZ21haWwuY29tIiwiaWQiOiI3NzQ0NGU3Zi0zMzFjLTQ3MTYtOTlkNC00YzA5YjQxYTE1NzgiLCJ0eXBlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE2NjkwMDYyNDR9.Dn1IkN_FYiRMec4jnMTqPzppuACjtZDqgMOBw4IRu40';
+
+
+
+
+  // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbmVldDMxNTdAZ21haWwuY29tIiwiaWQiOiI3NzQ0NGU3Zi0zMzFjLTQ3MTYtOTlkNC00YzA5YjQxYTE1NzgiLCJ0eXBlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE2NjkwMDYyNDR9.Dn1IkN_FYiRMec4jnMTqPzppuACjtZDqgMOBw4IRu40"
   // const [show, setShow] = useState(false);
 
   // const handleClose = () => {
@@ -36,24 +44,53 @@ const AdminTable = () => {
   //   localStorage.setItem("adminId", adminId);
   // };
 
-  const admin = async () => {
-    try {
-      const response = await axios.get(
-        'http://192.168.0.202:3000/admin/v1/admin/list?limit=10&skip=0',
-        {
-          headers: {
-            Authorization: `Bearer ${data.accessToken}`,
-          },
-        }
-      );
-      console.log(response);
-      console.log(
-        response.data.data.rows[0]?.admin_permissions[0]?.adminManagement
-      );
+  // const admin = async () => {
+  //   try {
+  //     const response = await adminListData(
+  //       ``,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`
+  //         }
+  //       }
+  //     );
+  //     console.log(response);
+  //     console.log(response.data.data.rows[0]?.admin_permissions[0]?.adminManagement
 
-      adminData.map((individualData, index) => {
-        setAdminPermission(individualData.admin_permissions);
-        // console.log("1", adminPermission);
+  //       );
+
+  //       adminData.map((individualData, index) => {
+  //         setAdminPermission(individualData.admin_permissions);
+  //         console.log("1", adminPermission);
+
+  //         adminPermission.map((individualAdminPermisison, index) => {
+  //             console.log("adminPermisison", individualAdminPermisison);
+
+  //             setIndividualPermission(individualAdminPermisison);
+  //             console.log("FINA:", individualPermission)
+              
+
+  //           })
+  //       })
+
+  //     setAdminData(response.data.data.rows);
+  //     setFilterData(response.data.data.rows);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  adminListData()
+  .then((data) => {
+    console.log("responseeee",data);
+    setAdminData(data.data.data.rows);
+    setFilterData(data.data.data.rows);
+        console.log("THIS IS DATA", data);
+
+        adminData.map((individualData, index) => {
+          setAdminPermission(individualData.admin_permissions);
+
+          adminPermission.map((individualAdminPermisison, index) => {
 
         adminPermission.map((individualAdminPermisison, index) => {
           // console.log("adminPermisison", individualAdminPermisison);
@@ -63,12 +100,10 @@ const AdminTable = () => {
         });
       });
 
-      setAdminData(response.data.data.rows);
-      setFilterData(response.data.data.rows);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      })
+  .catch((error) => {
+    console.log(error);
+  });
 
   // async function deleteAdmin() {
   //   let uId = localStorage.getItem("adminId");
@@ -197,45 +232,45 @@ const AdminTable = () => {
       grow: 1,
       sortable: true,
     },
-    {
-      name: (
-        <h6>
-          <b>Action</b>
-        </h6>
-      ),
-      // selector: (row) =>
-      //   row.uId === userid ? (
-      //     ""
-      //   ) : (
-      //     <div
-      //       style={{
-      //         display: "flex",
-      //         justifyContent: "space-between",
-      //         width: "110px",
-      //       }}
-      //     >
-      //       <button
-      //         style={{ border: "none", background: "none" }}
-      //         // onClick={() => navigate(`/editadmin/${row.uId}`)}
-      //       >
-      //         <i className="fa-solid fa-pen fa-lg"></i>
-      //       </button>
-      //       <button
-      //         style={{ border: "none", background: "none" }}
-      //         // onClick={() => deleteAdmin(row.uId)}
-      //         // onClick={() => handleShow(row.uId)}
-      //       >
-      //         <i className="fa-regular fa-trash-can fa-lg"></i>
-      //       </button>
-      //       <button
-      //         style={{ border: "none", background: "none" }}
-      //         // onClick={() => blockAdmin(row.uId)}
-      //       >
-      //         <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
-      //       </button>
-      //     </div>
-      //   ),
-    },
+    // {
+    //   name: (
+    //     <h6>
+    //       <b>Action</b>
+    //     </h6>
+    //   ),
+    //   selector: (row) =>
+    //     row.uId === userid ? (
+    //       ""
+    //     ) : (
+    //       <div
+    //         style={{
+    //           display: "flex",
+    //           justifyContent: "space-between",
+    //           width: "110px",
+    //         }}
+    //       >
+    //         <button
+    //           style={{ border: "none", background: "none" }}
+    //           // onClick={() => navigate(`/editadmin/${row.uId}`)}
+    //         >
+    //           <i className="fa-solid fa-pen fa-lg"></i>
+    //         </button>
+    //         <button
+    //           style={{ border: "none", background: "none" }}
+    //           // onClick={() => deleteAdmin(row.uId)}
+    //           // onClick={() => handleShow(row.uId)}
+    //         >
+    //           <i className="fa-regular fa-trash-can fa-lg"></i>
+    //         </button>
+    //         <button
+    //           style={{ border: "none", background: "none" }}
+    //           // onClick={() => blockAdmin(row.uId)}
+    //         >
+    //           <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
+    //         </button>
+    //       </div>
+    //     ),
+    // },
   ];
 
   const paginationComponentOptions = {
@@ -245,7 +280,7 @@ const AdminTable = () => {
   };
 
   useEffect(() => {
-    admin();
+    adminListData();
   }, []);
 
   useEffect(() => {
@@ -255,7 +290,6 @@ const AdminTable = () => {
         value.email.toLowerCase().match(search.toLowerCase())
       );
     });
-    setFilterData(result);
   }, [search]);
   // console.log(admin);
 
