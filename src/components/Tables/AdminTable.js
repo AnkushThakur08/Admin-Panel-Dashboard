@@ -14,6 +14,8 @@ const AdminTable = () => {
   const [adminPermission, setAdminPermission] = useState([])
   const [individualPermission, setIndividualPermission] = useState([])
 
+  
+
 
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbmVldDMxNTdAZ21haWwuY29tIiwiaWQiOiI3NzQ0NGU3Zi0zMzFjLTQ3MTYtOTlkNC00YzA5YjQxYTE1NzgiLCJ0eXBlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE2NjkwMDU3Mjl9.G6byYxt04N1bEeA2Hr8QNkKOXIdtX9qi28T-z49fpPo"
   // const [show, setShow] = useState(false);
