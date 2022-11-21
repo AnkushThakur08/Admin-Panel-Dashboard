@@ -1,23 +1,30 @@
-import React, { useEffect, useState } from "react";
-import DataTable from "react-data-table-component";
-// import { useNavigate } from "react-router-dom";
-// import { toast } from "react-toastify";
+import React, { useEffect, useState } from 'react';
+import DataTable from 'react-data-table-component';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import axios from "axios";
-import { Header } from "../../components";
+import axios from 'axios';
+import { Header } from '../../components';
+
+// API
+import { isAuthenticated } from '../../helper/login/loginHelper';
 
 const AdminTable = () => {
+  const { data, token } = isAuthenticated();
+
+  console.log('MY TOKEN', token);
+  console.log('MY DATA', data.accessToken);
+  console.log('MY DATA22', data);
+
   // const navigate = useNavigate();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [adminData, setAdminData] = useState([]);
   const [filterData, setFilterData] = useState([]);
-  const [adminPermission, setAdminPermission] = useState([])
-  const [individualPermission, setIndividualPermission] = useState([])
+  const [adminPermission, setAdminPermission] = useState([]);
+  const [individualPermission, setIndividualPermission] = useState([]);
 
-  
-
-
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbmVldDMxNTdAZ21haWwuY29tIiwiaWQiOiI3NzQ0NGU3Zi0zMzFjLTQ3MTYtOTlkNC00YzA5YjQxYTE1NzgiLCJ0eXBlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE2NjkwMDU3Mjl9.G6byYxt04N1bEeA2Hr8QNkKOXIdtX9qi28T-z49fpPo"
+  // const token =
+  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbmVldDMxNTdAZ21haWwuY29tIiwiaWQiOiI3NzQ0NGU3Zi0zMzFjLTQ3MTYtOTlkNC00YzA5YjQxYTE1NzgiLCJ0eXBlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE2NjkwMDYyNDR9.Dn1IkN_FYiRMec4jnMTqPzppuACjtZDqgMOBw4IRu40';
   // const [show, setShow] = useState(false);
 
   // const handleClose = () => {
@@ -32,31 +39,29 @@ const AdminTable = () => {
   const admin = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.0.202:3000/admin/v1/admin/list?limit=10&skip=0",
+        'http://192.168.0.202:3000/admin/v1/admin/list?limit=10&skip=0',
         {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${data.accessToken}`,
+          },
         }
       );
       console.log(response);
-      console.log(response.data.data.rows[0]?.admin_permissions[0]?.adminManagement
+      console.log(
+        response.data.data.rows[0]?.admin_permissions[0]?.adminManagement
+      );
 
-        );
+      adminData.map((individualData, index) => {
+        setAdminPermission(individualData.admin_permissions);
+        // console.log("1", adminPermission);
 
-        adminData.map((individualData, index) => {
-          setAdminPermission(individualData.admin_permissions);
-          // console.log("1", adminPermission);
+        adminPermission.map((individualAdminPermisison, index) => {
+          // console.log("adminPermisison", individualAdminPermisison);
 
-          adminPermission.map((individualAdminPermisison, index) => {
-              // console.log("adminPermisison", individualAdminPermisison);
-
-              setIndividualPermission(individualAdminPermisison);
-              console.log("FINA:", individualPermission)
-              
-
-            })
-        })
+          setIndividualPermission(individualAdminPermisison);
+          console.log('FINA:', individualPermission);
+        });
+      });
 
       setAdminData(response.data.data.rows);
       setFilterData(response.data.data.rows);
@@ -79,7 +84,7 @@ const AdminTable = () => {
   //     });
   //   });
   // }
-  
+
   const colunms = [
     {
       name: (
@@ -151,43 +156,42 @@ const AdminTable = () => {
         </h6>
       ),
       selector: (row) => [
-        individualPermission.adminManagement == "0"
-        // row?.admin_permissions[0]?.adminManagement == "0" 
-        ? (
+        individualPermission.adminManagement == '0' ? (
+          // row?.admin_permissions[0]?.adminManagement == "0"
           <span className="badge bg-secondary access">Admin</span>
         ) : (
-          ""
+          ''
         ),
-        individualPermission.dashboard == "0" ? (
+        individualPermission.dashboard == '0' ? (
           <>
             <span className="badge bg-primary">Dashboard</span>
           </>
         ) : (
-          ""
+          ''
         ),
-        individualPermission.userManagement == "0" ? (
+        individualPermission.userManagement == '0' ? (
           <span className="badge bg-success">User</span>
         ) : (
-          ""
+          ''
         ),
-        individualPermission.notificationManagement == "0" ? (
+        individualPermission.notificationManagement == '0' ? (
           <>
             <span className="badge bg-danger">Notification</span>
           </>
         ) : (
-          ""
+          ''
         ),
-        individualPermission.systemConfiguration == "0" ? (
+        individualPermission.systemConfiguration == '0' ? (
           <span className="badge bg-info access">System</span>
         ) : (
-          ""
+          ''
         ),
-        individualPermission.reportManagement == "0" ? (
+        individualPermission.reportManagement == '0' ? (
           <>
             <span className="badge bg-warning ">Report</span>
           </>
         ) : (
-          ""
+          ''
         ),
       ],
       grow: 1,
@@ -199,45 +203,45 @@ const AdminTable = () => {
           <b>Action</b>
         </h6>
       ),
-      selector: (row) =>
-        row.uId === userid ? (
-          ""
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "110px",
-            }}
-          >
-            <button
-              style={{ border: "none", background: "none" }}
-              // onClick={() => navigate(`/editadmin/${row.uId}`)}
-            >
-              <i className="fa-solid fa-pen fa-lg"></i>
-            </button>
-            <button
-              style={{ border: "none", background: "none" }}
-              // onClick={() => deleteAdmin(row.uId)}
-              // onClick={() => handleShow(row.uId)}
-            >
-              <i className="fa-regular fa-trash-can fa-lg"></i>
-            </button>
-            <button
-              style={{ border: "none", background: "none" }}
-              // onClick={() => blockAdmin(row.uId)}
-            >
-              <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
-            </button>
-          </div>
-        ),
+      // selector: (row) =>
+      //   row.uId === userid ? (
+      //     ""
+      //   ) : (
+      //     <div
+      //       style={{
+      //         display: "flex",
+      //         justifyContent: "space-between",
+      //         width: "110px",
+      //       }}
+      //     >
+      //       <button
+      //         style={{ border: "none", background: "none" }}
+      //         // onClick={() => navigate(`/editadmin/${row.uId}`)}
+      //       >
+      //         <i className="fa-solid fa-pen fa-lg"></i>
+      //       </button>
+      //       <button
+      //         style={{ border: "none", background: "none" }}
+      //         // onClick={() => deleteAdmin(row.uId)}
+      //         // onClick={() => handleShow(row.uId)}
+      //       >
+      //         <i className="fa-regular fa-trash-can fa-lg"></i>
+      //       </button>
+      //       <button
+      //         style={{ border: "none", background: "none" }}
+      //         // onClick={() => blockAdmin(row.uId)}
+      //       >
+      //         <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
+      //       </button>
+      //     </div>
+      //   ),
     },
   ];
 
   const paginationComponentOptions = {
-    rangeSeparatorText: "Total",
+    rangeSeparatorText: 'Total',
     selectAllRowsItem: true,
-    selectAllRowsItemText: "All",
+    selectAllRowsItemText: 'All',
   };
 
   useEffect(() => {
@@ -280,7 +284,11 @@ const AdminTable = () => {
             className="  form-control"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{ width: "100%", padding: "10px", border: "1px solid black" }}
+            style={{
+              width: '100%',
+              padding: '10px',
+              border: '1px solid black',
+            }}
           />
         }
       />
