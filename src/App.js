@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+// import Login from "./pages/Login/Login";
 
 import { Navbar, Footer, Sidebar, ThemeSettings } from "./components";
 import {
@@ -27,6 +28,8 @@ import "./App.css";
 import { useStateContext } from "./contexts/ContextProvider";
 import Login from "./pages/Login/Login";
 import AdminTable from "./components/Tables/AdminTable";
+import AppVersionTable from "./components/Tables/AppVersionTable";
+import Category from "./components/Tables/Category"
 
 const App = () => {
   const {
@@ -50,9 +53,11 @@ const App = () => {
 
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
+      {console.log("pathname",window.location.pathname)}
       <BrowserRouter>
-        {/* Login */}
-        <Routes>{/* <Route path="/login" element={<Login />} /> */}</Routes>
+      {window.location.pathname == "/" ? <Routes>
+      <Route path="/" element={<Login/>} />
+      </Routes> :
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
             <TooltipComponent content="Settings" position="Top">
@@ -90,17 +95,19 @@ const App = () => {
 
               <Routes>
                 {/* dashboard  */}
-                <Route path="/" element={<Ecommerce />} />
+                {/* <Route path="/dashboard" element={<Ecommerce />} /> */}
                 <Route path="/ecommerce" element={<Ecommerce />} />
 
                 {/* pages  */}
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/employees" element={<Employees />} />
                 <Route path="/admin" element={<AdminTable />} />
+                <Route path="/appVersion" element={<AppVersionTable />} />
+                <Route path="/category" element={<Category/>} />
                 <Route path="/customers" element={<Customers />} />
 
                 {/* apps  */}
-                <Route path="/kanban" element={<Kanban />} />
+                {/* <Route path="/kanban" element={<Kanban />} /> */}
                 <Route path="/editor" element={<Editor />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/color-picker" element={<ColorPicker />} />
@@ -118,7 +125,7 @@ const App = () => {
             </div>
             {/* <Footer /> */}
           </div>
-        </div>
+        </div>}
       </BrowserRouter>
     </div>
   );

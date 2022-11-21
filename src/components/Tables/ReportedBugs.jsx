@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-// import { useNavigate } from "react-router-dom";
-// import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import axios from "axios";
 import { Header } from "../../components";
 
-const AdminTable = () => {
+const ReportedBugs = () => {
   // const navigate = useNavigate();
   const [search, setSearch] = useState("");
-  const [adminData, setAdminData] = useState([]);
+  const [bugsData, setBugsData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   // const [show, setShow] = useState(false);
 
@@ -22,19 +22,16 @@ const AdminTable = () => {
   //   localStorage.setItem("adminId", adminId);
   // };
 
-  const admin = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:3002/admin/List?limit=100&skip=0"
-      );
-      console.log(response);
-
-      setAdminData(response.data.data.rows);
-      setFilterData(response.data.data.rows);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  reportedBugsListData()
+  .then((data) => {
+    console.log("responseeee",data);
+    setBugsData(data.data.data.rows);
+    setFilterData(data.data.data.rows);
+        console.log("THIS IS DATA", data);
+      })
+  .catch((error) => {
+    console.log(error);
+  });
 
   // async function deleteAdmin() {
   //   let uId = localStorage.getItem("adminId");
@@ -55,19 +52,10 @@ const AdminTable = () => {
     {
       name: (
         <h6>
-          <b>ID</b>
+          <b>Id</b>
         </h6>
       ),
-      selector: (row) => row.uId,
-      sortable: true,
-    },
-    {
-      name: (
-        <h6>
-          <b>Name</b>
-        </h6>
-      ),
-      selector: (row) => row.name,
+      selector: (row) => row.id,
       sortable: true,
     },
     {
@@ -76,131 +64,93 @@ const AdminTable = () => {
           <b>Title</b>
         </h6>
       ),
-      selector: (row) => row.role,
+      selector: (row) => row.title,
       sortable: true,
     },
     {
       name: (
         <h6>
-          <b>Email</b>
+          <b>Description</b>
         </h6>
       ),
-      selector: (row) => row.email,
+      selector: (row) => row.description,
       sortable: true,
     },
     {
       name: (
         <h6>
-          <b>Image</b>
+          <b>Status</b>
         </h6>
       ),
-      selector: (row) =>
-        row.image ? (
-          <img
-            alt=""
-            width={80}
-            height={50}
-            style={{ objectFit: "cover", border: "1px solid" }}
-            src={`http://localhost:3002/${row.image}`}
-          />
-        ) : (
-          <img
-            alt=""
-            width={80}
-            height={50}
-            style={{ objectFit: "cover", border: "1px solid" }}
-            src=""
-            // src={profilelogo}
-          />
-        ),
-      sortable: true,
-    },
-    {
-      name: (
-        <h6>
-          <b>Access</b>
-        </h6>
-      ),
-      selector: (row) => [
-        row.dashBoardPermission == "1" ? (
-          <span className="badge bg-secondary access">Dashboard</span>
-        ) : (
-          ""
-        ),
-        row.userManagementPermission == "1" ? (
-          <>
-            <span className="badge bg-primary">User</span>
-          </>
-        ) : (
-          ""
-        ),
-        row.AdminPermission == "1" ? (
-          <span className="badge bg-success">Admin</span>
-        ) : (
-          ""
-        ),
-        row.NotificationPermission == "1" ? (
-          <>
-            <span className="badge bg-danger">Notification</span>
-          </>
-        ) : (
-          ""
-        ),
-        row.systemConfigPermission == "1" ? (
-          <span className="badge bg-info access">System</span>
-        ) : (
-          ""
-        ),
-        row.reportPermission == "1" ? (
-          <>
-            <span className="badge bg-warning ">Report</span>
-          </>
-        ) : (
-          ""
-        ),
-      ],
-      grow: 1,
+      selector: (row) => row.status,
       sortable: true,
     },
     // {
     //   name: (
     //     <h6>
-    //       <b>Action</b>
+    //       <b>Image</b>
     //     </h6>
     //   ),
     //   selector: (row) =>
-    //     row.uId === userid ? (
-    //       ""
+    //     row.image ? (
+    //       <img
+    //         alt=""
+    //         width={80}
+    //         height={50}
+    //         style={{ objectFit: "cover", border: "1px solid" }}
+    //         src={`http://localhost:3002/${row.image}`}
+    //       />
     //     ) : (
-    //       <div
-    //         style={{
-    //           display: "flex",
-    //           justifyContent: "space-between",
-    //           width: "110px",
-    //         }}
-    //       >
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => navigate(`/editadmin/${row.uId}`)}
-    //         >
-    //           <i className="fa-solid fa-pen fa-lg"></i>
-    //         </button>
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => deleteAdmin(row.uId)}
-    //           // onClick={() => handleShow(row.uId)}
-    //         >
-    //           <i className="fa-regular fa-trash-can fa-lg"></i>
-    //         </button>
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => blockAdmin(row.uId)}
-    //         >
-    //           <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
-    //         </button>
-    //       </div>
+    //       <img
+    //         alt=""
+    //         width={80}
+    //         height={50}
+    //         style={{ objectFit: "cover", border: "1px solid" }}
+    //         src=""
+    //         // src={profilelogo}
+    //       />
     //     ),
+    //   sortable: true,
     // },
+    {
+      name: (
+        <h6>
+          <b>Action</b>
+        </h6>
+      ),
+      selector: (row) =>
+        // row.uId === userid ? (
+        //   ""
+        // ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "110px",
+            }}
+          >
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => navigate(`/editadmin/${row.uId}`)}
+            >
+              <i className="fa-solid fa-pen fa-lg"></i>
+            </button>
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => deleteAdmin(row.uId)}
+              // onClick={() => handleShow(row.uId)}
+            >
+              <i className="fa-regular fa-trash-can fa-lg"></i>
+            </button>
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => blockAdmin(row.uId)}
+            >
+              <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
+            </button>
+          </div>
+        // ),
+    },
   ];
 
   const paginationComponentOptions = {
@@ -210,11 +160,11 @@ const AdminTable = () => {
   };
 
   useEffect(() => {
-    admin();
+    reportedBugsListData();
   }, []);
 
   useEffect(() => {
-    const result = adminData.filter((value) => {
+    const result = bugsData.filter((value) => {
       return (
         value.name.toLowerCase().match(search.toLowerCase()) ||
         value.email.toLowerCase().match(search.toLowerCase())
@@ -272,4 +222,4 @@ const AdminTable = () => {
   );
 };
 
-export default AdminTable;
+export default ReportedBugs;
