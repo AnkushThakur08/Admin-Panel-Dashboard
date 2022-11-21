@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from 'react';
+
+// React Data Table
 import DataTable from 'react-data-table-component';
+
+// React Router
 import { useNavigate } from 'react-router-dom';
+
+// React Toastify
 import { toast } from 'react-toastify';
 
+// Axios
 import axios from 'axios';
+
+// Components
 import { Header } from '../../components';
 
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
-// import axios from "axios";
-import { Header } from "../../components";
-import {adminListData} from "../../Helper/ApiCall"
+import { adminListData } from '../../helper/ApiCall';
 
 const AdminTable = () => {
   const { data, token } = isAuthenticated();
-
-  console.log('MY TOKEN', token);
-  console.log('MY DATA', data.accessToken);
-  console.log('MY DATA22', data);
 
   // const navigate = useNavigate();
   const [search, setSearch] = useState('');
@@ -26,61 +29,79 @@ const AdminTable = () => {
   const [adminPermission, setAdminPermission] = useState([]);
   const [individualPermission, setIndividualPermission] = useState([]);
 
-  // const token =
-  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbmVldDMxNTdAZ21haWwuY29tIiwiaWQiOiI3NzQ0NGU3Zi0zMzFjLTQ3MTYtOTlkNC00YzA5YjQxYTE1NzgiLCJ0eXBlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE2NjkwMDYyNDR9.Dn1IkN_FYiRMec4jnMTqPzppuACjtZDqgMOBw4IRu40';
+  //   const [show, setShow] = useState(false);
 
+  /*  const handleClose = () => {
+    setShow(false);
+    localStorage.removeItem("adminId");
+  }; */
 
+  /*  const handleShow = () => {
+    setShow(true);
+    localStorage.setItem("adminId", adminId);
+  }; */
 
+  /* const admin = async () => {
+    try {
+      const response = await adminListData(
+        ``,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      console.log(response);
+      console.log(response.data.data.rows[0]?.admin_permissions[0]?.adminManagement
 
-  // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbmVldDMxNTdAZ21haWwuY29tIiwiaWQiOiI3NzQ0NGU3Zi0zMzFjLTQ3MTYtOTlkNC00YzA5YjQxYTE1NzgiLCJ0eXBlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE2NjkwMDYyNDR9.Dn1IkN_FYiRMec4jnMTqPzppuACjtZDqgMOBw4IRu40"
-  // const [show, setShow] = useState(false);
+        );
 
-  // const handleClose = () => {
-  //   setShow(false);
-  //   localStorage.removeItem("adminId");
-  // };
-  // const handleShow = () => {
-  //   setShow(true);
-  //   localStorage.setItem("adminId", adminId);
-  // };
+        adminData.map((individualData, index) => {
+          setAdminPermission(individualData.admin_permissions);
+          console.log("1", adminPermission);
 
-  // const admin = async () => {
-  //   try {
-  //     const response = await adminListData(
-  //       ``,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`
-  //         }
-  //       }
-  //     );
-  //     console.log(response);
-  //     console.log(response.data.data.rows[0]?.admin_permissions[0]?.adminManagement
+          adminPermission.map((individualAdminPermisison, index) => {
+              console.log("adminPermisison", individualAdminPermisison);
 
-  //       );
-
-  //       adminData.map((individualData, index) => {
-  //         setAdminPermission(individualData.admin_permissions);
-  //         console.log("1", adminPermission);
-
-  //         adminPermission.map((individualAdminPermisison, index) => {
-  //             console.log("adminPermisison", individualAdminPermisison);
-
-  //             setIndividualPermission(individualAdminPermisison);
-  //             console.log("FINA:", individualPermission)
+              setIndividualPermission(individualAdminPermisison);
+              console.log("FINA:", individualPermission)
               
 
-  //           })
-  //       })
+            })
+        })
 
-  //     setAdminData(response.data.data.rows);
-  //     setFilterData(response.data.data.rows);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+      setAdminData(response.data.data.rows);
+      setFilterData(response.data.data.rows);
+    } catch (error) {
+      console.log(error);
+    }
+  }; */
 
   adminListData()
+    .then((data) => {
+      console.log('responseeee', data);
+      setAdminData(data.data.data.rows);
+      setFilterData(data.data.data.rows);
+      console.log('THIS IS DATA', data);
+
+      adminData.map((individualData, index) => {
+        setAdminPermission(individualData.admin_permissions);
+
+        adminPermission.map((individualAdminPermisison, index) => {
+          adminPermission.map((individualAdminPermisison, index) => {
+            // console.log("adminPermisison", individualAdminPermisison);
+
+            setIndividualPermission(individualAdminPermisison);
+            console.log('FINA:', individualPermission);
+          });
+        });
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  /* adminListData()
   .then((data) => {
     console.log("responseeee",data);
     setAdminData(data.data.data.rows);
@@ -103,7 +124,7 @@ const AdminTable = () => {
       })
   .catch((error) => {
     console.log(error);
-  });
+  }); */
 
   // async function deleteAdmin() {
   //   let uId = localStorage.getItem("adminId");

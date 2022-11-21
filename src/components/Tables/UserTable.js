@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import DataTable from "react-data-table-component";
+import React, { useEffect, useState } from 'react';
+import DataTable from 'react-data-table-component';
 // import { useNavigate } from "react-router-dom";
 // import { toast } from "react-toastify";
 
-import axios from "axios";
-import { Header } from "../../components";
+import axios from 'axios';
+import { Header } from '..';
 
 const AdminTable = () => {
   // const navigate = useNavigate();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [adminData, setAdminData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   // const [show, setShow] = useState(false);
@@ -25,7 +25,7 @@ const AdminTable = () => {
   const admin = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3002/admin/List?limit=100&skip=0"
+        'http://localhost:3002/admin/List?limit=100&skip=0'
       );
       console.log(response);
 
@@ -100,7 +100,7 @@ const AdminTable = () => {
             alt=""
             width={80}
             height={50}
-            style={{ objectFit: "cover", border: "1px solid" }}
+            style={{ objectFit: 'cover', border: '1px solid' }}
             src={`http://localhost:3002/${row.image}`}
           />
         ) : (
@@ -108,7 +108,7 @@ const AdminTable = () => {
             alt=""
             width={80}
             height={50}
-            style={{ objectFit: "cover", border: "1px solid" }}
+            style={{ objectFit: 'cover', border: '1px solid' }}
             src=""
             // src={profilelogo}
           />
@@ -122,41 +122,41 @@ const AdminTable = () => {
         </h6>
       ),
       selector: (row) => [
-        row.dashBoardPermission == "1" ? (
+        row.dashBoardPermission == '1' ? (
           <span className="badge bg-secondary access">Dashboard</span>
         ) : (
-          ""
+          ''
         ),
-        row.userManagementPermission == "1" ? (
+        row.userManagementPermission == '1' ? (
           <>
             <span className="badge bg-primary">User</span>
           </>
         ) : (
-          ""
+          ''
         ),
-        row.AdminPermission == "1" ? (
+        row.AdminPermission == '1' ? (
           <span className="badge bg-success">Admin</span>
         ) : (
-          ""
+          ''
         ),
-        row.NotificationPermission == "1" ? (
+        row.NotificationPermission == '1' ? (
           <>
             <span className="badge bg-danger">Notification</span>
           </>
         ) : (
-          ""
+          ''
         ),
-        row.systemConfigPermission == "1" ? (
+        row.systemConfigPermission == '1' ? (
           <span className="badge bg-info access">System</span>
         ) : (
-          ""
+          ''
         ),
-        row.reportPermission == "1" ? (
+        row.reportPermission == '1' ? (
           <>
             <span className="badge bg-warning ">Report</span>
           </>
         ) : (
-          ""
+          ''
         ),
       ],
       grow: 1,
@@ -204,9 +204,9 @@ const AdminTable = () => {
   ];
 
   const paginationComponentOptions = {
-    rangeSeparatorText: "Total",
+    rangeSeparatorText: 'Total',
     selectAllRowsItem: true,
-    selectAllRowsItemText: "All",
+    selectAllRowsItemText: 'All',
   };
 
   useEffect(() => {
@@ -249,7 +249,7 @@ const AdminTable = () => {
             className="  form-control"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{ width: "100%", padding: "10px" }}
+            style={{ width: '100%', padding: '10px' }}
           />
         }
       />

@@ -1,52 +1,62 @@
-import React, { useEffect, useState } from "react";
-import DataTable from "react-data-table-component";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from 'react';
 
-import axios from "axios";
-import { Header } from "../../components";
+// React Table
+import DataTable from 'react-data-table-component';
+
+// React Router
+import { useNavigate } from 'react-router-dom';
+
+// React Toastify
+import { toast } from 'react-toastify';
+
+// Axios
+import axios from 'axios';
+
+// Components
+import { Header } from '../../components';
 
 const ReportedBugs = () => {
   // const navigate = useNavigate();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [bugsData, setBugsData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   // const [show, setShow] = useState(false);
 
-  // const handleClose = () => {
-  //   setShow(false);
-  //   localStorage.removeItem("adminId");
-  // };
-  // const handleShow = () => {
-  //   setShow(true);
-  //   localStorage.setItem("adminId", adminId);
-  // };
+  /*  const handleClose = () => {
+    setShow(false);
+    localStorage.removeItem("adminId");
+  }; */
+
+  /* const handleShow = () => {
+    setShow(true);
+    localStorage.setItem("adminId", adminId);
+  }; */
 
   reportedBugsListData()
-  .then((data) => {
-    console.log("responseeee",data);
-    setBugsData(data.data.data.rows);
-    setFilterData(data.data.data.rows);
-        console.log("THIS IS DATA", data);
-      })
-  .catch((error) => {
-    console.log(error);
-  });
+    .then((data) => {
+      console.log('responseeee', data);
+      setBugsData(data.data.data.rows);
+      setFilterData(data.data.data.rows);
+      console.log('THIS IS DATA', data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
-  // async function deleteAdmin() {
-  //   let uId = localStorage.getItem("adminId");
-  //   await fetch(`http://localhost:3002/admin/deleteAdmin/${uId}`, {
-  //     method: "DELETE",
-  //   }).then((result) => {
-  //     result.json().then((resq) => {
-  //       toast.success("Admin deleted successfully", {
-  //         position: toast.POSITION.TOP_CENTER,
-  //       });
-  //       admin();
-  //       handleClose();
-  //     });
-  //   });
-  // }
+  /*  async function deleteAdmin() {
+    let uId = localStorage.getItem("adminId");
+    await fetch(`http://localhost:3002/admin/deleteAdmin/${uId}`, {
+      method: "DELETE",
+    }).then((result) => {
+      result.json().then((resq) => {
+        toast.success("Admin deleted successfully", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        admin();
+        handleClose();
+      });
+    });
+  } */
 
   const colunms = [
     {
@@ -118,45 +128,46 @@ const ReportedBugs = () => {
           <b>Action</b>
         </h6>
       ),
-      selector: (row) =>
+      selector: (row) => (
         // row.uId === userid ? (
         //   ""
         // ) : (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "110px",
-            }}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '110px',
+          }}
+        >
+          <button
+            style={{ border: 'none', background: 'none' }}
+            // onClick={() => navigate(`/editadmin/${row.uId}`)}
           >
-            <button
-              style={{ border: "none", background: "none" }}
-              // onClick={() => navigate(`/editadmin/${row.uId}`)}
-            >
-              <i className="fa-solid fa-pen fa-lg"></i>
-            </button>
-            <button
-              style={{ border: "none", background: "none" }}
-              // onClick={() => deleteAdmin(row.uId)}
-              // onClick={() => handleShow(row.uId)}
-            >
-              <i className="fa-regular fa-trash-can fa-lg"></i>
-            </button>
-            <button
-              style={{ border: "none", background: "none" }}
-              // onClick={() => blockAdmin(row.uId)}
-            >
-              <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
-            </button>
-          </div>
-        // ),
+            <i className="fa-solid fa-pen fa-lg"></i>
+          </button>
+          <button
+            style={{ border: 'none', background: 'none' }}
+            // onClick={() => deleteAdmin(row.uId)}
+            // onClick={() => handleShow(row.uId)}
+          >
+            <i className="fa-regular fa-trash-can fa-lg"></i>
+          </button>
+          <button
+            style={{ border: 'none', background: 'none' }}
+            // onClick={() => blockAdmin(row.uId)}
+          >
+            <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
+          </button>
+        </div>
+      ),
+      // ),
     },
   ];
 
   const paginationComponentOptions = {
-    rangeSeparatorText: "Total",
+    rangeSeparatorText: 'Total',
     selectAllRowsItem: true,
-    selectAllRowsItemText: "All",
+    selectAllRowsItemText: 'All',
   };
 
   useEffect(() => {
@@ -199,7 +210,7 @@ const ReportedBugs = () => {
             className="  form-control"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{ width: "100%", padding: "10px" }}
+            style={{ width: '100%', padding: '10px' }}
           />
         }
       />
