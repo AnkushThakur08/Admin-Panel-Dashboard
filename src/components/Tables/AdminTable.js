@@ -22,6 +22,8 @@ import { adminListData } from '../../helper/Table/TableHelper';
 const AdminTable = () => {
   const { data, token } = isAuthenticated();
 
+  console.log(data.accessToken);
+
   // const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [adminData, setAdminData] = useState([]);
@@ -77,29 +79,29 @@ const AdminTable = () => {
     }
   }; */
 
-  adminListData()
-    .then((data) => {
-      console.log('responseeee', data);
-      setAdminData(data.data.data.rows);
-      setFilterData(data.data.data.rows);
-      console.log('THIS IS DATA', data);
+  const preload = () => {
+    adminListData(data.accessToken)
+      .then((data) => {
+        // console.log('DATA', data);
+        setAdminData(data.data.rows);
+        setFilterData(data.data.rows);
 
-      adminData.map((individualData, index) => {
-        setAdminPermission(individualData.admin_permissions);
+        adminData.map((individualData, index) => {
+          setAdminPermission(individualData.admin_permissions);
 
-        adminPermission.map((individualAdminPermisison, index) => {
           adminPermission.map((individualAdminPermisison, index) => {
-            // console.log("adminPermisison", individualAdminPermisison);
+            adminPermission.map((individualAdminPermisison, index) => {
+              // console.log("adminPermisison", individualAdminPermisison);
 
-            setIndividualPermission(individualAdminPermisison);
-            console.log('FINA:', individualPermission);
+              setIndividualPermission(individualAdminPermisison);
+            });
           });
         });
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  };
 
   /* adminListData()
   .then((data) => {
@@ -301,7 +303,7 @@ const AdminTable = () => {
   };
 
   useEffect(() => {
-    adminListData();
+    preload();
   }, []);
 
   useEffect(() => {
