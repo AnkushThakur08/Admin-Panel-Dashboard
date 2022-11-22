@@ -9,74 +9,68 @@ import { useNavigate } from 'react-router-dom';
 // React Toastify
 import { toast } from 'react-toastify';
 
-// AXIOS
-import axios from 'axios';
-
 // Components
 import { Header } from '../../components';
 
-const AdminTable = () => {
+// API
+import { isAuthenticated } from '../../helper/login/loginHelper';
+import {reportedBugsListData} from '../../helper/Table/TableHelper'
+
+const ReportedContent = () => {
   // const navigate = useNavigate();
+  const { data, token } = isAuthenticated();
+
   const [search, setSearch] = useState('');
-  const [adminData, setAdminData] = useState([]);
+  const [contentData, setContentData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   // const [show, setShow] = useState(false);
 
-  // const handleClose = () => {
-  //   setShow(false);
-  //   localStorage.removeItem("adminId");
-  // };
-  // const handleShow = () => {
-  //   setShow(true);
-  //   localStorage.setItem("adminId", adminId);
-  // };
+  /*  const handleClose = () => {
+    setShow(false);
+    localStorage.removeItem("adminId");
+  }; */
 
-  const admin = async () => {
-    try {
-      const response = await axios.get(
-        'http://localhost:3002/admin/List?limit=100&skip=0'
-      );
-      console.log(response);
-
-      setAdminData(response.data.data.rows);
-      setFilterData(response.data.data.rows);
-    } catch (error) {
+  /* const handleShow = () => {
+    setShow(true);
+    localStorage.setItem("adminId", adminId);
+  }; */
+const reportContent = () =>{
+  reportedContentListData(token)
+    .then((data) => {
+      console.log('responseeee', data);
+      setContentData(data.data.data.rows);
+      setFilterData(data.data.data.rows);
+      console.log('THIS IS DATA', data);
+    })
+    .catch((error) => {
       console.log(error);
-    }
-  };
+    });
+}
 
-  // async function deleteAdmin() {
-  //   let uId = localStorage.getItem("adminId");
-  //   await fetch(`http://localhost:3002/admin/deleteAdmin/${uId}`, {
-  //     method: "DELETE",
-  //   }).then((result) => {
-  //     result.json().then((resq) => {
-  //       toast.success("Admin deleted successfully", {
-  //         position: toast.POSITION.TOP_CENTER,
-  //       });
-  //       admin();
-  //       handleClose();
-  //     });
-  //   });
-  // }
+
+  /*  async function deleteAdmin() {
+    let uId = localStorage.getItem("adminId");
+    await fetch(`http://localhost:3002/admin/deleteAdmin/${uId}`, {
+      method: "DELETE",
+    }).then((result) => {
+      result.json().then((resq) => {
+        toast.success("Admin deleted successfully", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        admin();
+        handleClose();
+      });
+    });
+  } */
 
   const colunms = [
     {
       name: (
         <h6>
-          <b>ID</b>
+          <b>Id</b>
         </h6>
       ),
-      selector: (row) => row.uId,
-      sortable: true,
-    },
-    {
-      name: (
-        <h6>
-          <b>Name</b>
-        </h6>
-      ),
-      selector: (row) => row.name,
+      selector: (row) => row.id,
       sortable: true,
     },
     {
@@ -85,131 +79,103 @@ const AdminTable = () => {
           <b>Title</b>
         </h6>
       ),
-      selector: (row) => row.role,
+      selector: (row) => row.title,
       sortable: true,
     },
     {
       name: (
         <h6>
-          <b>Email</b>
+          <b>Reported By</b>
         </h6>
       ),
-      selector: (row) => row.email,
+      selector: (row) => row.reportedBy,
       sortable: true,
     },
     {
       name: (
         <h6>
-          <b>Image</b>
+          <b>Description</b>
         </h6>
       ),
-      selector: (row) =>
-        row.image ? (
-          <img
-            alt=""
-            width={80}
-            height={50}
-            style={{ objectFit: 'cover', border: '1px solid' }}
-            src={`http://localhost:3002/${row.image}`}
-          />
-        ) : (
-          <img
-            alt=""
-            width={80}
-            height={50}
-            style={{ objectFit: 'cover', border: '1px solid' }}
-            src=""
-            // src={profilelogo}
-          />
-        ),
+      selector: (row) => row.description,
       sortable: true,
     },
     {
       name: (
         <h6>
-          <b>Access</b>
+          <b>Status</b>
         </h6>
       ),
-      selector: (row) => [
-        row.dashBoardPermission == '1' ? (
-          <span className="badge bg-secondary access">Dashboard</span>
-        ) : (
-          ''
-        ),
-        row.userManagementPermission == '1' ? (
-          <>
-            <span className="badge bg-primary">User</span>
-          </>
-        ) : (
-          ''
-        ),
-        row.AdminPermission == '1' ? (
-          <span className="badge bg-success">Admin</span>
-        ) : (
-          ''
-        ),
-        row.NotificationPermission == '1' ? (
-          <>
-            <span className="badge bg-danger">Notification</span>
-          </>
-        ) : (
-          ''
-        ),
-        row.systemConfigPermission == '1' ? (
-          <span className="badge bg-info access">System</span>
-        ) : (
-          ''
-        ),
-        row.reportPermission == '1' ? (
-          <>
-            <span className="badge bg-warning ">Report</span>
-          </>
-        ) : (
-          ''
-        ),
-      ],
-      grow: 1,
+      selector: (row) => row.status,
       sortable: true,
     },
     // {
     //   name: (
     //     <h6>
-    //       <b>Action</b>
+    //       <b>Image</b>
     //     </h6>
     //   ),
     //   selector: (row) =>
-    //     row.uId === userid ? (
-    //       ""
+    //     row.image ? (
+    //       <img
+    //         alt=""
+    //         width={80}
+    //         height={50}
+    //         style={{ objectFit: "cover", border: "1px solid" }}
+    //         src={`http://localhost:3002/${row.image}`}
+    //       />
     //     ) : (
-    //       <div
-    //         style={{
-    //           display: "flex",
-    //           justifyContent: "space-between",
-    //           width: "110px",
-    //         }}
-    //       >
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => navigate(`/editadmin/${row.uId}`)}
-    //         >
-    //           <i className="fa-solid fa-pen fa-lg"></i>
-    //         </button>
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => deleteAdmin(row.uId)}
-    //           // onClick={() => handleShow(row.uId)}
-    //         >
-    //           <i className="fa-regular fa-trash-can fa-lg"></i>
-    //         </button>
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => blockAdmin(row.uId)}
-    //         >
-    //           <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
-    //         </button>
-    //       </div>
+    //       <img
+    //         alt=""
+    //         width={80}
+    //         height={50}
+    //         style={{ objectFit: "cover", border: "1px solid" }}
+    //         src=""
+    //         // src={profilelogo}
+    //       />
     //     ),
+    //   sortable: true,
     // },
+    {
+      name: (
+        <h6>
+          <b>Action</b>
+        </h6>
+      ),
+      selector: (row) => (
+        // row.uId === userid ? (
+        //   ""
+        // ) : (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '110px',
+          }}
+        >
+          <button
+            style={{ border: 'none', background: 'none' }}
+            // onClick={() => navigate(`/editadmin/${row.uId}`)}
+          >
+            <i className="fa-solid fa-pen fa-lg"></i>
+          </button>
+          <button
+            style={{ border: 'none', background: 'none' }}
+            // onClick={() => deleteAdmin(row.uId)}
+            // onClick={() => handleShow(row.uId)}
+          >
+            <i className="fa-regular fa-trash-can fa-lg"></i>
+          </button>
+          <button
+            style={{ border: 'none', background: 'none' }}
+            // onClick={() => blockAdmin(row.uId)}
+          >
+            <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
+          </button>
+        </div>
+      ),
+      // ),
+    },
   ];
 
   const paginationComponentOptions = {
@@ -219,14 +185,14 @@ const AdminTable = () => {
   };
 
   useEffect(() => {
-    admin();
+    reportContent();
   }, []);
 
   useEffect(() => {
-    const result = adminData.filter((value) => {
+    const result = contentData.filter((value) => {
       return (
         value.name.toLowerCase().match(search.toLowerCase()) ||
-        value.email.toLowerCase().match(search.toLowerCase())
+        value.id.toLowerCase().match(search.toLowerCase())
       );
     });
     setFilterData(result);
@@ -239,7 +205,7 @@ const AdminTable = () => {
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header category="Page" title="Admin" />
+      <Header category="Page" title="Reported Bugs" />
       <DataTable
         // title="Admin"
         columns={colunms}
@@ -281,4 +247,4 @@ const AdminTable = () => {
   );
 };
 
-export default AdminTable;
+export default ReportedContent;

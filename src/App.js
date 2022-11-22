@@ -42,6 +42,8 @@ import Login from './pages/Login/Login';
 import AdminTable from './components/Tables/AdminTable';
 import AppVersionTable from './components/Tables/AppVersionTable';
 import Category from './components/Tables/CategoryTable';
+import UserTable from './components/Tables/UserTable';
+import ReportedBugs from './components/Tables/ReportedBugs';
 
 // Custom CSS
 import './App.css';
@@ -120,6 +122,8 @@ const App = () => {
 
                   {/* pages  */}
                   <Route path="/orders" element={<Orders />} />
+                  <Route path="/user" element={<UserTable />} />
+
                   <Route path="/employees" element={<Employees />} />
                   <Route path="/admin" element={<AdminTable />} />
                   <Route path="/appVersion" element={<AppVersionTable />} />
@@ -135,6 +139,7 @@ const App = () => {
                   {/* charts  */}
                   <Route path="/line" element={<Line />} />
                   <Route path="/area" element={<Area />} />
+                  <Route path="/reportedBugs" element={<ReportedBugs/>} />
                   <Route path="/bar" element={<Bar />} />
                   <Route path="/pie" element={<Pie />} />
                   <Route path="/financial" element={<Financial />} />

@@ -9,9 +9,6 @@ import { useNavigate } from 'react-router-dom';
 // React Toastify
 import { toast } from 'react-toastify';
 
-// Axios
-import axios from 'axios';
-
 // Components
 import { Header } from '../../components';
 
@@ -26,6 +23,7 @@ const ReportedBugs = () => {
   const [search, setSearch] = useState('');
   const [bugsData, setBugsData] = useState([]);
   const [filterData, setFilterData] = useState([]);
+  const [reportBy, setReportBy ] = useState({})
   // const [show, setShow] = useState(false);
 
   /*  const handleClose = () => {
@@ -37,17 +35,31 @@ const ReportedBugs = () => {
     setShow(true);
     localStorage.setItem("adminId", adminId);
   }; */
-const reportBug = () =>{
-  reportedBugsListData(token)
+
+const reportBug = () =>   {
+  reportedBugsListData(data.accessToken)
     .then((data) => {
-      console.log('responseeee', data);
+      console.log("STEP-1",data)
       setBugsData(data.data.data.rows);
       setFilterData(data.data.data.rows);
-      console.log('THIS IS DATA', data);
+
+      console.log("STATE",bugsData);
+
+      // preload();
     })
     .catch((error) => {
       console.log(error);
     });
+}
+
+const preload = () => {
+  console.log("inside");
+  console.log(bugsData)
+  bugsData.map((user, index)=>{
+    console.log(user);
+    setReportBy(user)
+    // console.log(".........",reportBy)
+  })
 }
 
 
@@ -83,6 +95,15 @@ const reportBug = () =>{
         </h6>
       ),
       selector: (row) => row.title,
+      sortable: true,
+    },
+    {
+      name: (
+        <h6>
+          <b>Reported By</b>
+        </h6>
+      ),
+      selector: (row) => row.reportedBy,
       sortable: true,
     },
     {
@@ -178,15 +199,17 @@ const reportBug = () =>{
     selectAllRowsItemText: 'All',
   };
 
-  useEffect(() => {
-    reportBug();
-  }, []);
+useEffect(() => {
+  reportBug();
+  
+}, [])
+
 
   useEffect(() => {
     const result = bugsData.filter((value) => {
       return (
-        value.name.toLowerCase().match(search.toLowerCase()) ||
-        value.email.toLowerCase().match(search.toLowerCase())
+        value.id.toLowerCase().match(search.toLowerCase()) ||
+        value.title.toLowerCase().match(search.toLowerCase())
       );
     });
     setFilterData(result);
@@ -199,7 +222,7 @@ const reportBug = () =>{
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header category="Page" title="Admin" />
+      <Header category="Page" title="Reported Bugs" />
       <DataTable
         // title="Admin"
         columns={colunms}

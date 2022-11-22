@@ -45,93 +45,32 @@ const AdminTable = () => {
     localStorage.setItem("adminId", adminId);
   }; */
 
-  /* const admin = async () => {
-    try {
-      const response = await adminListData(
-        ``,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
-      console.log(response);
-      console.log(response.data.data.rows[0]?.admin_permissions[0]?.adminManagement
-
-        );
-
-        adminData.map((individualData, index) => {
-          setAdminPermission(individualData.admin_permissions);
-          console.log("1", adminPermission);
-
-          adminPermission.map((individualAdminPermisison, index) => {
-              console.log("adminPermisison", individualAdminPermisison);
-
-              setIndividualPermission(individualAdminPermisison);
-              console.log("FINA:", individualPermission)
-              
-
-            })
-        })
-
-      setAdminData(response.data.data.rows);
-      setFilterData(response.data.data.rows);
-    } catch (error) {
-      console.log(error);
-    }
-  }; */
 
   const preload = () => {
     adminListData(data.accessToken)
       .then((data) => {
-        // console.log('DATA', data);
         setAdminData(data.data.rows);
         setFilterData(data.data.rows);
 
-        adminData.map((individualData, index) => {
-          console.log("individualData", individualData)
-          setAdminPermission(individualData.admin_permissions);
-
-          console.log("adminPermission",adminPermission)
-
-
-            adminPermission.map((individualAdminPermisison, index) => {
-              console.log("adminPermisison", individualAdminPermisison);
-
-              setIndividualPermission(individualAdminPermisison);
-            });
-          
-        });
+        preload2();
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  /* adminListData()
-  .then((data) => {
-    console.log("responseeee",data);
-    setAdminData(data.data.data.rows);
-    setFilterData(data.data.data.rows);
-        console.log("THIS IS DATA", data);
+  const preload2 = () =>{
+    adminData.map((individualData, index) => {
+      setAdminPermission(individualData.admin_permissions);
+      console.log("adminPermission",adminPermission);
 
-        adminData.map((individualData, index) => {
-          setAdminPermission(individualData.admin_permissions);
-
-          adminPermission.map((individualAdminPermisison, index) => {
 
         adminPermission.map((individualAdminPermisison, index) => {
-          // console.log("adminPermisison", individualAdminPermisison);
-
           setIndividualPermission(individualAdminPermisison);
-          console.log('FINA:', individualPermission);
         });
-      });
-
-      })
-  .catch((error) => {
-    console.log(error);
-  }); */
+      
+    });
+  }
 
   // async function deleteAdmin() {
   //   let uId = localStorage.getItem("adminId");
@@ -219,44 +158,45 @@ const AdminTable = () => {
         </h6>
       ),
       selector: (row) => [
-        individualPermission.adminManagement == '0' ? (
+        individualPermission.adminManagement == '1' ? (
           // row?.admin_permissions[0]?.adminManagement == "0"
           <span className="badge bg-secondary access">Admin</span>
         ) : (
           ''
         ),
-        individualPermission.dashboard == '0' ? (
+        individualPermission.dashboard == '1' ? (
           <>
             <span className="badge bg-primary">Dashboard</span>
           </>
         ) : (
           ''
         ),
-        individualPermission.userManagement == '0' ? (
+        individualPermission.userManagement == '1' ? (
           <span className="badge bg-success">User</span>
         ) : (
           ''
         ),
-        individualPermission.notificationManagement == '0' ? (
+        individualPermission.notificationManagement == '1' ? (
           <>
             <span className="badge bg-danger">Notification</span>
           </>
         ) : (
           ''
         ),
-        individualPermission.systemConfiguration == '0' ? (
+        individualPermission.systemConfiguration == '1' ? (
           <span className="badge bg-info access">System</span>
         ) : (
           ''
         ),
-        individualPermission.reportManagement == '0' ? (
+        individualPermission.reportManagement == '1' ? (
           <>
             <span className="badge bg-warning ">Report</span>
           </>
         ) : (
           ''
         ),
-      ],
+      ], 
+
       grow: 1,
       sortable: true,
     },
@@ -312,6 +252,10 @@ const AdminTable = () => {
   }, []);
 
   useEffect(() => {
+    preload2();
+  }, [preload]);
+
+  useEffect(() => {
     const result = adminData.filter((value) => {
       return (
         value.firstName.toLowerCase().match(search.toLowerCase()) ||
@@ -339,6 +283,7 @@ const AdminTable = () => {
         // onRowClicked={handleRowClicked}
         selectableRowsHighlight
         highlightOnHover
+        // progressPending
         subHeader
         subHeaderComponent={
           <input

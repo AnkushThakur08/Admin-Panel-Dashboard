@@ -22,6 +22,25 @@ export const adminListData = async (token) => {
     });
 };
 
+export const userListData = async (token) => {
+  return await axios
+    .get(`${API}admin/v1/users?limit=10&skip=0`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+      },
+    })
+    .then((response) => {
+      console.log(response.data.data.rows);
+      return response;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 export const appVersionListData = async (token) => {
   return await axios
     .get(`${API}api/v1/app-version/appVersion?limit=100&skip=0`, {
@@ -65,7 +84,28 @@ export const categoryListData = async (token) => {
 // reported bugs
 export const reportedBugsListData = async (token) => {
   return await axios
-    .get(`${API}/admin/v1/reportedBugs/?limit=10&skip=0`, {
+    .get(`${API}admin/v1/reportedBugs/?limit=10&skip=0`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+      },
+    })
+    .then((response) => {
+      console.log(response);
+
+      return response;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+// reported content
+export const reportedContentListData = async (token) => {
+  return await axios
+    .get(`${API}admin/v1/reportedItems/?limit=10&skip=0`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',

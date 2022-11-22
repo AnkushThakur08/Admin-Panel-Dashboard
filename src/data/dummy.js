@@ -535,7 +535,7 @@ export const links = [
       },
 
       {
-        name: "orders",
+        name: "user",
         title: "User Management",
         icon: <FaUserFriends size={25} />,
       },
@@ -605,7 +605,8 @@ export const links = [
       },
 
       {
-        name: "area",
+        // name: "area",
+        name: "reportedBugs",
         title: "Reported Bugs",
         icon: <IoMdContacts />,
       },

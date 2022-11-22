@@ -4,12 +4,18 @@ import DataTable from 'react-data-table-component';
 // import { toast } from "react-toastify";
 
 import axios from 'axios';
-import { Header } from '..';
+import { Header } from '../../components';
 
-const AdminTable = () => {
+// API 
+import { userListData } from '../../helper/Table/TableHelper';
+import { isAuthenticated } from '../../helper/login/loginHelper';
+
+
+const UserTable = () => {
   // const navigate = useNavigate();
+  const { data, token } = isAuthenticated();
   const [search, setSearch] = useState('');
-  const [adminData, setAdminData] = useState([]);
+  const [userData, setUserData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   // const [show, setShow] = useState(false);
 
@@ -22,35 +28,33 @@ const AdminTable = () => {
   //   localStorage.setItem("adminId", adminId);
   // };
 
-  const admin = async () => {
-    try {
-      const response = await axios.get(
-        'http://localhost:3002/admin/List?limit=100&skip=0'
-      );
-      console.log(response);
-
-      setAdminData(response.data.data.rows);
-      setFilterData(response.data.data.rows);
-    } catch (error) {
-      console.log(error);
-    }
+  const preload = () => {
+    userListData(data.accessToken)
+      .then((data) => {
+        console.log('DATA', data.data.data.rows);
+        setUserData(data.data.data.rows);
+        setFilterData(data.data.data.rows);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
-  // async function deleteAdmin() {
-  //   let uId = localStorage.getItem("adminId");
-  //   await fetch(`http://localhost:3002/admin/deleteAdmin/${uId}`, {
-  //     method: "DELETE",
-  //   }).then((result) => {
-  //     result.json().then((resq) => {
-  //       toast.success("Admin deleted successfully", {
-  //         position: toast.POSITION.TOP_CENTER,
-  //       });
-  //       admin();
-  //       handleClose();
-  //     });
-  //   });
-  // }
-
+/*   async function deleteAdmin() {
+    let uId = localStorage.getItem("adminId");
+    await fetch(`http://localhost:3002/admin/deleteAdmin/${uId}`, {
+      method: "DELETE",
+    }).then((result) => {
+      result.json().then((resq) => {
+        toast.success("Admin deleted successfully", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        admin();
+        handleClose();
+      });
+    });
+  }
+ */
   const colunms = [
     {
       name: (
@@ -58,25 +62,34 @@ const AdminTable = () => {
           <b>ID</b>
         </h6>
       ),
-      selector: (row) => row.uId,
+      selector: (row) => row.id,
       sortable: true,
     },
     {
       name: (
         <h6>
-          <b>Name</b>
+          <b>First Name</b>
         </h6>
       ),
-      selector: (row) => row.name,
+      selector: (row) => row.firstName,
       sortable: true,
     },
     {
       name: (
         <h6>
-          <b>Title</b>
+          <b>Last Name</b>
         </h6>
       ),
-      selector: (row) => row.role,
+      selector: (row) => row.lastName,
+      sortable: true,
+    },
+    {
+      name: (
+        <h6>
+          <b>Contact No</b>
+        </h6>
+      ),
+      selector: (row) => row.phoneNumber,
       sortable: true,
     },
     {
@@ -88,7 +101,7 @@ const AdminTable = () => {
       selector: (row) => row.email,
       sortable: true,
     },
-    {
+  /*   {
       name: (
         <h6>
           <b>Image</b>
@@ -114,93 +127,46 @@ const AdminTable = () => {
           />
         ),
       sortable: true,
-    },
-    {
+    }, */
+  /*   {
       name: (
         <h6>
-          <b>Access</b>
+          <b>Action</b>
         </h6>
       ),
-      selector: (row) => [
-        row.dashBoardPermission == '1' ? (
-          <span className="badge bg-secondary access">Dashboard</span>
+      selector: (row) =>
+        row.uId === userid ? (
+          ""
         ) : (
-          ''
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "110px",
+            }}
+          >
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => navigate(`/editadmin/${row.uId}`)}
+            >
+              <i className="fa-solid fa-pen fa-lg"></i>
+            </button>
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => deleteAdmin(row.uId)}
+              // onClick={() => handleShow(row.uId)}
+            >
+              <i className="fa-regular fa-trash-can fa-lg"></i>
+            </button>
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => blockAdmin(row.uId)}
+            >
+              <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
+            </button>
+          </div>
         ),
-        row.userManagementPermission == '1' ? (
-          <>
-            <span className="badge bg-primary">User</span>
-          </>
-        ) : (
-          ''
-        ),
-        row.AdminPermission == '1' ? (
-          <span className="badge bg-success">Admin</span>
-        ) : (
-          ''
-        ),
-        row.NotificationPermission == '1' ? (
-          <>
-            <span className="badge bg-danger">Notification</span>
-          </>
-        ) : (
-          ''
-        ),
-        row.systemConfigPermission == '1' ? (
-          <span className="badge bg-info access">System</span>
-        ) : (
-          ''
-        ),
-        row.reportPermission == '1' ? (
-          <>
-            <span className="badge bg-warning ">Report</span>
-          </>
-        ) : (
-          ''
-        ),
-      ],
-      grow: 1,
-      sortable: true,
-    },
-    // {
-    //   name: (
-    //     <h6>
-    //       <b>Action</b>
-    //     </h6>
-    //   ),
-    //   selector: (row) =>
-    //     row.uId === userid ? (
-    //       ""
-    //     ) : (
-    //       <div
-    //         style={{
-    //           display: "flex",
-    //           justifyContent: "space-between",
-    //           width: "110px",
-    //         }}
-    //       >
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => navigate(`/editadmin/${row.uId}`)}
-    //         >
-    //           <i className="fa-solid fa-pen fa-lg"></i>
-    //         </button>
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => deleteAdmin(row.uId)}
-    //           // onClick={() => handleShow(row.uId)}
-    //         >
-    //           <i className="fa-regular fa-trash-can fa-lg"></i>
-    //         </button>
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => blockAdmin(row.uId)}
-    //         >
-    //           <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
-    //         </button>
-    //       </div>
-    //     ),
-    // },
+    }, */
   ];
 
   const paginationComponentOptions = {
@@ -210,13 +176,13 @@ const AdminTable = () => {
   };
 
   useEffect(() => {
-    admin();
+    preload();
   }, []);
 
   useEffect(() => {
-    const result = adminData.filter((value) => {
+    const result = userData.filter((value) => {
       return (
-        value.name.toLowerCase().match(search.toLowerCase()) ||
+        value.firstName.toLowerCase().match(search.toLowerCase()) ||
         value.email.toLowerCase().match(search.toLowerCase())
       );
     });
@@ -230,7 +196,7 @@ const AdminTable = () => {
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header category="Page" title="Admin" />
+      <Header category="Page" title="User" />
       <DataTable
         // title="Admin"
         columns={colunms}
@@ -272,4 +238,4 @@ const AdminTable = () => {
   );
 };
 
-export default AdminTable;
+export default UserTable;
