@@ -17,9 +17,12 @@ import { Header } from '../../components';
 
 // API
 import { appVersionListData } from '../../helper/Table/TableHelper';
+import { isAuthenticated } from '../../helper/login/loginHelper';
 
 const AppVersionTable = () => {
   // const navigate = useNavigate();
+  const { data, token } = isAuthenticated();
+
   const [search, setSearch] = useState('');
   const [appVersionData, setAppVersionData] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -34,8 +37,8 @@ const AppVersionTable = () => {
     setShow(true);
     localStorage.setItem("adminId", adminId);
   }; */
-
-  appVersionListData()
+const appData = () =>{
+  appVersionListData(data.accessToken)
     .then((data) => {
       console.log('responseeee', data);
       setAppVersionData(data.data.data.rows);
@@ -45,6 +48,8 @@ const AppVersionTable = () => {
     .catch((error) => {
       console.log(error);
     });
+}
+
 
   /* async function deleteAdmin() {
     let uId = localStorage.getItem("adminId");
@@ -152,7 +157,7 @@ const AppVersionTable = () => {
   };
 
   useEffect(() => {
-    appVersionListData();
+    appData();
   }, []);
 
   useEffect(() => {

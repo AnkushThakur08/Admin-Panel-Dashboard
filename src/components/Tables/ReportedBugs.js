@@ -15,8 +15,14 @@ import axios from 'axios';
 // Components
 import { Header } from '../../components';
 
+// API
+import { isAuthenticated } from '../../helper/login/loginHelper';
+import {reportedBugsListData} from '../../helper/Table/TableHelper'
+
 const ReportedBugs = () => {
   // const navigate = useNavigate();
+  const { data, token } = isAuthenticated();
+
   const [search, setSearch] = useState('');
   const [bugsData, setBugsData] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -31,8 +37,8 @@ const ReportedBugs = () => {
     setShow(true);
     localStorage.setItem("adminId", adminId);
   }; */
-
-  reportedBugsListData()
+const reportBug = () =>{
+  reportedBugsListData(token)
     .then((data) => {
       console.log('responseeee', data);
       setBugsData(data.data.data.rows);
@@ -42,6 +48,8 @@ const ReportedBugs = () => {
     .catch((error) => {
       console.log(error);
     });
+}
+
 
   /*  async function deleteAdmin() {
     let uId = localStorage.getItem("adminId");
@@ -171,7 +179,7 @@ const ReportedBugs = () => {
   };
 
   useEffect(() => {
-    reportedBugsListData();
+    reportBug();
   }, []);
 
   useEffect(() => {

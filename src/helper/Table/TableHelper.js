@@ -22,14 +22,14 @@ export const adminListData = async (token) => {
     });
 };
 
-export const appVersionListData = async () => {
+export const appVersionListData = async (token) => {
   return await axios
     .get(`${API}api/v1/app-version/appVersion?limit=100&skip=0`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`
       },
     })
     .then((response) => {
@@ -42,14 +42,14 @@ export const appVersionListData = async () => {
     });
 };
 
-export const categoryListData = async () => {
+export const categoryListData = async (token) => {
   return await axios
     .get(`${API}admin/v1/categories/?limit=100&skip=0`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`
       },
     })
     .then((response) => {
@@ -63,14 +63,14 @@ export const categoryListData = async () => {
 };
 
 // reported bugs
-export const reportedBugsListData = async () => {
+export const reportedBugsListData = async (token) => {
   return await axios
     .get(`${API}/admin/v1/reportedBugs/?limit=10&skip=0`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`
       },
     })
     .then((response) => {

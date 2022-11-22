@@ -31,6 +31,8 @@ const AdminTable = () => {
   const [adminPermission, setAdminPermission] = useState([]);
   const [individualPermission, setIndividualPermission] = useState([]);
 
+  console.log("5555555", individualPermission)
+
   //   const [show, setShow] = useState(false);
 
   /*  const handleClose = () => {
@@ -87,15 +89,18 @@ const AdminTable = () => {
         setFilterData(data.data.rows);
 
         adminData.map((individualData, index) => {
+          console.log("individualData", individualData)
           setAdminPermission(individualData.admin_permissions);
 
-          adminPermission.map((individualAdminPermisison, index) => {
+          console.log("adminPermission",adminPermission)
+
+
             adminPermission.map((individualAdminPermisison, index) => {
-              // console.log("adminPermisison", individualAdminPermisison);
+              console.log("adminPermisison", individualAdminPermisison);
 
               setIndividualPermission(individualAdminPermisison);
             });
-          });
+          
         });
       })
       .catch((error) => {
@@ -313,6 +318,7 @@ const AdminTable = () => {
         value.email.toLowerCase().match(search.toLowerCase())
       );
     });
+    setFilterData(result);
   }, [search]);
   // console.log(admin);
 

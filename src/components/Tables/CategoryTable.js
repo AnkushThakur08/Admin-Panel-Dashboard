@@ -17,9 +17,13 @@ import { Header } from '../../components';
 
 // API
 import { categoryListData } from '../../helper/Table/TableHelper';
+import { isAuthenticated } from '../../helper/login/loginHelper';
+
 
 const AdminTable = () => {
   // const navigate = useNavigate();
+  const { data, token } = isAuthenticated();
+
   const [search, setSearch] = useState('');
   const [categoryData, setCategoryData] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -34,8 +38,8 @@ const AdminTable = () => {
     setShow(true);
     localStorage.setItem("adminId", adminId);
   }; */
-
-  categoryListData()
+const category = () =>{
+  categoryListData(data.accessToken)
     .then((data) => {
       console.log('responseeee', data);
       setCategoryData(data.data.data.rows);
@@ -45,6 +49,8 @@ const AdminTable = () => {
     .catch((error) => {
       console.log(error);
     });
+}
+
 
   /*  async function deleteAdmin() {
     let uId = localStorage.getItem("adminId");
@@ -165,7 +171,7 @@ const AdminTable = () => {
   };
 
   useEffect(() => {
-    categoryListData();
+    category();
   }, []);
 
   useEffect(() => {
