@@ -16,7 +16,7 @@ import axios from 'axios';
 import { Header } from '../../components';
 
 // API
-import { appVersionListData } from '../../helper/ApiCall';
+import { appVersionListData } from '../../helper/Table/TableHelper';
 
 const AppVersionTable = () => {
   // const navigate = useNavigate();

@@ -17,7 +17,7 @@ import { Header } from '../../components';
 
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
-import { adminListData } from '../../helper/ApiCall';
+import { adminListData } from '../../helper/Table/TableHelper';
 
 const AdminTable = () => {
   const { data, token } = isAuthenticated();

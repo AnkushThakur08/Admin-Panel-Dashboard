@@ -16,7 +16,7 @@ import axios from 'axios';
 import { Header } from '../../components';
 
 // API
-import { categoryListData } from '../../helper/ApiCall';
+import { categoryListData } from '../../helper/Table/TableHelper';
 
 const AdminTable = () => {
   // const navigate = useNavigate();
