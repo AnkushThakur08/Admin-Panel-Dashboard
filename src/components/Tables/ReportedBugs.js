@@ -1,3 +1,4 @@
+import { row } from '@syncfusion/ej2-react-grids';
 import React, { useEffect, useState } from 'react';
 
 // React Table
@@ -23,7 +24,9 @@ const ReportedBugs = () => {
   const [search, setSearch] = useState('');
   const [bugsData, setBugsData] = useState([]);
   const [filterData, setFilterData] = useState([]);
-  const [reportBy, setReportBy ] = useState({})
+  const [reportBy, setReportBy ] = useState([]);
+  const [reportBy1, setReportBy1 ] = useState([])
+
   // const [show, setShow] = useState(false);
 
   /*  const handleClose = () => {
@@ -45,7 +48,7 @@ const reportBug = () =>   {
 
       console.log("STATE",bugsData);
 
-      // preload();
+      preload();
     })
     .catch((error) => {
       console.log(error);
@@ -56,9 +59,10 @@ const preload = () => {
   console.log("inside");
   console.log(bugsData)
   bugsData.map((user, index)=>{
-    console.log(user);
-    setReportBy(user)
-    // console.log(".........",reportBy)
+    // console.log(user.user?.firstName, "!")
+    setReportBy(user.user?.firstName)
+
+    console.log(reportBy, "This is state")
   })
 }
 
@@ -101,9 +105,10 @@ const preload = () => {
       name: (
         <h6>
           <b>Reported By</b>
-        </h6>
+        </h6> 
       ),
-      selector: (row) => row.reportedBy,
+      selector: (row) => reportBy ,
+      // accessor: (row)=> row.reportBy.user.firstName,
       sortable: true,
     },
     {
@@ -203,6 +208,10 @@ useEffect(() => {
   reportBug();
   
 }, [])
+
+useEffect(() => {
+  preload();
+}, [reportBug])
 
 
   useEffect(() => {
