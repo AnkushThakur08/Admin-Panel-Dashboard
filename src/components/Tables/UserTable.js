@@ -14,6 +14,7 @@ import { isAuthenticated } from '../../helper/login/loginHelper';
 const UserTable = () => {
   // const navigate = useNavigate();
   const { data, token } = isAuthenticated();
+
   const [search, setSearch] = useState('');
   const [userData, setUserData] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -128,16 +129,13 @@ const UserTable = () => {
         ),
       sortable: true,
     }, */
-  /*   {
+    {
       name: (
         <h6>
           <b>Action</b>
         </h6>
       ),
       selector: (row) =>
-        row.uId === userid ? (
-          ""
-        ) : (
           <div
             style={{
               display: "flex",
@@ -145,12 +143,6 @@ const UserTable = () => {
               width: "110px",
             }}
           >
-            <button
-              style={{ border: "none", background: "none" }}
-              // onClick={() => navigate(`/editadmin/${row.uId}`)}
-            >
-              <i className="fa-solid fa-pen fa-lg"></i>
-            </button>
             <button
               style={{ border: "none", background: "none" }}
               // onClick={() => deleteAdmin(row.uId)}
@@ -165,8 +157,7 @@ const UserTable = () => {
               <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
             </button>
           </div>
-        ),
-    }, */
+    },
   ];
 
   const paginationComponentOptions = {
