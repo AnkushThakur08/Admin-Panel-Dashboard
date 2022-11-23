@@ -570,7 +570,8 @@ export const links = [
       },
 
       {
-        name: "bar",
+        // name: "bar",
+        name: "adminAchievement",
         title: "Admin Achievements",
         icon: <RiTrophyLine size={25} />,
       },
@@ -599,7 +600,8 @@ export const links = [
     title: "Report",
     links: [
       {
-        name: "pie",
+        // name: "pie",
+        name: "reportedContent",
         title: "Reported Content",
         icon: <AiOutlineShoppingCart />,
       },

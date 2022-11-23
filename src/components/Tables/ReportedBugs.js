@@ -22,10 +22,8 @@ const ReportedBugs = () => {
   const { data, token } = isAuthenticated();
 
   const [search, setSearch] = useState('');
-  const [bugsData, setBugsData] = useState([]);
+  const [getBugsData, setGetBugsData] = useState([])
   const [filterData, setFilterData] = useState([]);
-  const [reportBy, setReportBy ] = useState([]);
-  const [reportBy1, setReportBy1 ] = useState([])
 
   // const [show, setShow] = useState(false);
 
@@ -39,32 +37,19 @@ const ReportedBugs = () => {
     localStorage.setItem("adminId", adminId);
   }; */
 
-const reportBug = () =>   {
-  reportedBugsListData(data.accessToken)
-    .then((data) => {
-      console.log("STEP-1",data)
-      setBugsData(data.data.data.rows);
-      setFilterData(data.data.data.rows);
+  const preload = () => {
+    reportedBugsListData(data.accessToken)
+      .then((data) => {
+        console.log("NEW",data.data.data.rows); 
+        setGetBugsData(data.data.data.rows);
+        setFilterData(data.data.data.rows)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-      console.log("STATE",bugsData);
 
-      preload();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-
-const preload = () => {
-  console.log("inside");
-  console.log(bugsData)
-  bugsData.map((user, index)=>{
-    // console.log(user.user?.firstName, "!")
-    setReportBy(user.user?.firstName)
-
-    console.log(reportBy, "This is state")
-  })
-}
 
 
   /*  async function deleteAdmin() {
@@ -91,6 +76,7 @@ const preload = () => {
       ),
       selector: (row) => row.id,
       sortable: true,
+      grow: 1.5
     },
     {
       name: (
@@ -107,9 +93,11 @@ const preload = () => {
           <b>Reported By</b>
         </h6> 
       ),
-      selector: (row) => reportBy ,
-      // accessor: (row)=> row.reportBy.user.firstName,
-      sortable: true,
+      selector: (row) => [
+        row.user.firstName
+      ],
+      sortable: true
+
     },
     {
       name: (
@@ -129,33 +117,6 @@ const preload = () => {
       selector: (row) => row.status,
       sortable: true,
     },
-    // {
-    //   name: (
-    //     <h6>
-    //       <b>Image</b>
-    //     </h6>
-    //   ),
-    //   selector: (row) =>
-    //     row.image ? (
-    //       <img
-    //         alt=""
-    //         width={80}
-    //         height={50}
-    //         style={{ objectFit: "cover", border: "1px solid" }}
-    //         src={`http://localhost:3002/${row.image}`}
-    //       />
-    //     ) : (
-    //       <img
-    //         alt=""
-    //         width={80}
-    //         height={50}
-    //         style={{ objectFit: "cover", border: "1px solid" }}
-    //         src=""
-    //         // src={profilelogo}
-    //       />
-    //     ),
-    //   sortable: true,
-    // },
     {
       name: (
         <h6>
@@ -195,6 +156,7 @@ const preload = () => {
         </div>
       ),
       // ),
+      grow: 1.5
     },
   ];
 
@@ -204,26 +166,38 @@ const preload = () => {
     selectAllRowsItemText: 'All',
   };
 
-useEffect(() => {
-  reportBug();
+// useEffect(() => {
+//   reportBug();
   
-}, [])
+// }, [])
+
+// useEffect(() => {
+//   preload();
+// }, [reportBug])
+
 
 useEffect(() => {
-  preload();
-}, [reportBug])
+  let isApiSubscribed = true;
+  if(isApiSubscribed){
+    preload();
+  }
+  return () => {
+    // cancel the subscription
+    isApiSubscribed = false;
+};
+}, []);
 
 
   useEffect(() => {
-    const result = bugsData.filter((value) => {
+    const result = getBugsData.filter((value) => {
       return (
         value.id.toLowerCase().match(search.toLowerCase()) ||
-        value.title.toLowerCase().match(search.toLowerCase())
+        value.title.toLowerCase().match(search.toLowerCase()) ||
+        value.user.firstName.toLowerCase().match(search.toLowerCase())
       );
     });
     setFilterData(result);
   }, [search]);
-  // console.log(admin);
 
   // const handleRowClicked = (row) => {
   //   navigate(`/admindetails/${row.uId}`);

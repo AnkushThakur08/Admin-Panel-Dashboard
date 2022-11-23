@@ -43,7 +43,7 @@ const Sidebar = () => {
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
             >
               {/* <SiShopware /> <span>Applify</span> */}
-              <img src={Logo} alt="" srcset="" width="80" className="ml-4 " />
+              <img src={Logo} alt="" srcSet="" width="80" className="ml-4 " />
               <span className="text-3xl" style={{ marginLeft: "-10px" }}>
                 Applify
               </span>

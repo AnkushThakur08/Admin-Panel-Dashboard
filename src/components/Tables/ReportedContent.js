@@ -14,7 +14,7 @@ import { Header } from '../../components';
 
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
-import {reportedBugsListData} from '../../helper/Table/TableHelper'
+import {reportedContentListData} from '../../helper/Table/TableHelper'
 
 const ReportedContent = () => {
   // const navigate = useNavigate();
@@ -35,7 +35,7 @@ const ReportedContent = () => {
     localStorage.setItem("adminId", adminId);
   }; */
 const reportContent = () =>{
-  reportedContentListData(token)
+  reportedContentListData(data.accessToken)
     .then((data) => {
       console.log('responseeee', data);
       setContentData(data.data.data.rows);
@@ -76,10 +76,10 @@ const reportContent = () =>{
     {
       name: (
         <h6>
-          <b>Title</b>
+          <b>Item Type</b>
         </h6>
       ),
-      selector: (row) => row.title,
+      selector: (row) => row.itemType,
       sortable: true,
     },
     {
@@ -88,7 +88,7 @@ const reportContent = () =>{
           <b>Reported By</b>
         </h6>
       ),
-      selector: (row) => row.reportedBy,
+      selector: (row) => [row.user.firstName],
       sortable: true,
     },
     {
@@ -191,8 +191,10 @@ const reportContent = () =>{
   useEffect(() => {
     const result = contentData.filter((value) => {
       return (
-        value.name.toLowerCase().match(search.toLowerCase()) ||
-        value.id.toLowerCase().match(search.toLowerCase())
+        value.itemType.toLowerCase().match(search.toLowerCase()) ||
+        value.id.toLowerCase().match(search.toLowerCase()) ||
+        value.description.toLowerCase().match(search.toLowerCase()) ||
+        value.user.firstName.toLowerCase().match(search.toLowerCase())
       );
     });
     setFilterData(result);
@@ -205,7 +207,7 @@ const reportContent = () =>{
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header category="Page" title="Reported Bugs" />
+      <Header category="Page" title="Reported Content" />
       <DataTable
         // title="Admin"
         columns={colunms}

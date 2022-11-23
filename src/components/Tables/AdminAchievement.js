@@ -17,9 +17,9 @@ import { Header } from '../../components';
 
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
-import { adminListData } from '../../helper/Table/TableHelper';
+import { achievementListData } from '../../helper/Table/TableHelper';
 
-const AdminTable = () => {
+const AdminAchievement = () => {
   const { data, token } = isAuthenticated();
 
   console.log(data.accessToken);
@@ -28,11 +28,7 @@ const AdminTable = () => {
   const [search, setSearch] = useState('');
   const [adminData, setAdminData] = useState([]);
   const [filterData, setFilterData] = useState([]);
-  const [adminPermission, setAdminPermission] = useState([]);
-  const [individualPermission, setIndividualPermission] = useState([]);
-
-  console.log("5555555", individualPermission)
-
+ 
   //   const [show, setShow] = useState(false);
 
   /*  const handleClose = () => {
@@ -47,30 +43,16 @@ const AdminTable = () => {
 
 
   const preload = () => {
-    adminListData(data.accessToken)
+    achievementListData(data.accessToken)
       .then((data) => {
         setAdminData(data.data.rows);
         setFilterData(data.data.rows);
 
-        preload2();
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
-  const preload2 = () =>{
-    adminData.map((individualData, index) => {
-      setAdminPermission(individualData.admin_permissions);
-      console.log("adminPermission",adminPermission);
-
-
-        adminPermission.map((individualAdminPermisison, index) => {
-          setIndividualPermission(individualAdminPermisison);
-        });
-      
-    });
-  }
 
   // async function deleteAdmin() {
   //   let uId = localStorage.getItem("adminId");
@@ -91,12 +73,12 @@ const AdminTable = () => {
     {
       name: (
         <h6>
-          <b>ID</b>
+          <b>Sr.No</b>
         </h6>
       ),
       selector: (row) => row.id,
       sortable: true,
-      grow:2.5
+      grow:2
     },
     {
       name: (
@@ -104,28 +86,19 @@ const AdminTable = () => {
           <b>Name</b>
         </h6>
       ),
-      selector: (row) => row.firstName,
+      selector: (row) => row.name,
       sortable: true,
     },
     {
       name: (
         <h6>
-          <b>Last Name</b>
+          <b>Type</b>
         </h6>
       ),
-      selector: (row) => row.lastName,
+      selector: (row) => row.type,
       sortable: true,
     },
-    {
-      name: (
-        <h6>
-          <b>Email</b>
-        </h6>
-      ),
-      selector: (row) => row.email,
-      sortable: true,
-      grow:1.5
-    },
+
     // {
     //   name: (
     //     <h6>
@@ -156,91 +129,36 @@ const AdminTable = () => {
     {
       name: (
         <h6>
-          <b>Access</b>
+          <b>Action</b>
         </h6>
       ),
-      selector: (row) => [
-        individualPermission.adminManagement == '1' ? (
-          // row?.admin_permissions[0]?.adminManagement == "0"
-          <span className="badge bg-secondary access">Admin</span>
-        ) : (
-          ''
-        ),
-        individualPermission.dashboard == '1' ? (
-          <>
-            <span className="badge bg-primary">Dashboard</span>
-          </>
-        ) : (
-          ''
-        ),
-        individualPermission.userManagement == '1' ? (
-          <span className="badge bg-success">User</span>
-        ) : (
-          ''
-        ),
-        individualPermission.notificationManagement == '1' ? (
-          <>
-            <span className="badge bg-danger">Notification</span>
-          </>
-        ) : (
-          ''
-        ),
-        individualPermission.systemConfiguration == '1' ? (
-          <span className="badge bg-info access">System</span>
-        ) : (
-          ''
-        ),
-        individualPermission.reportManagement == '1' ? (
-          <>
-            <span className="badge bg-warning ">Report</span>
-          </>
-        ) : (
-          ''
-        ),
-      ], 
-
-      grow: 1,
-      sortable: true,
+      selector: (row) =>
+        // row.uId === userid ? (
+        //   ""
+        // ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "110px",
+            }}
+          >
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => navigate(`/editadmin/${row.uId}`)}
+            >
+              <i className="fa-solid fa-pen fa-lg"></i>
+            </button>
+            <button
+              style={{ border: "none", background: "none" }}
+              // onClick={() => deleteAdmin(row.uId)}
+              // onClick={() => handleShow(row.uId)}
+            >
+              <i className="fa-regular fa-trash-can fa-lg"></i>
+            </button>
+          </div>
+        // ),
     },
-    // {
-    //   name: (
-    //     <h6>
-    //       <b>Action</b>
-    //     </h6>
-    //   ),
-    //   selector: (row) =>
-    //     row.uId === userid ? (
-    //       ""
-    //     ) : (
-    //       <div
-    //         style={{
-    //           display: "flex",
-    //           justifyContent: "space-between",
-    //           width: "110px",
-    //         }}
-    //       >
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => navigate(`/editadmin/${row.uId}`)}
-    //         >
-    //           <i className="fa-solid fa-pen fa-lg"></i>
-    //         </button>
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => deleteAdmin(row.uId)}
-    //           // onClick={() => handleShow(row.uId)}
-    //         >
-    //           <i className="fa-regular fa-trash-can fa-lg"></i>
-    //         </button>
-    //         <button
-    //           style={{ border: "none", background: "none" }}
-    //           // onClick={() => blockAdmin(row.uId)}
-    //         >
-    //           <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
-    //         </button>
-    //       </div>
-    //     ),
-    // },
   ];
 
   const paginationComponentOptions = {
@@ -254,14 +172,11 @@ const AdminTable = () => {
   }, []);
 
   useEffect(() => {
-    preload2();
-  }, [preload]);
-
-  useEffect(() => {
     const result = adminData.filter((value) => {
       return (
-        value.firstName.toLowerCase().match(search.toLowerCase()) ||
-        value.email.toLowerCase().match(search.toLowerCase())
+        value.name.toLowerCase().match(search.toLowerCase()) ||
+        value.id.toLowerCase().match(search.toLowerCase()) ||
+        value.type.toLowerCase().match(search.toLowerCase())
       );
     });
     setFilterData(result);
@@ -274,7 +189,7 @@ const AdminTable = () => {
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header category="Page" title="Admin" />
+      <Header category="Page" title="Admin Achievements" />
       <DataTable
         // title="Admin"
         columns={colunms}
@@ -321,4 +236,4 @@ const AdminTable = () => {
   );
 };
 
-export default AdminTable;
+export default AdminAchievement;
