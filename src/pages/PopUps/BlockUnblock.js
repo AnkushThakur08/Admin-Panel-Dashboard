@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
+
+//react router dom
 import { useNavigate } from 'react-router-dom'
+
+// react toast
 import { toast } from 'react-toastify'
+
+// api call
 import {blockOrUnblockAdmin} from "../../helper/Table/adminTableHelper"
 
 const BlockUnblock = (props) => {

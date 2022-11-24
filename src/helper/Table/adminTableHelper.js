@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import axios from 'axios';
 import { API } from '../../backend';
 
@@ -24,21 +25,31 @@ export const deleteAdminData = async (token, id) => {
   };
 
 // BLOCK OR UNBLOCK ADMIN
-export const blockOrUnblockAdmin = async(token, id, isBlocked) =>{
-  return await axios.put(`${API}admin/v1/admin/block`,{
+export const blockOrUnblockAdmin = async (id, isBlocked, token) => {
+  
+  if(isBlocked == 0){
+    isBlocked = 1
+
+  } else
+  {
+    isBlocked = 0;
+  }
+
+  return fetch(`${API}admin/v1/admin/block`, {
+    method: "PUT",
     headers:{
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-     Authorization: `Bearer ${token}`
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
     },
-    data:{
-      id: id,
-      isBlocked: isBlocked
-    }
-  }).then((response)=>{
-    console.log(response);
-    return response;
-  }).catch((error)=>{
+
+
+    body: JSON.stringify({id: id, isBlocked: isBlocked}),
+  }).then((response) => {
+    return response.json();
+
+  }).catch((error) => {
     console.log(error);
   })
+
 }
