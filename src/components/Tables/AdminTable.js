@@ -308,6 +308,31 @@ const blockedvalue = localStorage.getItem("isBlocked")
 
   return (
     <>
+      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+      <Header category="Page" title="Admin" />
+      <DataTable
+        // title="Admin"
+        columns={colunms}
+        data={filterData}
+        pagination
+        paginationComponentOptions={paginationComponentOptions}
+        fixedHeader
+        // onRowClicked={handleRowClicked}
+        selectableRowsHighlight
+        highlightOnHover
+        subHeader
+        subHeaderComponent={
+          <input
+            type="text"
+            placeholder="Search..."
+            className="  form-control"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            style={{ width: '100%', padding: '10px' }}
+          />
+        }
+      />
+
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -421,6 +446,8 @@ const blockedvalue = localStorage.getItem("isBlocked")
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
+    </div>
+
     </>
   );
 };
