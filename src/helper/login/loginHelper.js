@@ -20,6 +20,26 @@ export const signIn = async (user) => {
     });
 };
 
+export const forgetPassword = async (user) => {
+  console.log(API);
+  console.log(user);
+  return await fetch(`${API}admin/v1/admin/forgot-password`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+
+    body: JSON.stringify(user),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 //TODO: Middleware
 export const authenticate = (data, next) => {
   // This Function store the JWT token(auth token) of the user in the localStorage

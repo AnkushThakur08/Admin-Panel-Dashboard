@@ -9,21 +9,22 @@ import { toast } from 'react-toastify';
 // Components
 import Logo from '../../components/Logo';
 import FormRow from '../../components/FormRow';
+import ForgetPasswordImage from '../../Assets/forgetPassword.svg';
 
-// CSS
-import './Login.css';
 // API
 import { API } from '../../backend';
-import { signIn, authenticate } from '../../helper/login/loginHelper';
+import { forgetPassword } from '../../helper/login/loginHelper';
+
+// CSS
+import '../Login/Login.css';
 
 const initialState = {
   email: '',
-  password: '',
   success: false,
   error: '',
 };
 
-const Login = () => {
+const ForgetPassword = () => {
   const navigate = useNavigate();
 
   const [values, setValues] = useState(initialState);
@@ -44,37 +45,32 @@ const Login = () => {
     e.preventDefault();
     console.log(e.target);
 
-    const { email, password } = values;
+    const { email } = values;
 
-    if (!email || !password) {
-      console.log('Please Fill out all the Fields');
-      return toast.error('Please Fill out all the Fields');
+    if (!email) {
+      console.log('Please Enter your Email');
+      return toast.error('Please Enter your Email');
     }
     setValues({ ...values, error: false });
     console.log(values);
 
-    signIn({ email, password })
+    forgetPassword({ email })
       .then((data) => {
         console.log(data);
         if (data.statusCode == 400) {
           toast.error(data.message);
           setValues({ ...values, error: data.message, success: false });
         } else if (data.statusCode == 200) {
-          authenticate(data, () => {
-            setValues({
-              ...values,
-              success: true,
-              isMember: false,
-            });
-            console.log('THIS IS DATA', data);
-            toast.success('User Login Successfully!!');
-            console.log('Ankush');
-
-            setTimeout(() => {
-              navigate('/ecommerce');
-              navigate(0);
-            }, 3000);
+          setValues({
+            ...values,
+            success: true,
           });
+          toast.success('Reset Password Mail Send');
+          console.log('Ankush');
+
+          setTimeout(() => {
+            navigate('/login');
+          }, 3000);
         }
       })
       .catch((error) => {
@@ -88,6 +84,14 @@ const Login = () => {
       <div className="full-page-login">
         <form className="form-login" onSubmit={onSubmit}>
           <Logo />
+          <h3 className="heading">
+            <h3>Forget Password</h3>
+            <img
+              className="img-fluid smallforgetPassword"
+              src={ForgetPasswordImage}
+              alt=""
+            />
+          </h3>
 
           {/* Email Field */}
           <FormRow
@@ -97,28 +101,12 @@ const Login = () => {
             handleChange={handleChange}
           />
 
-          {/* Password Field */}
-          <FormRow
-            type="password"
-            name="password"
-            values={values.password}
-            handleChange={handleChange}
-          />
-          <span>
-            <Link
-              to="/resetPassword"
-              className="member-btn-login forgetPassword-login"
-            >
-              Forget Password?
-            </Link>
-          </span>
-
           <button
             type="submit"
             className="btn-login btn-block-login"
             onClick={onSubmit}
           >
-            Login
+            Send Mail
           </button>
         </form>
       </div>
@@ -126,4 +114,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgetPassword;
