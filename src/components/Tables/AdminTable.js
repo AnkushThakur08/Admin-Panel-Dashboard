@@ -9,19 +9,14 @@ import { useNavigate } from 'react-router-dom';
 // React Toastify
 import { toast } from 'react-toastify';
 
-// react modal components
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-
 // Components
 import { Header } from '../../components';
 
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
-import {adminListData} from "../../helper/Table/TableHelper"
+import { adminListData } from '../../helper/Table/TableHelper';
 import { deleteAdminData } from '../../helper/Table/adminTableHelper';
 import BlockUnblock from '../../pages/PopUps/BlockUnblock';
-
 
 // Custom CSS
 // import "./AdminTable.css"
@@ -40,23 +35,22 @@ const AdminTable = () => {
   const [adminPermission, setAdminPermission] = useState([]);
   const [individualPermission, setIndividualPermission] = useState([]);
 
-  console.log("5555555", individualPermission)
+  console.log('5555555', individualPermission);
 
-    // const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
 
-   const handleClose = () => {
+  const handleClose = () => {
     // setShow(false);
-    setShowModal(false)
-    localStorage.removeItem("adminId");
+    setShowModal(false);
+    localStorage.removeItem('adminId');
   };
 
-   const handleShow = (id) => {
+  const handleShow = (id) => {
     // setShow(true);
-    setShowModal(true)
-    localStorage.setItem("adminId", id);
-    console.log("Ankush")
+    setShowModal(true);
+    localStorage.setItem('adminId', id);
+    console.log('Ankush');
   };
-
 
   const preload = () => {
     adminListData(data.accessToken)
@@ -71,33 +65,35 @@ const AdminTable = () => {
       });
   };
 
-  const preload2 = () =>{
+  const preload2 = () => {
     adminData.map((individualData, index) => {
       setAdminPermission(individualData.admin_permissions);
-      console.log("adminPermission",adminPermission);
+      console.log('adminPermission', adminPermission);
 
-
-        adminPermission.map((individualAdminPermisison, index) => {
-          setIndividualPermission(individualAdminPermisison);
-        });
-      
+      adminPermission.map((individualAdminPermisison, index) => {
+        setIndividualPermission(individualAdminPermisison);
+      });
     });
-  }
+  };
 
   async function deleteAdmin() {
-    let uId = localStorage.getItem("adminId");
-    console.log("UID",uId)
-    deleteAdminData(data.accessToken, uId)
-    .then((result) => {
-        console.log(result)
-        toast("Deletion successful.");
-        preload();
+    let uId = localStorage.getItem('adminId');
+    console.log('UID', uId);
+    deleteAdminData(data.accessToken, uId).then((result) => {
+      console.log(result);
+      toast('Deletion successful.');
+      preload();
     });
-    handleClose()
+    handleClose();
   }
 
-  async function blockUnblockAdmin(id, isBlocked){
-    <BlockUnblock id={id} isBlocked={isBlocked} showModal="true" token={data.accessToken}/>
+  async function blockUnblockAdmin(id, isBlocked) {
+    <BlockUnblock
+      id={id}
+      isBlocked={isBlocked}
+      showModal="true"
+      token={data.accessToken}
+    />;
   }
 
   const colunms = [
@@ -109,7 +105,7 @@ const AdminTable = () => {
       ),
       selector: (row) => row.id,
       sortable: true,
-      grow:2.5
+      grow: 2.5,
     },
     {
       name: (
@@ -137,7 +133,7 @@ const AdminTable = () => {
       ),
       selector: (row) => row.email,
       sortable: true,
-      grow:1.5
+      grow: 1.5,
     },
     // {
     //   name: (
@@ -209,7 +205,7 @@ const AdminTable = () => {
         ) : (
           ''
         ),
-      ], 
+      ],
 
       grow: 1,
       sortable: true,
@@ -222,23 +218,23 @@ const AdminTable = () => {
       ),
       selector: (row) =>
         row.id === userId ? (
-          ""
+          ''
         ) : (
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "110px",
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '110px',
             }}
           >
             <button
-              style={{ border: "none", background: "none" }}
+              style={{ border: 'none', background: 'none' }}
               // onClick={() => navigate(`/editadmin/${row.uId}`)}
             >
               <i className="fa-solid fa-pen fa-lg"></i>
             </button>
             <button
-              style={{ border: "none", background: "none" }}
+              style={{ border: 'none', background: 'none' }}
               // onClick={() => deleteAdmin(row.uId)}
               onClick={() => handleShow(row.id)}
               // onClick={() => setShowModal(true)}
@@ -246,14 +242,14 @@ const AdminTable = () => {
               <i className="fa-regular fa-trash-can fa-lg"></i>
             </button>
             <button
-              style={{ border: "none", background: "none" }}
-              onClick={() => blockUnblockAdmin(row.id,row.isBlocked)}
+              style={{ border: 'none', background: 'none' }}
+              onClick={() => blockUnblockAdmin(row.id, row.isBlocked)}
             >
               <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
             </button>
           </div>
         ),
-        grow: 2
+      grow: 2,
     },
   ];
 
@@ -289,19 +285,15 @@ const AdminTable = () => {
 
   return (
     <>
-    {showModal ? (
+      {showModal ? (
         <>
-          <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-          >
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">
-                    Confirmation
-                  </h3>
+                  <h3 className="text-3xl font-semibold">Confirmation</h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={handleClose}
@@ -323,7 +315,6 @@ const AdminTable = () => {
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={deleteAdmin}
-
                   >
                     Yes
                   </button>
@@ -341,38 +332,38 @@ const AdminTable = () => {
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
-    
-    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header category="Page" title="Admin" />
-      <DataTable
-        // title="Admin"
-        columns={colunms}
-        data={filterData}
-        pagination
-        paginationComponentOptions={paginationComponentOptions}
-        fixedHeader
-        // onRowClicked={handleRowClicked}
-        selectableRowsHighlight
-        highlightOnHover
-        // progressPending
-        subHeader
-        subHeaderComponent={
-          <input
-            type="text"
-            placeholder="Search..."
-            className="  form-control"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '10px',
-              border: '1px solid black',
-            }}
-          />
-        }
-      />
 
-     {/*  <Modal show={show} onHide={handleClose}>
+      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+        <Header category="Page" title="Admin" />
+        <DataTable
+          // title="Admin"
+          columns={colunms}
+          data={filterData}
+          pagination
+          paginationComponentOptions={paginationComponentOptions}
+          fixedHeader
+          // onRowClicked={handleRowClicked}
+          selectableRowsHighlight
+          highlightOnHover
+          // progressPending
+          subHeader
+          subHeaderComponent={
+            <input
+              type="text"
+              placeholder="Search..."
+              className="  form-control"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '10px',
+                border: '1px solid black',
+              }}
+            />
+          }
+        />
+
+        {/*  <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Confirmation Message</Modal.Title>
         </Modal.Header>
@@ -386,7 +377,7 @@ const AdminTable = () => {
           </Button>
         </Modal.Footer>
       </Modal> */}
-    </div>
+      </div>
     </>
   );
 };

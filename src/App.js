@@ -46,6 +46,7 @@ import UserTable from './components/Tables/UserTable';
 import ReportedBugs from './components/Tables/ReportedBugs';
 import ReportedContent from './components/Tables/ReportedContent';
 import AdminAchievement from './components/Tables/AdminAchievement';
+import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 
 // Custom CSS
 import './App.css';
@@ -77,9 +78,12 @@ const App = () => {
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <ToastContainer position="top-right" />
       <BrowserRouter>
-        {window.location.pathname == '/login' ? (
+        {/* {data.accessToken ? :} */}
+        {/* {console.log(data.accessToken)} */}
+        {!localStorage.getItem('jwt') ? (
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/resetPassword" element={<ForgetPassword />} />
           </Routes>
         ) : (
           <div className="flex relative dark:bg-main-dark-bg">
@@ -130,7 +134,10 @@ const App = () => {
                   <Route path="/admin" element={<AdminTable />} />
                   <Route path="/appVersion" element={<AppVersionTable />} />
                   <Route path="/category" element={<Category />} />
-                  <Route path="/adminAchievement" element={<AdminAchievement/>}/>
+                  <Route
+                    path="/adminAchievement"
+                    element={<AdminAchievement />}
+                  />
                   <Route path="/customers" element={<Customers />} />
 
                   {/* apps  */}
@@ -142,8 +149,11 @@ const App = () => {
                   {/* charts  */}
                   <Route path="/line" element={<Line />} />
                   <Route path="/area" element={<Area />} />
-                  <Route path="/reportedBugs" element={<ReportedBugs/>} />
-                  <Route path="/reportedContent" element={<ReportedContent/>} />
+                  <Route path="/reportedBugs" element={<ReportedBugs />} />
+                  <Route
+                    path="/reportedContent"
+                    element={<ReportedContent />}
+                  />
                   <Route path="/bar" element={<Bar />} />
                   <Route path="/pie" element={<Pie />} />
                   <Route path="/financial" element={<Financial />} />
