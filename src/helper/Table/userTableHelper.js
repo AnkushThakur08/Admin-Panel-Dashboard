@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import axios from 'axios';
 import { API } from '../../backend';
 
@@ -13,7 +12,7 @@ export const blockOrUnblockUser = async (id, isBlocked, token) => {
       isBlocked = 0;
     }
   
-    return fetch(`${API}admin/v1/admin/block`, {
+    return fetch(`${API}admin/v1/users/block`, {
       method: "PUT",
       headers:{
         Accept: "application/json",
