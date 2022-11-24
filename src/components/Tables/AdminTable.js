@@ -20,6 +20,7 @@ import { Header } from '../../components';
 import { isAuthenticated } from '../../helper/login/loginHelper';
 import {adminListData} from "../../helper/Table/TableHelper"
 import { deleteAdminData } from '../../helper/Table/adminTableHelper';
+import BlockUnblock from '../../pages/PopUps/BlockUnblock';
 
 
 // Custom CSS
@@ -93,6 +94,10 @@ const AdminTable = () => {
         preload();
     });
     handleClose()
+  }
+
+  async function blockUnblockAdmin(id, isBlocked){
+    <BlockUnblock id={id} isBlocked={isBlocked} showModal="true" token={data.accessToken}/>
   }
 
   const colunms = [
@@ -242,12 +247,13 @@ const AdminTable = () => {
             </button>
             <button
               style={{ border: "none", background: "none" }}
-              // onClick={() => blockAdmin(row.uId)}
+              onClick={() => blockUnblockAdmin(row.id,row.isBlocked)}
             >
               <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
             </button>
           </div>
         ),
+        grow: 2
     },
   ];
 
@@ -269,7 +275,8 @@ const AdminTable = () => {
     const result = adminData.filter((value) => {
       return (
         value.firstName.toLowerCase().match(search.toLowerCase()) ||
-        value.email.toLowerCase().match(search.toLowerCase())
+        value.email.toLowerCase().match(search.toLowerCase()) ||
+        value.lastName.toLowerCase().match(search.toLowerCase())
       );
     });
     setFilterData(result);

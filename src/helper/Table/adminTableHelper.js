@@ -22,3 +22,23 @@ export const deleteAdminData = async (token, id) => {
         console.log(error);
       });
   };
+
+// BLOCK OR UNBLOCK ADMIN
+export const blockOrUnblockAdmin = async(token, id, isBlocked) =>{
+  return await axios.put(`${API}admin/v1/admin/block`,{
+    headers:{
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+     Authorization: `Bearer ${token}`
+    },
+    data:{
+      id: id,
+      isBlocked: isBlocked
+    }
+  }).then((response)=>{
+    console.log(response);
+    return response;
+  }).catch((error)=>{
+    console.log(error);
+  })
+}
