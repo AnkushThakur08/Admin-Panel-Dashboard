@@ -9,16 +9,16 @@ import { toast } from 'react-toastify'
 // api call
 import {blockOrUnblockAdmin} from "../../helper/Table/adminTableHelper"
 
-const BlockUnblock = ({props}) => {
+const BlockUnblock = ({id, isBlocked, token, opened , close}) => {
     // console.log(props.showModal, "displayModal")
-    console.log( "displayModal")
+    // console.log( "displayModal")
 
     const navigate = useNavigate();
     // const [showModal, setShowModal] = useState(props.showModal)
-    const [showModal, setShowModal] = useState(true)
+    // const [showModal, setShowModal] = useState(true)
 
 
-    async function blockOrUnblock(id, isBlockedValue){
+/*     async function blockOrUnblock(id, isBlockedValue){
         blockOrUnblockAdmin(token, id, isBlockedValue)
         .then((data)=>{
             console.log(data);
@@ -28,14 +28,13 @@ const BlockUnblock = ({props}) => {
             // }, 1000);
         })
         setShowModal(false)
-    } 
-    
+    } */
 
 
   return (
     <>
-    {console.log(showModal)}
-        {showModal ? (
+    {console.log(opened,"33333")}
+        {opened ? (
         <>
         {console.log("INSIDE")}
           <div
@@ -51,7 +50,9 @@ const BlockUnblock = ({props}) => {
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={setShowModal(false)}
+                    // onClick={setShowModal(false)}
+                    onClick={close}
+
                   >
                     <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
                       ×
@@ -76,11 +77,12 @@ const BlockUnblock = ({props}) => {
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={()=>{
-                        props.isBlocked = 1
-                        blockOrUnblock(props.token ,props.id, props.isBlocked);
-                        setShowModal(false);
-                    }}
+                    // onClick={()=>{
+                    //     props.isBlocked = 1
+                    //     blockOrUnblock(props.token ,props.id, props.isBlocked);
+                    //     setShowModal(false);
+                    // }}
+                    onClick={close}
 
                   >
                     Yes
@@ -88,7 +90,9 @@ const BlockUnblock = ({props}) => {
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    // onClick={() => setShowModal(false)}
+                    onClick={close}
+
                   >
                     No
                   </button>

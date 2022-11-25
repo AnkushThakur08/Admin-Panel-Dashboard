@@ -26,7 +26,7 @@ import {blockOrUnblockAdmin} from "../../helper/Table/adminTableHelper"
 const AdminTable = () => {
   const { data, token } = isAuthenticated();
 
-  console.log(data.accessToken);
+  // console.log(data.accessToken);
   const userId = data.adminDetails.id;
 
   const navigate = useNavigate();
@@ -38,7 +38,19 @@ const AdminTable = () => {
   const [adminPermission, setAdminPermission] = useState([]);
   const [individualPermission, setIndividualPermission] = useState([]);
 
-  console.log('5555555', individualPermission);
+// modal testing
+  const [opened, setOpened] = useState(false);
+
+  const openPopup = () => {
+    setOpened(true);
+  };
+  const closePopup = () => {
+    setOpened(false);
+  };
+
+
+
+  // console.log('5555555', individualPermission);
 
   // const [show, setShow] = useState(false);
 
@@ -61,6 +73,8 @@ const AdminTable = () => {
     localStorage.setItem("isBlocked", isBlocked);
   };
 
+
+
   const preload = () => {
     adminListData(data.accessToken)
       .then((data) => {
@@ -77,7 +91,7 @@ const AdminTable = () => {
   const preload2 = () => {
     adminData.map((individualData, index) => {
       setAdminPermission(individualData.admin_permissions);
-      console.log('adminPermission', adminPermission);
+      // console.log('adminPermission', adminPermission);
 
       adminPermission.map((individualAdminPermisison, index) => {
         setIndividualPermission(individualAdminPermisison);
@@ -97,11 +111,11 @@ const AdminTable = () => {
     handleClose();
   }
 
-  async function blockUnblockAdmin(id, isBlocked){
-    console.log("TANVI");
-    <BlockUnblock /* id={id} isBlocked={isBlocked} showModal={true} token={data.accessToken} */ 
-    />
-  }
+  // async function blockUnblockAdmin(id, isBlocked){
+  //   console.log("TANVI");
+  //   <BlockUnblock  id={id} isBlocked={isBlocked} showModal={true} token={data.accessToken} 
+  //   />
+  // }
 
   async function blockOrUnblock(){
     let uId = localStorage.getItem("id");
@@ -264,8 +278,7 @@ const blockedvalue = localStorage.getItem("isBlocked")
             </button>
             <button
               style={{ border: "none", background: "none" }}
-              // onClick={() => handleShowBlockModal(row.id, row.isBlocked)}
-              onClick={() => blockUnblockAdmin()}
+              onClick={() => handleShowBlockModal(row.id, row.isBlocked)}
 
             >
             {row.isBlocked == 0 ? 
@@ -312,8 +325,9 @@ const blockedvalue = localStorage.getItem("isBlocked")
 
   return (
     <>
+    {/* {console.log(adminData)} */}
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header category="Page" title="Admin" />
+      <Header category="Page" title="Admin"  /* test={adminData} *//>
       <DataTable
         // title="Admin"
         columns={colunms}
