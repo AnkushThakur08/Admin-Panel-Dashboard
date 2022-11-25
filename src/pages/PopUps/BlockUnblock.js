@@ -28,7 +28,8 @@ const BlockUnblock = ({props}) => {
             // }, 1000);
         })
         setShowModal(false)
-    }
+    } 
+    
 
 
   return (
