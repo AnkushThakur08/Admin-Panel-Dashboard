@@ -1,17 +1,25 @@
 import React from 'react';
 
-const Header = ({ category, title }) => (
+const Header = ({ category, title, data }) => (
   <div className=" mb-10">
     <p className="text-lg text-gray-400">{category}</p>
 
+    {/* {data.length > 0
+      ? data.map((IndividualData, index) => {
+          console.log(IndividualData);
+          return (
+            <>
+              <p className="text-lg text-gray-400">
+                {IndividualData.firstName}
+              </p>
+              <p className="text-lg text-gray-400">{IndividualData.lastName}</p>
+            </>
+          );
+        })
+      : ''} */}
 
-{/* {console.log(test, "888899999")}
-{test.map((value, index)=>{
-   return <p className="text-lg text-gray-400">{value.firstName}</p>
-  console.log(value,"88888")
-})} */}
- {/* <p className="text-lg text-gray-400">{name}</p> */}
- 
+    {/* <p className="text-lg text-gray-400">{firstName}</p>
+    <p className="text-lg text-gray-400">{lastName}</p> */}
     <p className="text-3xl font-extrabold tracking-tight text-slate-900">
       {title}
     </p>
