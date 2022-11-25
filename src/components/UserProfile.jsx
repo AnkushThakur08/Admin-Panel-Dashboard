@@ -5,9 +5,17 @@ import { Button } from '.';
 import { userProfileData } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
 import avatar from '../data/avatar.jpg';
+// import { Navigate, useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
   const { currentColor } = useStateContext();
+
+/*   function logout (){
+    localStorage.removeItem('jwt')
+    setTimeout(() => {
+      navigate("/login")
+    }, 1000);
+  } */
 
   return (
     <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
@@ -58,6 +66,7 @@ const UserProfile = () => {
           text="Logout"
           borderRadius="10px"
           width="full"
+          // onClick={()=> logout}
         />
       </div>
     </div>
