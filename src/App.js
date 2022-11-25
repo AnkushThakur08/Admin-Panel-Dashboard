@@ -48,8 +48,12 @@ import ReportedContent from './components/Tables/ReportedContent';
 import AdminAchievement from './components/Tables/AdminAchievement';
 import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 
+// Edit Pages
+import EditAdmin from './pages/Edit/EditAdmin';
+
 // Custom CSS
 import './App.css';
+import EditAppVersion from './pages/Edit/EditAppVersion';
 
 const App = () => {
   const {
@@ -160,6 +164,11 @@ const App = () => {
                   <Route path="/color-mapping" element={<ColorMapping />} />
                   <Route path="/pyramid" element={<Pyramid />} />
                   <Route path="/stacked" element={<Stacked />} />
+
+                  {/* EDIT ROUTES */}
+
+                  <Route path='/editadmin/:id' element={<EditAdmin/>} />
+                  <Route path='/editappversion/:id' element={<EditAppVersion/>} />
                 </Routes>
               </div>
               {/* <Footer /> */}

@@ -20,7 +20,7 @@ import { appVersionListData } from '../../helper/Table/TableHelper';
 import { isAuthenticated } from '../../helper/login/loginHelper';
 
 const AppVersionTable = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { data, token } = isAuthenticated();
 
   const [search, setSearch] = useState('');
@@ -128,7 +128,7 @@ const appData = () =>{
         >
           <button
             style={{ border: 'none', background: 'none' }}
-            // onClick={() => navigate(`/editadmin/${row.uId}`)}
+            onClick={() => navigate(`/editappversion/${row.id}`)}
           >
             <i className="fa-solid fa-pen fa-lg"></i>
           </button>

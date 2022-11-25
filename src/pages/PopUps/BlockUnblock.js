@@ -9,10 +9,14 @@ import { toast } from 'react-toastify'
 // api call
 import {blockOrUnblockAdmin} from "../../helper/Table/adminTableHelper"
 
-const BlockUnblock = (props) => {
-    console.log(props.showModal, "displayModal")
+const BlockUnblock = ({props}) => {
+    // console.log(props.showModal, "displayModal")
+    console.log( "displayModal")
+
     const navigate = useNavigate();
-    const [showModal, setShowModal] = useState(props.showModal)
+    // const [showModal, setShowModal] = useState(props.showModal)
+    const [showModal, setShowModal] = useState(true)
+
 
     async function blockOrUnblock(id, isBlockedValue){
         blockOrUnblockAdmin(token, id, isBlockedValue)
@@ -29,8 +33,10 @@ const BlockUnblock = (props) => {
 
   return (
     <>
+    {console.log(showModal)}
         {showModal ? (
         <>
+        {console.log("INSIDE")}
           <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >

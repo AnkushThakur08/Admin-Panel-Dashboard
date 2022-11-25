@@ -16,7 +16,7 @@ import { Header } from '../../components';
 import { isAuthenticated } from '../../helper/login/loginHelper';
 import { adminListData } from '../../helper/Table/TableHelper';
 import { deleteAdminData } from '../../helper/Table/adminTableHelper';
-// import BlockUnblock from '../../pages/PopUps/BlockUnblock';
+import BlockUnblock from '../../pages/PopUps/BlockUnblock';
 import {blockOrUnblockAdmin} from "../../helper/Table/adminTableHelper"
 
 
@@ -29,7 +29,7 @@ const AdminTable = () => {
   console.log(data.accessToken);
   const userId = data.adminDetails.id;
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showBlockModal, setShowBlockModal] = useState(false)
   const [search, setSearch] = useState('');
@@ -97,9 +97,11 @@ const AdminTable = () => {
     handleClose();
   }
 
-  // async function blockUnblockAdmin(id, isBlocked){
-  //   <BlockUnblock id={id} isBlocked={isBlocked} showModal={true} token={data.accessToken}/>
-  // }
+  async function blockUnblockAdmin(id, isBlocked){
+    console.log("TANVI");
+    <BlockUnblock /* id={id} isBlocked={isBlocked} showModal={true} token={data.accessToken} */ 
+    />
+  }
 
   async function blockOrUnblock(){
     let uId = localStorage.getItem("id");
@@ -250,7 +252,7 @@ const blockedvalue = localStorage.getItem("isBlocked")
           >
             <button
               style={{ border: 'none', background: 'none' }}
-              // onClick={() => navigate(`/editadmin/${row.uId}`)}
+              onClick={() => navigate(`/editadmin/${row.id}`)}
             >
               <i className="fa-solid fa-pen fa-lg" style={{color: "#001f4d"}}></i>
             </button>
@@ -262,7 +264,9 @@ const blockedvalue = localStorage.getItem("isBlocked")
             </button>
             <button
               style={{ border: "none", background: "none" }}
-              onClick={() => handleShowBlockModal(row.id, row.isBlocked)}
+              // onClick={() => handleShowBlockModal(row.id, row.isBlocked)}
+              onClick={() => blockUnblockAdmin()}
+
             >
             {row.isBlocked == 0 ? 
               <i className="fa-sharp fa-solid fa-check fa-lg" style={{color: "#3DBE29"}}></i>
