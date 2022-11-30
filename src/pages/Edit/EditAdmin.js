@@ -1,43 +1,78 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Header } from "../../components";
 
 const EditAdmin = () => {
+  const [adminManagement, setAdminManagement] = useState("");
+  const [notificationManagement, setNotificationManagement] = useState("");
+  const [userManagement, setUserManagement] = useState("");
+  const [reportManagement, setReportManagement] = useState("");
+  const [systemConfiguration, setSystemConfiguration] = useState("");
+  const [dashboard, setDashboard] = useState("");
 
+  const [check, setCheck] = useState([
+    {
+      module: "gfg",
+      permission: "1",
+    },
+  ])
+
+  // const [adminType, setAdminType] = useState("")
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     id: "",
-    admin_permissions: [
-      {
-        module: "",
-        permission: "",
-      },
-    ],
     email: "",
     adminType: "",
   });
 
-  const {firstName, lastName, id, admin_permissions, email, adminType} = formData
+
+  const { firstName, lastName, id, admin_permissions, email, adminType } =
+    formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log("formData", formData);
   };
 
-  const handleSubmit = (e)=>{
-    e.preventDefault();
-    if(!email || !firstName || !lastName){
-      toast.error("Please Fill Out The Required Fields.")
+  console.log("formData", formData);
+
+  const test =()=>{
+    console.log("hellllo")
+   const somevalue = document.getElementById("dashboard").value
+   console.log(somevalue, "somevalue")
+    const value = {
+      module: `${somevalue}`,
+      permission: "1"
     }
+
+    setCheck([...check , value])
   }
 
+  console.log(check,"check")
+
+  // function handleSelect(e) {
+  //   setAdminType(e.target.value);
+  // }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email || !firstName || !lastName) {
+      toast.error("Please Fill Out The Required Fields.");
+    }
+  };
 
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
         <Header category="Page" title="Edit Admin" />
         {/* <div class="w-full max-w-xs  "> */}
-        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full" onSubmit={handleSubmit} method="POST" encType="multipart/form-data">
+        <form
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full"
+          onSubmit={handleSubmit}
+          method="POST"
+          encType="multipart/form-data"
+        >
           <div class="mb-4">
             <label
               class="block text-gray-700 text-sm font-bold mb-2 "
@@ -50,7 +85,7 @@ const EditAdmin = () => {
               id="firstname"
               type="text"
               value={firstName}
-              name={firstName}
+              name="firstName"
               placeholder="First Name"
               onChange={onChange}
             />
@@ -90,7 +125,7 @@ const EditAdmin = () => {
             />
           </div>
 
-          <div class="flex w-full">
+          <div class="flex w-full mb-3">
             <div class="mb-3 w-full ">
               <label class="block text-gray-700 text-sm font-bold mb-2 " for="">
                 Admin Type
@@ -113,9 +148,10 @@ const EditAdmin = () => {
                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 onChange={onChange}
                 value={adminType}
+                name="adminType"
               >
-                <option value="SUPER_ADMIN">Super Admin</option>
-                <option value="SUb_ADMIN">Sub Admin</option>
+                <option value="Super_Admin">Super Admin</option>
+                <option value="Sub_Admin">Sub Admin</option>
               </select>
             </div>
           </div>
@@ -130,9 +166,11 @@ const EditAdmin = () => {
                 <input
                   class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
-                  id="inlineCheckbox1"
-                  value={admin_permissions.permission}
-                  name=""
+                  id="dashboard"
+                  value="dashboard"
+                  onChange={(e)=> setDashboard(e.target.checked)}
+                  name="dashboard"
+                  // onClick = {test}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -145,9 +183,11 @@ const EditAdmin = () => {
                 <input
                   class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
-                  id="inlineCheckbox2"
+                  id="report"
                   value={reportManagement}
-                  name={reportManagement}
+                  name="reportManagement"
+                  onChange={(e)=> setReportManagement(e.target.checked)}
+                  onClick = {test}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -165,7 +205,8 @@ const EditAdmin = () => {
                   type="checkbox"
                   id="inlineCheckbox1"
                   value={userManagement}
-                  name={userManagement}
+                  name="userManagement"
+                  onChange={(e)=> setUserManagement(e.target.checked)}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -180,7 +221,8 @@ const EditAdmin = () => {
                   type="checkbox"
                   id="inlineCheckbox2"
                   value={adminManagement}
-                  name={adminManagement}
+                  name="adminManagement"
+                  onChange={(e)=> setAdminManagement(e.target.checked)}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -198,7 +240,8 @@ const EditAdmin = () => {
                   type="checkbox"
                   id="inlineCheckbox1"
                   value={notificationManagement}
-                  name={notificationManagement}
+                  name="notificationManagement"
+                  onChange={(e)=> setNotificationManagement(e.target.checked)}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -213,13 +256,14 @@ const EditAdmin = () => {
                   type="checkbox"
                   id="inlineCheckbox2"
                   value={systemConfiguration}
-                  name={systemConfiguration}
+                  name="systemConfiguration"
+                  onChange={(e)=> setSystemConfiguration(e.target.checked)}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
                   for="inlineCheckbox2"
                 >
-                System Configuration
+                  System Configuration
                 </label>
               </div>
             </div>
