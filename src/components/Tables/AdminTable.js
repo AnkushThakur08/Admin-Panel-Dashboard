@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 // React Data Table
-import DataTable from 'react-data-table-component';
+import DataTable from "react-data-table-component";
 
 // React Router
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 // React Toastify
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 // Components
-import { Header } from '../../components';
+import { Header } from "../../components";
 
 // API
-import { isAuthenticated } from '../../helper/login/loginHelper';
-import { adminListData } from '../../helper/Table/TableHelper';
-import { deleteAdminData } from '../../helper/Table/adminTableHelper';
-import BlockUnblock from '../../pages/PopUps/BlockUnblock';
-import { blockOrUnblockAdmin } from '../../helper/Table/adminTableHelper';
+import { isAuthenticated } from "../../helper/login/loginHelper";
+import { adminListData } from "../../helper/Table/TableHelper";
+import { deleteAdminData } from "../../helper/Table/adminTableHelper";
+import BlockUnblock from "../../pages/PopUps/BlockUnblock";
+import { blockOrUnblockAdmin } from "../../helper/Table/adminTableHelper";
 // Custom CSS
 // import "./AdminTable.css"
 
@@ -30,11 +30,11 @@ const AdminTable = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showBlockModal, setShowBlockModal] = useState(false);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [adminData, setAdminData] = useState([]);
   const [filterData, setFilterData] = useState([]);
-  const [adminPermission, setAdminPermission] = useState([]);
-  const [individualPermission, setIndividualPermission] = useState([]);
+  // const [adminPermission, setAdminPermission] = useState([]);
+  // const [individualPermission, setIndividualPermission] = useState([]);
 
   // console.log('5555555', individualPermission);
 
@@ -43,23 +43,21 @@ const AdminTable = () => {
   const handleClose = () => {
     // setShow(false);
     setShowModal(false);
-    localStorage.removeItem('adminId');
+    localStorage.removeItem("adminId");
   };
 
   const handleShow = (id) => {
     // setShow(true);
     setShowModal(true);
-    localStorage.setItem('adminId', id);
+    localStorage.setItem("adminId", id);
   };
 
   const handleShowBlockModal = (id, isBlocked) => {
     console.log(id, isBlocked);
     setShowBlockModal(true);
-    localStorage.setItem('id', id);
-    localStorage.setItem('isBlocked', isBlocked);
+    localStorage.setItem("id", id);
+    localStorage.setItem("isBlocked", isBlocked);
   };
-
-
 
   const preload = () => {
     adminListData(data.accessToken)
@@ -67,30 +65,33 @@ const AdminTable = () => {
         setAdminData(data.data.rows);
         setFilterData(data.data.rows);
 
-        preload2();
+        // preload2();
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const preload2 = () => {
-    adminData.map((individualData, index) => {
-      setAdminPermission(individualData.admin_permissions);
-      // console.log('adminPermission', adminPermission);
+  console.log("setAdminData", adminData);
 
-      adminPermission.map((individualAdminPermisison, index) => {
-        setIndividualPermission(individualAdminPermisison);
-      });
-    });
-  };
+  // const preload2 = () => {
+  //   adminData.map((individualData, index) => {
+  //     setAdminPermission(individualData.admin_permissions);
+  //     // console.log('adminPermission', adminPermission);
+
+  //     adminPermission.map((individualAdminPermisison, index) => {
+  //       setIndividualPermission(individualAdminPermisison);
+  //       // console.log(individualPermission,"individualPermission")
+  //     });
+  //   });
+  // };
 
   async function deleteAdmin() {
-    let uId = localStorage.getItem('adminId');
-    console.log('UID', uId);
+    let uId = localStorage.getItem("adminId");
+    console.log("UID", uId);
     deleteAdminData(data.accessToken, uId).then((result) => {
       console.log(result);
-      toast('Deletion successful.');
+      toast("Deletion successful.");
       preload();
     });
     handleClose();
@@ -104,19 +105,20 @@ const AdminTable = () => {
   } */
 
   async function blockOrUnblock() {
-    let uId = localStorage.getItem('id');
-    const blockValue = localStorage.getItem('isBlocked');
+    let uId = localStorage.getItem("id");
+    const blockValue = localStorage.getItem("isBlocked");
     blockOrUnblockAdmin(uId, blockValue, data.accessToken).then((data) => {
-      console.log('117', data);
-      toast.success('Success');
+      console.log("117", data);
+      toast.success("Success");
       preload();
     });
     setShowBlockModal(false);
-    localStorage.removeItem('isBlocked');
-    localStorage.removeItem('id');
+    localStorage.removeItem("isBlocked");
+    localStorage.removeItem("id");
   }
 
-  const blockedvalue = localStorage.getItem('isBlocked');
+  const blockedvalue = localStorage.getItem("isBlocked");
+
   const colunms = [
     {
       name: (
@@ -190,45 +192,45 @@ const AdminTable = () => {
         </h6>
       ),
       selector: (row) => [
-        individualPermission.adminManagement == '1' ? (
+        row.admin_permissions[0]?.adminManagement == 1 ? (
           <span className="badge bg-secondary access">Admin</span>
         ) : (
-          ''
+          ""
         ),
-        individualPermission.dashboard == '1' ? (
-          <>
-            <span className="badge bg-primary">Dashboard</span>
-          </>
+        row.admin_permissions[0]?.dashboard == 1 ? (
+          <span className="badge bg-secondary access">Dashboard</span>
         ) : (
-          ''
+          ""
         ),
-        individualPermission.userManagement == '1' ? (
-          <span className="badge bg-success">User</span>
+        row.admin_permissions[0]?.notificationManagement == 1 ? (
+          <span className="badge bg-secondary access">Notification</span>
         ) : (
-          ''
+          ""
         ),
-        individualPermission.notificationManagement == '1' ? (
-          <>
-            <span className="badge bg-danger">Notification</span>
-          </>
+        row.admin_permissions[0]?.userManagement == 1 ? (
+          <span className="badge bg-secondary access">User Management</span>
         ) : (
-          ''
+          ""
         ),
-        individualPermission.systemConfiguration == '1' ? (
-          <span className="badge bg-info access">System</span>
+        row.admin_permissions[0]?.systemConfiguration == 1 ? (
+          <span className="badge bg-secondary access">System Configuration</span>
         ) : (
-          ''
+          ""
         ),
-        individualPermission.reportManagement == '1' ? (
-          <>
-            <span className="badge bg-warning ">Report</span>
-          </>
+        row.admin_permissions[0]?.systemConfiguration == 1 ? (
+          <span className="badge bg-secondary access">Report</span>
         ) : (
-          ''
+          ""
         ),
+
+        // individualPermission.adminManagement == 1 ? (
+        //   <span className="badge bg-secondary access">A</span>
+        // ) : (
+        //   ''
+        // ),
       ],
 
-      grow: 1,
+      grow: 3,
       sortable: true,
     },
     {
@@ -239,47 +241,46 @@ const AdminTable = () => {
       ),
       selector: (row) =>
         row.id === userId ? (
-          ''
+          ""
         ) : (
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '110px',
+              display: "flex",
+              justifyContent: "space-between",
+              width: "110px",
             }}
           >
             <button
-              style={{ border: 'none', background: 'none' }}
+              style={{ border: "none", background: "none" }}
               onClick={() => navigate(`/editadmin/${row.id}`)}
             >
               <i
                 className="fa-solid fa-pen fa-lg"
-                style={{ color: '#001f4d' }}
+                style={{ color: "#001f4d" }}
               ></i>
             </button>
             <button
-              style={{ border: 'none', background: 'none' }}
+              style={{ border: "none", background: "none" }}
               onClick={() => handleShow(row.id)}
             >
               <i
                 className="fa-regular fa-trash-can fa-lg"
-                style={{ color: '#242B2E' }}
+                style={{ color: "#242B2E" }}
               ></i>
             </button>
             <button
               style={{ border: "none", background: "none" }}
               onClick={() => handleShowBlockModal(row.id, row.isBlocked)}
-
             >
               {row.isBlocked == 0 ? (
                 <i
                   className="fa-sharp fa-solid fa-check fa-lg"
-                  style={{ color: '#3DBE29' }}
+                  style={{ color: "#3DBE29" }}
                 ></i>
               ) : (
                 <i
                   class="fa-sharp fa-solid fa-xmark fa-lg"
-                  style={{ color: '#E21717' }}
+                  style={{ color: "#E21717" }}
                 ></i>
               )}
             </button>
@@ -290,18 +291,18 @@ const AdminTable = () => {
   ];
 
   const paginationComponentOptions = {
-    rangeSeparatorText: 'Total',
+    rangeSeparatorText: "Total",
     selectAllRowsItem: true,
-    selectAllRowsItemText: 'All',
+    selectAllRowsItemText: "All",
   };
 
   useEffect(() => {
     preload();
   }, []);
 
-  useEffect(() => {
-    preload2();
-  }, [preload]);
+  // useEffect(() => {
+  //   preload2();
+  // }, [preload]);
 
   useEffect(() => {
     const result = adminData.filter((value) => {
@@ -322,7 +323,7 @@ const AdminTable = () => {
 
   return (
     <>
-    {/* {console.log(adminData)} */}
+      {/* {console.log(adminData)} */}
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
         <Header
           category="page"
@@ -349,7 +350,7 @@ const AdminTable = () => {
               className="  form-control"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              style={{ width: '100%', padding: '10px' }}
+              style={{ width: "100%", padding: "10px" }}
             />
           }
         />
@@ -415,7 +416,7 @@ const AdminTable = () => {
                       className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                       onClick={() => {
                         setShowBlockModal(false);
-                        localStorage.removeItem('isBlocked');
+                        localStorage.removeItem("isBlocked");
                       }}
                     >
                       <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
@@ -450,7 +451,7 @@ const AdminTable = () => {
                       type="button"
                       onClick={() => {
                         setShowBlockModal(false);
-                        localStorage.removeItem('isBlocked');
+                        localStorage.removeItem("isBlocked");
                       }}
                     >
                       No
