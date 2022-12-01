@@ -18,6 +18,8 @@ const EditAdmin = () => {
   ])
 
   // const [adminType, setAdminType] = useState("")
+
+  
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
