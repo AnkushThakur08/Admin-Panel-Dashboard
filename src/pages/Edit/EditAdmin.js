@@ -1,61 +1,143 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+// react router dom
+import {useParams} from "react-router-dom"
+
+
+// React Toastify
 import { toast } from "react-toastify";
+
+// Components
 import { Header } from "../../components";
 
+
+
+// API
+import {adminIndividualData} from "../../helper/adminHelper/admin"
+import { editAdmin } from "../../helper/adminHelper/admin";
+import { isAuthenticated } from "../../helper/login/loginHelper";
+
 const EditAdmin = () => {
-  const [adminManagement, setAdminManagement] = useState("");
-  const [notificationManagement, setNotificationManagement] = useState("");
-  const [userManagement, setUserManagement] = useState("");
-  const [reportManagement, setReportManagement] = useState("");
-  const [systemConfiguration, setSystemConfiguration] = useState("");
-  const [dashboard, setDashboard] = useState("");
 
-  const [check, setCheck] = useState([
-    {
-      module: "gfg",
-      permission: "1",
-    },
-  ])
+  // PARAMS
+  const params = useParams()
+  const userid = params.id;
 
-  // const [adminType, setAdminType] = useState("")
+
+  // Authentication
+  const { data } = isAuthenticated();
 
   
+// STATE
+const [adminData, setAdminData] = useState([])
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    id: "",
+    id: userid,
     email: "",
     adminType: "",
+    admin_permissions: [
+      {
+        module: "module",
+        permission: "0",
+      },
+    ],
   });
 
+// Destructure
+  const { firstName, lastName, id, admin_permissions, email, adminType } = formData;
 
-  const { firstName, lastName, id, admin_permissions, email, adminType } =
-    formData;
+
+  const preload = () => {
+    console.log(userid)
+
+    adminIndividualData(userid, data.accessToken)
+      .then((data) => {
+        console.log(data.data.admin_permissions[0],"6666")
+
+        setAdminData(data.data.admin_permissions[0]);
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      // adminData.map((individualData, index) => {
+      //   console.log(individualData, "individualData")
+
+      // })
+      console.log(adminData.dashboard,"5555555555")
+
+
+
+      
+  };
+
+  console.log(adminData.dashboard,"data.data.admin_permissions[]")
+
+useEffect(() => {
+  preload()
+}, [])
+
+  
+
+
+
+  // Edit Admin
+    const edit = () => {
+      editAdmin(userid, formData, data.accessToken)
+      .then((result) => {
+        // setAdminData(data.data.rows);
+        toast.success("edit successful")
+        console.log("resulttt", result)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleCheck = (e) => {
+    console.log(e.target.value, "valueeeee"); /* Dashbaord */   
+  };
+
+// Setting object in Item
+  let item = {firstName, lastName, id, admin_permissions, email, adminType}
+
+  console.log(item, ".....000000.....")
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     console.log("formData", formData);
   };
 
-  console.log("formData", formData);
 
-  const test =()=>{
-    console.log("hellllo")
-   const somevalue = document.getElementById("dashboard").value
-   console.log(somevalue, "somevalue")
-    const value = {
-      module: `${somevalue}`,
-      permission: "1"
+  const test = (e) => {
+    const value = e.target.value /* Dasboard */
+    console.log(e.target.checked)
+    const somevalue = admin_permissions; /* Allocated Permission */
+
+    if(e.target.checked){
+      somevalue.push({
+        module:  value,
+        permission: "1"
+      });
+    setFormData({ ...formData, admin_permissions: somevalue });
+
+    }
+    
+    if(!e.target.checked){
+      somevalue.push({
+        module:value,
+        permission: "0"
+      })
+
+
     }
 
-    setCheck([...check , value])
-  }
-
-  console.log(check,"check")
-
-  // function handleSelect(e) {
-  //   setAdminType(e.target.value);
-  // }
+   
+    console.log(somevalue, "somevalue");
+   
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -152,8 +234,8 @@ const EditAdmin = () => {
                 value={adminType}
                 name="adminType"
               >
-                <option value="Super_Admin">Super Admin</option>
-                <option value="Sub_Admin">Sub Admin</option>
+                <option value="SUPER_ADMIN">Super Admin</option>
+                <option value="SUB_ADMIN">Sub Admin</option>
               </select>
             </div>
           </div>
@@ -170,9 +252,10 @@ const EditAdmin = () => {
                   type="checkbox"
                   id="dashboard"
                   value="dashboard"
-                  onChange={(e)=> setDashboard(e.target.checked)}
-                  name="dashboard"
-                  // onClick = {test}
+                  onChange={test}
+                  name="permissions"
+                  defaultChecked={adminData.dashboard === "1" ? true : false}
+                  // onClick={test}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -181,15 +264,17 @@ const EditAdmin = () => {
                   Dashboard
                 </label>
               </div>
+
               <div class="form-check form-check-inline">
                 <input
                   class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   id="report"
-                  value={reportManagement}
-                  name="reportManagement"
-                  onChange={(e)=> setReportManagement(e.target.checked)}
-                  onClick = {test}
+                  value="reportManagement"
+                  name="permissions"
+                  onChange={test}
+                  defaultChecked = {adminData.reportManagement === 1 ? true : false}
+                  // onClick={test}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -206,9 +291,11 @@ const EditAdmin = () => {
                   class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   id="inlineCheckbox1"
-                  value={userManagement}
-                  name="userManagement"
-                  onChange={(e)=> setUserManagement(e.target.checked)}
+                  value="userManagement"
+                  name="permissions"
+                  onChange={test}
+                  defaultChecked={adminData.userManagement === 1 ? true : false}
+                  // onClick={test}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -222,9 +309,11 @@ const EditAdmin = () => {
                   class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   id="inlineCheckbox2"
-                  value={adminManagement}
-                  name="adminManagement"
-                  onChange={(e)=> setAdminManagement(e.target.checked)}
+                  value="adminManagement"
+                  name="permissions"
+                  onChange={test}
+                  defaultChecked={adminData.adminManagement === 1 ? true : false}
+                  // onClick={test}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -241,9 +330,11 @@ const EditAdmin = () => {
                   class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   id="inlineCheckbox1"
-                  value={notificationManagement}
-                  name="notificationManagement"
-                  onChange={(e)=> setNotificationManagement(e.target.checked)}
+                  value="notificationManagement"
+                  name="permissions"
+                  onChange={test}
+                 defaultChecked={adminData.notificationManagement === 1 ? true : false}
+                  // onClick={test}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -257,9 +348,12 @@ const EditAdmin = () => {
                   class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   id="inlineCheckbox2"
-                  value={systemConfiguration}
-                  name="systemConfiguration"
-                  onChange={(e)=> setSystemConfiguration(e.target.checked)}
+                  value="systemConfiguration"
+                  name="permissions"
+                  // onChange={(e)=> setSystemConfiguration(e.target.checked)}
+                  onChange={test}
+                 defaultChecked={adminData.systemConfiguration === 1 ? true : false}
+                  // onClick={test}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -275,6 +369,7 @@ const EditAdmin = () => {
             <button
               class="bg-blue-500 hover:bg-blue-700 w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
+              onClick={edit}
             >
               Save
             </button>
