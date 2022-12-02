@@ -22,37 +22,32 @@ const AdminTable = () => {
   // Authorization
   const { data } = isAuthenticated();
 
-  // console.log(data.accessToken);
   const userId = data.adminDetails.id;
 
   // Navigate
   const navigate = useNavigate();
 
   // STATE
-  const [showModal, setShowModal] = useState(false);
-  const [showBlockModal, setShowBlockModal] = useState(false);
   const [search, setSearch] = useState('');
   const [adminData, setAdminData] = useState([]);
   const [filterData, setFilterData] = useState([]);
-  // const [adminPermission, setAdminPermission] = useState([]);
-  // const [individualPermission, setIndividualPermission] = useState([]);
+  const [showDeleteModal, setshowDeleteModal] = useState(false);
+  const [showBlockModal, setShowBlockModal] = useState(false);
 
-  // console.log('5555555', individualPermission);
-
-  // const [show, setShow] = useState(false);
-
+  // DELETE MODAL
   const handleClose = () => {
     // setShow(false);
-    setShowModal(false);
+    setshowDeleteModal(false);
     localStorage.removeItem('adminId');
   };
 
   const handleShow = (id) => {
     // setShow(true);
-    setShowModal(true);
+    setshowDeleteModal(true);
     localStorage.setItem('adminId', id);
   };
 
+  // BLOCK MODAL
   const handleShowBlockModal = (id, isBlocked) => {
     console.log(id, isBlocked);
     setShowBlockModal(true);
@@ -60,6 +55,20 @@ const AdminTable = () => {
     localStorage.setItem('isBlocked', isBlocked);
   };
 
+  async function blockOrUnblock() {
+    let uId = localStorage.getItem('id');
+    const blockValue = localStorage.getItem('isBlocked');
+    blockOrUnblockAdmin(uId, blockValue, data.accessToken).then((data) => {
+      console.log('117', data);
+      toast.success('Success');
+      preload();
+    });
+    setShowBlockModal(false);
+    localStorage.removeItem('isBlocked');
+    localStorage.removeItem('id');
+  }
+
+  // Preload Admin Function
   const preload = () => {
     adminListData(data.accessToken)
       .then((data) => {
@@ -72,8 +81,6 @@ const AdminTable = () => {
         console.log(error);
       });
   };
-
-  console.log('setAdminData', adminData);
 
   // const preload2 = () => {
   //   adminData.map((individualData, index) => {
@@ -98,27 +105,7 @@ const AdminTable = () => {
     handleClose();
   }
 
-  /*  function blockUnblockAdmin(id, isBlocked) {
-    console.log('TANVI');
-    <BlockUnblock /* id={id} isBlocked={isBlocked} showModal={true} token={data.accessToken}/>;
-
-    console.log('Anksuh');
-  } */
-
-  async function blockOrUnblock() {
-    let uId = localStorage.getItem('id');
-    const blockValue = localStorage.getItem('isBlocked');
-    blockOrUnblockAdmin(uId, blockValue, data.accessToken).then((data) => {
-      console.log('117', data);
-      toast.success('Success');
-      preload();
-    });
-    setShowBlockModal(false);
-    localStorage.removeItem('isBlocked');
-    localStorage.removeItem('id');
-  }
-
-  const blockedvalue = localStorage.getItem('isBlocked');
+  // const blockedvalue = localStorage.getItem('isBlocked');
 
   const colunms = [
     {
@@ -225,12 +212,6 @@ const AdminTable = () => {
         ) : (
           ''
         ),
-
-        // individualPermission.adminManagement == 1 ? (
-        //   <span className="badge bg-secondary access">A</span>
-        // ) : (
-        //   ''
-        // ),
       ],
 
       grow: 3,
@@ -363,7 +344,7 @@ const AdminTable = () => {
           }
         />
 
-        {showModal ? (
+        {showDeleteModal ? (
           <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
               <div className="relative w-auto my-6 mx-auto max-w-3xl">
@@ -399,7 +380,7 @@ const AdminTable = () => {
                     <button
                       className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => setshowDeleteModal(false)}
                     >
                       No
                     </button>
@@ -435,7 +416,7 @@ const AdminTable = () => {
                   {/*body*/}
 
                   <div className="relative p-6 flex-auto">
-                    {blockedvalue == 0 ? (
+                    {localStorage.getItem('isBlocked') == 0 ? (
                       <p className="my-4 text-slate-500 text-lg leading-relaxed">
                         Are you sure, you want to block this user?
                       </p>

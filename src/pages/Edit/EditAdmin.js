@@ -1,95 +1,87 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 // react router dom
-import {useParams} from "react-router-dom"
-
+import { useNavigate, useParams } from 'react-router-dom';
 
 // React Toastify
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 // Components
-import { Header } from "../../components";
-
-
+import { Header } from '../../components';
 
 // API
-import {adminIndividualData} from "../../helper/adminHelper/admin"
-import { editAdmin } from "../../helper/adminHelper/admin";
-import { isAuthenticated } from "../../helper/login/loginHelper";
+import { adminIndividualData } from '../../helper/adminHelper/admin';
+import { editAdmin } from '../../helper/adminHelper/admin';
+import { isAuthenticated } from '../../helper/login/loginHelper';
 
 const EditAdmin = () => {
-
   // PARAMS
-  const params = useParams()
+  const params = useParams();
   const userid = params.id;
-
 
   // Authentication
   const { data } = isAuthenticated();
 
-  
-// STATE
-const [adminData, setAdminData] = useState([])
+  // Navigate
+  const navigate = useNavigate();
+
+  // STATE
+  const [adminData, setAdminData] = useState([]);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    firstName: '',
+    lastName: '',
     id: userid,
-    email: "",
-    adminType: "",
+    email: '',
+    adminType: '',
     admin_permissions: [
       {
-        module: "module",
-        permission: "0",
+        module: 'module',
+        permission: '0',
       },
     ],
   });
 
-// Destructure
-  const { firstName, lastName, id, admin_permissions, email, adminType } = formData;
-
+  // Destructure
+  const { firstName, lastName, id, admin_permissions, email, adminType } =
+    formData;
 
   const preload = () => {
-    console.log(userid)
+    console.log(userid);
 
     adminIndividualData(userid, data.accessToken)
       .then((data) => {
-        console.log(data.data.admin_permissions[0],"6666")
+        console.log(data.data.admin_permissions[0], '6666');
 
         setAdminData(data.data.admin_permissions[0]);
-
       })
       .catch((error) => {
         console.log(error);
       });
 
-      // adminData.map((individualData, index) => {
-      //   console.log(individualData, "individualData")
+    // adminData.map((individualData, index) => {
+    //   console.log(individualData, "individualData")
 
-      // })
-      console.log(adminData.dashboard,"5555555555")
-
-
-
-      
+    // })
+    console.log(adminData.dashboard, '5555555555');
   };
 
-  console.log(adminData.dashboard,"data.data.admin_permissions[]")
+  console.log(adminData.dashboard, 'data.data.admin_permissions[]');
 
-useEffect(() => {
-  preload()
-}, [])
-
-  
-
-
+  useEffect(() => {
+    preload();
+  }, []);
 
   // Edit Admin
-    const edit = () => {
-      editAdmin(userid, formData, data.accessToken)
+  const edit = () => {
+    editAdmin(userid, formData, data.accessToken)
       .then((result) => {
         // setAdminData(data.data.rows);
-        toast.success("edit successful")
-        console.log("resulttt", result)
+        toast.success('edit successful');
+        console.log('resulttt', result);
+
+        setTimeout(() => {
+          navigate('/admin');
+        }, 2000);
       })
       .catch((error) => {
         console.log(error);
@@ -97,52 +89,46 @@ useEffect(() => {
   };
 
   const handleCheck = (e) => {
-    console.log(e.target.value, "valueeeee"); /* Dashbaord */   
+    console.log(e.target.value, 'valueeeee'); /* Dashbaord */
   };
 
-// Setting object in Item
-  let item = {firstName, lastName, id, admin_permissions, email, adminType}
+  // Setting object in Item
+  let item = { firstName, lastName, id, admin_permissions, email, adminType };
 
-  console.log(item, ".....000000.....")
+  console.log(item, '.....000000.....');
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log("formData", formData);
+    console.log('formData', formData);
   };
 
-
   const test = (e) => {
-    const value = e.target.value /* Dasboard */
-    console.log(e.target.checked)
+    const value = e.target.value; /* Dasboard */
+    console.log(e.target.checked);
     const somevalue = admin_permissions; /* Allocated Permission */
 
-    if(e.target.checked){
+    if (e.target.checked) {
       somevalue.push({
-        module:  value,
-        permission: "1"
+        module: value,
+        permission: '1',
       });
-    setFormData({ ...formData, admin_permissions: somevalue });
-
+      setFormData({ ...formData, admin_permissions: somevalue });
     }
-    
-    if(!e.target.checked){
+
+    if (!e.target.checked) {
       somevalue.push({
-        module:value,
-        permission: "0"
-      })
-
-
+        module: value,
+        permission: '0',
+      });
     }
 
-   
-    console.log(somevalue, "somevalue");
-   
+    console.log(somevalue, 'somevalue');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !firstName || !lastName) {
-      toast.error("Please Fill Out The Required Fields.");
+      toast.error('Please Fill Out The Required Fields.');
     }
   };
 
@@ -254,7 +240,7 @@ useEffect(() => {
                   value="dashboard"
                   onChange={test}
                   name="permissions"
-                  defaultChecked={adminData.dashboard === "1" ? true : false}
+                  defaultChecked={adminData.dashboard === '1' ? true : false}
                   // onClick={test}
                 />
                 <label
@@ -273,7 +259,9 @@ useEffect(() => {
                   value="reportManagement"
                   name="permissions"
                   onChange={test}
-                  defaultChecked = {adminData.reportManagement === 1 ? true : false}
+                  defaultChecked={
+                    adminData.reportManagement === 1 ? true : false
+                  }
                   // onClick={test}
                 />
                 <label
@@ -312,7 +300,9 @@ useEffect(() => {
                   value="adminManagement"
                   name="permissions"
                   onChange={test}
-                  defaultChecked={adminData.adminManagement === 1 ? true : false}
+                  defaultChecked={
+                    adminData.adminManagement === 1 ? true : false
+                  }
                   // onClick={test}
                 />
                 <label
@@ -333,7 +323,9 @@ useEffect(() => {
                   value="notificationManagement"
                   name="permissions"
                   onChange={test}
-                 defaultChecked={adminData.notificationManagement === 1 ? true : false}
+                  defaultChecked={
+                    adminData.notificationManagement === 1 ? true : false
+                  }
                   // onClick={test}
                 />
                 <label
@@ -352,7 +344,9 @@ useEffect(() => {
                   name="permissions"
                   // onChange={(e)=> setSystemConfiguration(e.target.checked)}
                   onChange={test}
-                 defaultChecked={adminData.systemConfiguration === 1 ? true : false}
+                  defaultChecked={
+                    adminData.systemConfiguration === 1 ? true : false
+                  }
                   // onClick={test}
                 />
                 <label

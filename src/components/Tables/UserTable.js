@@ -1,27 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import DataTable from 'react-data-table-component';
-// import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
-import axios from 'axios';
+// React Table
+import DataTable from 'react-data-table-component';
+
+// React-Router-DOM
+import { useNavigate } from 'react-router-dom';
+
+// React Toastify
+import { toast } from 'react-toastify';
+
+// COomponents
 import { Header } from '../../components';
 
-// API 
+// API
 import { userListData } from '../../helper/Table/TableHelper';
 import { blockOrUnblockUser } from '../../helper/Table/userTableHelper';
 import { isAuthenticated } from '../../helper/login/loginHelper';
 
-
 const UserTable = () => {
   // const navigate = useNavigate();
   const { data, token } = isAuthenticated();
-  const [showBlockModal, setShowBlockModal] = useState(false)
+  const [showBlockModal, setShowBlockModal] = useState(false);
 
   const [search, setSearch] = useState('');
   const [userData, setUserData] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
-const blockedvalue = localStorage.getItem("isBlocked")
+  const blockedvalue = localStorage.getItem('isBlocked');
 
   // const [show, setShow] = useState(false);
 
@@ -35,10 +40,10 @@ const blockedvalue = localStorage.getItem("isBlocked")
   // };
 
   const handleShowBlockModal = (id, isBlocked) => {
-    console.log(id, isBlocked)
-    setShowBlockModal(true)
-    localStorage.setItem("id", id);
-    localStorage.setItem("isBlocked", isBlocked);
+    console.log(id, isBlocked);
+    setShowBlockModal(true);
+    localStorage.setItem('id', id);
+    localStorage.setItem('isBlocked', isBlocked);
   };
 
   const preload = () => {
@@ -53,21 +58,18 @@ const blockedvalue = localStorage.getItem("isBlocked")
       });
   };
 
-  async function blockOrUnblock(){
-    let uId = localStorage.getItem("id");
-   const blockValue = localStorage.getItem("isBlocked")
-   blockOrUnblockUser(uId, blockValue, data.accessToken)
-    .then((data)=>{
-        console.log("117",data);
-        toast.success("Success")
-        preload();
-    })
-    setShowBlockModal(false)
-    localStorage.removeItem("isBlocked")
-    localStorage.removeItem("id")
-
-}
-
+  async function blockOrUnblock() {
+    let uId = localStorage.getItem('id');
+    const blockValue = localStorage.getItem('isBlocked');
+    blockOrUnblockUser(uId, blockValue, data.accessToken).then((data) => {
+      console.log('117', data);
+      toast.success('Success');
+      preload();
+    });
+    setShowBlockModal(false);
+    localStorage.removeItem('isBlocked');
+    localStorage.removeItem('id');
+  }
 
   const colunms = [
     {
@@ -115,7 +117,7 @@ const blockedvalue = localStorage.getItem("isBlocked")
       selector: (row) => row.email,
       sortable: true,
     },
-  /*   {
+    /*   {
       name: (
         <h6>
           <b>Image</b>
@@ -148,32 +150,39 @@ const blockedvalue = localStorage.getItem("isBlocked")
           <b>Action</b>
         </h6>
       ),
-      selector: (row) =>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "110px",
-            }}
+      selector: (row) => (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '110px',
+          }}
+        >
+          <button
+            style={{ border: 'none', background: 'none' }}
+            // onClick={() => deleteAdmin(row.uId)}
+            // onClick={() => handleShow(row.uId)}
           >
-            <button
-              style={{ border: "none", background: "none" }}
-              // onClick={() => deleteAdmin(row.uId)}
-              // onClick={() => handleShow(row.uId)}
-            >
-              <i className="fa-regular fa-trash-can fa-lg"></i>
-            </button>
-            <button
-              style={{ border: "none", background: "none" }}
-              onClick={() => handleShowBlockModal(row.id, row.isBlocked)}
-            >
-            {row.isBlocked == 0 ? 
-              <i className="fa-sharp fa-solid fa-check fa-lg" style={{color: "#3DBE29"}}></i>
-
-             : <i class="fa-sharp fa-solid fa-xmark fa-lg" style ={{color: "#E21717"}}></i> }
-
-            </button>
-          </div>
+            <i className="fa-regular fa-trash-can fa-lg"></i>
+          </button>
+          <button
+            style={{ border: 'none', background: 'none' }}
+            onClick={() => handleShowBlockModal(row.id, row.isBlocked)}
+          >
+            {row.isBlocked == 0 ? (
+              <i
+                className="fa-sharp fa-solid fa-check fa-lg"
+                style={{ color: '#3DBE29' }}
+              ></i>
+            ) : (
+              <i
+                class="fa-sharp fa-solid fa-xmark fa-lg"
+                style={{ color: '#E21717' }}
+              ></i>
+            )}
+          </button>
+        </div>
+      ),
     },
   ];
 
@@ -228,24 +237,20 @@ const blockedvalue = localStorage.getItem("isBlocked")
         }
       />
 
-{showBlockModal ? (
+      {showBlockModal ? (
         <>
-          <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-          >
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">
-                    Confirmation
-                  </h3>
+                  <h3 className="text-3xl font-semibold">Confirmation</h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={()=>{
+                    onClick={() => {
                       setShowBlockModal(false);
-                      localStorage.removeItem("isBlocked");
+                      localStorage.removeItem('isBlocked');
                     }}
                   >
                     <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
@@ -254,18 +259,17 @@ const blockedvalue = localStorage.getItem("isBlocked")
                   </button>
                 </div>
                 {/*body*/}
-                
+
                 <div className="relative p-6 flex-auto">
-                {blockedvalue == 0 ? 
-                <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                Are you sure, you want to block this user?
-              </p>
-              :
-              <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                    Are you sure, you want to Unblock this user?
-                  </p>
-                   }
-                  
+                  {blockedvalue == 0 ? (
+                    <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                      Are you sure, you want to block this user?
+                    </p>
+                  ) : (
+                    <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                      Are you sure, you want to Unblock this user?
+                    </p>
+                  )}
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
@@ -280,8 +284,8 @@ const blockedvalue = localStorage.getItem("isBlocked")
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {
-                      setShowBlockModal(false)
-                      localStorage.removeItem("isBlocked")
+                      setShowBlockModal(false);
+                      localStorage.removeItem('isBlocked');
                     }}
                   >
                     No
@@ -293,7 +297,6 @@ const blockedvalue = localStorage.getItem("isBlocked")
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
-
     </div>
   );
 };

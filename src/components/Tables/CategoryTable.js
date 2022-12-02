@@ -17,7 +17,7 @@ import { categoryListData } from '../../helper/Table/TableHelper';
 import { isAuthenticated } from '../../helper/login/loginHelper';
 import { blockOrUnblockAdmin } from '../../helper/Table/categoryTableHelper';
 
-const AdminTable = () => {
+const CategoryTable = () => {
   // Navigate
   const navigate = useNavigate();
 
@@ -30,18 +30,8 @@ const AdminTable = () => {
   const [search, setSearch] = useState('');
   const [categoryData, setCategoryData] = useState([]);
   const [filterData, setFilterData] = useState([]);
-  const [showDeleteModel, setshowDeleteModel] = useState(false);
   const [showBlockModal, setShowBlockModal] = useState(false);
-
-  const handleClose = () => {
-    setshowDeleteModel(false);
-    localStorage.removeItem('adminId');
-  };
-
-  const handleShow = (id) => {
-    setshowDeleteModel(true);
-    localStorage.setItem('adminId', id);
-  };
+  const [showDeleteModel, setshowDeleteModel] = useState(false);
 
   // BLOCK MODEL
   const handleShowBlockModal = (id, isBlocked) => {
@@ -63,8 +53,7 @@ const AdminTable = () => {
     localStorage.removeItem('isBlocked');
     localStorage.removeItem('id');
   }
-
-  const blockedvalue = localStorage.getItem('isBlocked');
+  // const blockedvalue = localStorage.getItem('isBlocked');
 
   // Preload Category Function
   const Preload = () => {
@@ -326,7 +315,7 @@ const AdminTable = () => {
                 {/*body*/}
 
                 <div className="relative p-6 flex-auto">
-                  {blockedvalue == 0 ? (
+                  {localStorage.getItem('isBlocked') == 0 ? (
                     <p className="my-4 text-slate-500 text-lg leading-relaxed">
                       Are you sure, you want to block this user?
                     </p>
@@ -366,4 +355,4 @@ const AdminTable = () => {
   );
 };
 
-export default AdminTable;
+export default CategoryTable;
