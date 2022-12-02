@@ -9,48 +9,76 @@ import { useNavigate } from 'react-router-dom';
 // React Toastify
 import { toast } from 'react-toastify';
 
-// Axios
-import axios from 'axios';
-
 // Components
 import { Header } from '../../components';
 
 // API
 import { categoryListData } from '../../helper/Table/TableHelper';
 import { isAuthenticated } from '../../helper/login/loginHelper';
-
+import { blockOrUnblockAdmin } from '../../helper/Table/categoryTableHelper';
 
 const AdminTable = () => {
-  // const navigate = useNavigate();
-  const { data, token } = isAuthenticated();
+  // Navigate
+  const navigate = useNavigate();
 
+  // Authorization
+  const { data } = isAuthenticated();
+
+  console.log(data.accessToken);
+
+  // STATE
   const [search, setSearch] = useState('');
   const [categoryData, setCategoryData] = useState([]);
   const [filterData, setFilterData] = useState([]);
-  // const [show, setShow] = useState(false);
+  const [showDeleteModel, setshowDeleteModel] = useState(false);
+  const [showBlockModal, setShowBlockModal] = useState(false);
 
-  /* const handleClose = () => {
-    setShow(false);
-    localStorage.removeItem("adminId");
-  }; */
+  const handleClose = () => {
+    setshowDeleteModel(false);
+    localStorage.removeItem('adminId');
+  };
 
-  /* const handleShow = () => {
-    setShow(true);
-    localStorage.setItem("adminId", adminId);
-  }; */
-const category = () =>{
-  categoryListData(data.accessToken)
-    .then((data) => {
-      console.log('responseeee', data);
-      setCategoryData(data.data.data.rows);
-      setFilterData(data.data.data.rows);
-      console.log('THIS IS DATA', data);
-    })
-    .catch((error) => {
-      console.log(error);
+  const handleShow = (id) => {
+    setshowDeleteModel(true);
+    localStorage.setItem('adminId', id);
+  };
+
+  // BLOCK MODEL
+  const handleShowBlockModal = (id, isBlocked) => {
+    console.log(id, isBlocked);
+    setShowBlockModal(true);
+    localStorage.setItem('id', id);
+    localStorage.setItem('isBlocked', isBlocked);
+  };
+
+  async function blockOrUnblock() {
+    let userID = localStorage.getItem('id');
+    const blockValue = localStorage.getItem('isBlocked');
+    blockOrUnblockAdmin(userID, blockValue, data.accessToken).then((data) => {
+      console.log('117', data);
+      toast.success('Success');
+      Preload();
     });
-}
+    setShowBlockModal(false);
+    localStorage.removeItem('isBlocked');
+    localStorage.removeItem('id');
+  }
 
+  const blockedvalue = localStorage.getItem('isBlocked');
+
+  // Preload Category Function
+  const Preload = () => {
+    categoryListData(data.accessToken)
+      .then((data) => {
+        console.log('responseeee', data);
+        setCategoryData(data.data.data.rows);
+        setFilterData(data.data.data.rows);
+        console.log('THIS IS DATA', data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   /*  async function deleteAdmin() {
     let uId = localStorage.getItem("adminId");
@@ -152,11 +180,23 @@ const category = () =>{
           >
             <i className="fa-regular fa-trash-can fa-lg"></i>
           </button>
+
+          {/* BLOCK */}
           <button
             style={{ border: 'none', background: 'none' }}
-            // onClick={() => blockAdmin(row.uId)}
+            onClick={() => handleShowBlockModal(row.id, row.isBlocked)}
           >
-            <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
+            {row.isBlocked == 0 ? (
+              <i
+                className="fa-sharp fa-solid fa-check fa-lg"
+                style={{ color: '#3DBE29' }}
+              ></i>
+            ) : (
+              <i
+                class="fa-sharp fa-solid fa-xmark fa-lg"
+                style={{ color: '#E21717' }}
+              ></i>
+            )}
           </button>
         </div>
       ),
@@ -171,7 +211,7 @@ const category = () =>{
   };
 
   useEffect(() => {
-    category();
+    Preload();
   }, []);
 
   useEffect(() => {
@@ -214,21 +254,114 @@ const category = () =>{
           />
         }
       />
+      {showDeleteModel ? (
+        <>
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              {/*content*/}
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                {/*header*/}
+                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                  <h3 className="text-3xl font-semibold">Confirmation</h3>
+                  <button
+                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    onClick={handleClose}
+                  >
+                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      ×
+                    </span>
+                  </button>
+                </div>
+                {/*body*/}
+                <div className="relative p-6 flex-auto">
+                  <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                    Are you sure, you want to delete this record?
+                  </p>
+                </div>
+                {/*footer*/}
+                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                  <button
+                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={deleteAdmin}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
 
-      {/* <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmation Message</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure, you want to delete this record?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={deleteAdmin}>
-            Yes
-          </Button>
-          <Button variant="secondary" onClick={handleClose}>
-            No
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
+      {showBlockModal ? (
+        <>
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              {/*content*/}
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                {/*header*/}
+                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                  <h3 className="text-3xl font-semibold">Confirmation</h3>
+                  <button
+                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    onClick={() => {
+                      setShowBlockModal(false);
+                      localStorage.removeItem('isBlocked');
+                    }}
+                  >
+                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      ×
+                    </span>
+                  </button>
+                </div>
+                {/*body*/}
+
+                <div className="relative p-6 flex-auto">
+                  {blockedvalue == 0 ? (
+                    <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                      Are you sure, you want to block this user?
+                    </p>
+                  ) : (
+                    <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                      Are you sure, you want to Unblock this user?
+                    </p>
+                  )}
+                </div>
+                {/*footer*/}
+                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                  <button
+                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={blockOrUnblock}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => {
+                      setShowBlockModal(false);
+                      localStorage.removeItem('isBlocked');
+                    }}
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
     </div>
   );
 };
