@@ -244,7 +244,7 @@ const EditAdmin = () => {
                   // onClick={test}
                 />
                 <label
-                  class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
+                  class="form-check-label mr-1.5 mb-2 inline-block text-gray-800 opacity-50"
                   for="inlineCheckbox1"
                 >
                   Dashboard
@@ -286,7 +286,7 @@ const EditAdmin = () => {
                   // onClick={test}
                 />
                 <label
-                  class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
+                  class="form-check-label mr-1.5 mb-2 inline-block text-gray-800 opacity-50 "
                   for="inlineCheckbox1"
                 >
                   User Mangement
@@ -329,7 +329,7 @@ const EditAdmin = () => {
                   // onClick={test}
                 />
                 <label
-                  class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
+                  class="form-check-label mr-1.5 mb-2 inline-block text-gray-800 opacity-50"
                   for="inlineCheckbox1"
                 >
                   Notification
@@ -361,7 +361,7 @@ const EditAdmin = () => {
 
           <div class="flex items-center justify-between">
             <button
-              class="bg-blue-500 hover:bg-blue-700 w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              class="bg-blue-500 hover:bg-blue-700 w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-3"
               type="submit"
               onClick={edit}
             >

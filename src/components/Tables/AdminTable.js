@@ -35,7 +35,6 @@ const AdminTable = () => {
   const [showBlockModal, setShowBlockModal] = useState(false);
 
   // DELETE MODAL
-
   const handleShow = (id) => {
     setshowDeleteModal(true);
     localStorage.setItem('adminId', id);
@@ -309,7 +308,7 @@ const AdminTable = () => {
     <>
       {/* {console.log(adminData)} */}
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-        <Header category="page" title="Admin" data={adminData} />
+        <Header category="Page" title="Admin" data={adminData} />
         <DataTable
           // title="Admin"
           columns={colunms}
