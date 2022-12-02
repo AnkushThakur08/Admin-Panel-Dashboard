@@ -35,17 +35,23 @@ const AdminTable = () => {
   const [showBlockModal, setShowBlockModal] = useState(false);
 
   // DELETE MODAL
-  const handleClose = () => {
-    // setShow(false);
-    setshowDeleteModal(false);
-    localStorage.removeItem('adminId');
-  };
 
   const handleShow = (id) => {
-    // setShow(true);
     setshowDeleteModal(true);
     localStorage.setItem('adminId', id);
   };
+
+  async function deleteAdmin() {
+    let uId = localStorage.getItem('adminId');
+    console.log('UID', uId);
+    deleteAdminData(data.accessToken, uId).then((result) => {
+      console.log(result);
+      toast('Deletion successful.');
+      preload();
+    });
+    setshowDeleteModal(false);
+    localStorage.removeItem('adminId');
+  }
 
   // BLOCK MODAL
   const handleShowBlockModal = (id, isBlocked) => {
@@ -93,17 +99,6 @@ const AdminTable = () => {
   //     });
   //   });
   // };
-
-  async function deleteAdmin() {
-    let uId = localStorage.getItem('adminId');
-    console.log('UID', uId);
-    deleteAdminData(data.accessToken, uId).then((result) => {
-      console.log(result);
-      toast('Deletion successful.');
-      preload();
-    });
-    handleClose();
-  }
 
   // const blockedvalue = localStorage.getItem('isBlocked');
 
@@ -314,13 +309,7 @@ const AdminTable = () => {
     <>
       {/* {console.log(adminData)} */}
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-        <Header
-          category="page"
-          title="Admin"
-          /* firstName={adminData?.[0]?.firstName}
-          lastName={adminData?.[0]?.lastName} */
-          data={adminData}
-        />
+        <Header category="page" title="Admin" data={adminData} />
         <DataTable
           // title="Admin"
           columns={colunms}
@@ -353,14 +342,14 @@ const AdminTable = () => {
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                     <h3 className="text-3xl font-semibold">Confirmation</h3>
-                    <button
+                    {/* <button
                       className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                       onClick={handleClose}
                     >
                       <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
                         ×
                       </span>
-                    </button>
+                    </button> */}
                   </div>
                   {/*body*/}
                   <div className="relative p-6 flex-auto">
