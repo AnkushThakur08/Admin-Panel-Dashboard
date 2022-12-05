@@ -6,6 +6,9 @@ import DataTable from 'react-data-table-component';
 // React Router
 import { useNavigate } from 'react-router-dom';
 
+//React Icons
+import {FiFilter} from "react-icons/fi";
+
 // React Toastify
 import { toast } from 'react-toastify';
 
@@ -309,6 +312,9 @@ const AdminTable = () => {
       {/* {console.log(adminData)} */}
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
         <Header category="Page" title="Admin" data={adminData} />
+        <div style={{float: "right"}} className="mr-6">
+          < FiFilter size={25}/>
+        </div>
         <DataTable
           // title="Admin"
           columns={colunms}

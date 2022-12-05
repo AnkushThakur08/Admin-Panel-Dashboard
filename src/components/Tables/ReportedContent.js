@@ -188,13 +188,15 @@ const reportContent = () =>{
     reportContent();
   }, []);
 
+  console.log(contentData,"contentData888888")
+
   useEffect(() => {
+    console.log(contentData,"contentData")
     const result = contentData.filter((value) => {
       return (
         value.itemType.toLowerCase().match(search.toLowerCase()) ||
         value.id.toLowerCase().match(search.toLowerCase()) ||
-        value.description.toLowerCase().match(search.toLowerCase()) ||
-        value.user.firstName.toLowerCase().match(search.toLowerCase())
+        value.description.toLowerCase().match(search.toLowerCase()) 
       );
     });
     setFilterData(result);
