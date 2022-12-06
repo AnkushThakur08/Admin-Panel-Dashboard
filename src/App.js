@@ -57,6 +57,7 @@ import AddAppVersion from './pages/Add/AddAppVersion';
 // Custom CSS
 import './App.css';
 import EditAppVersion from './pages/Edit/EditAppVersion';
+import EditAdminAchievement from './pages/Edit/EditAdminAchievement';
 
 const App = () => {
   const {
@@ -178,6 +179,10 @@ const App = () => {
 
                   {/* ADD ROUTES */}
                   <Route path="/addAppVersion" element={<AddAppVersion />} />
+                  <Route
+                    path="/editAdminAchievement/:id"
+                    element={<EditAdminAchievement />}
+                  />
                 </Routes>
               </div>
               {/* <Footer /> */}

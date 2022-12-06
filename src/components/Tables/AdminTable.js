@@ -21,7 +21,6 @@ import { adminListData } from '../../helper/Table/TableHelper';
 import { deleteAdminData } from '../../helper/Table/adminTableHelper';
 import { blockOrUnblockAdmin } from '../../helper/Table/adminTableHelper';
 
-var userType;
 
 const AdminTable = () => {
   // Authorization
@@ -45,11 +44,14 @@ const AdminTable = () => {
   const [checkBox, setCheckbox] = useState('');
   const checkBoxValue = checkBox;
 
+<<<<<<< HEAD
   const handleCheckBox = (e) => {
     console.log(e.target.name, '2222');
     setCheckbox(e.target.name);
   };
 
+=======
+>>>>>>> remotes/origin/6thDec
   // DELETE MODAL
   const handleShow = (id) => {
     setshowDeleteModal(true);
@@ -89,10 +91,13 @@ const AdminTable = () => {
     localStorage.removeItem('id');
   }
 
+<<<<<<< HEAD
   //Filter Modal
   const handleShowFilterModal = () => {
     setShowFilterModal(true);
   };
+=======
+>>>>>>> remotes/origin/6thDec
 
   // Preload Admin Function
   const preload = () => {
@@ -106,7 +111,8 @@ const AdminTable = () => {
       });
   };
 
-  const filter = () => {
+  // FILTER
+  const applyFilter = () => {
     preload();
     setShowFilterModal(false);
     setCheckbox('');
@@ -114,6 +120,7 @@ const AdminTable = () => {
     console.log(checkBox, adminType, 'after clearing the state in preload');
   };
 
+<<<<<<< HEAD
   // Handle adminType dropdown
   const handleAdminType = (name) => (event) => {
     userType = event.target.value;
@@ -136,6 +143,29 @@ const AdminTable = () => {
     console.log(checkBox, adminType, 'after clearing the state');
     setShowFilterModal(false);
   };
+=======
+    // Handle adminType dropdown
+    const handleAdminType = (name) => (event) => {
+      setAdminType(event.target.value);
+    };
+
+    console.log(adminType, "2222")
+    
+    const clearFilter =  (e) => {
+      setCheckbox("");
+      console.log(adminType, "Before Delete")
+
+      setAdminType("");
+
+
+      console.log(adminType, "After Delete")
+
+      setShowFilterModal(false);
+
+      preload()
+
+    };
+>>>>>>> remotes/origin/6thDec
 
   // const preload2 = () => {
   //   adminData.map((individualData, index) => {
@@ -356,14 +386,18 @@ const AdminTable = () => {
 
   return (
     <>
-      {/* {console.log(adminData)} */}
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
         <Header category="Page" title="Admin" data={adminData} />
         <div style={{ float: 'right' }} className="mr-6">
           <FiFilter
             size={25}
+<<<<<<< HEAD
             style={{ cursor: 'pointer' }}
             onClick={handleShowFilterModal}
+=======
+            style={{ cursor: "pointer" }}
+            onClick={() => setShowFilterModal(true)}
+>>>>>>> remotes/origin/6thDec
           />
         </div>
         <DataTable
@@ -552,8 +586,9 @@ const AdminTable = () => {
                             class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox"
                             id="dashboard"
-                            value={checkBox}
-                            onChange={handleCheckBox}
+                            // value={checkBox}
+                            // onChange={handleCheckBox}
+                            onChange={(e)=> setCheckbox(e.target.name)}
                             name="dashboard"
                           />
                           <label
@@ -571,7 +606,8 @@ const AdminTable = () => {
                             id="report"
                             value={checkBox}
                             name="reportManagement"
-                            onChange={handleCheckBox}
+                            // onChange={handleCheckBox}
+                            onChange={(e)=> setCheckbox(e.target.name)}
                             // onClick={test}
                           />
                           <label
@@ -589,9 +625,10 @@ const AdminTable = () => {
                             class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox"
                             id="inlineCheckbox1"
-                            value={checkBox}
+                            // value={checkBox}
                             name="userManagement"
-                            onChange={handleCheckBox}
+                            // onChange={handleCheckBox}
+                            onChange={(e)=> setCheckbox(e.target.name)}
                             // onClick={test}
                           />
                           <label
@@ -606,10 +643,10 @@ const AdminTable = () => {
                             class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox"
                             id="inlineCheckbox2"
-                            value={checkBox}
+                            // value={checkBox}
                             name="adminManagement"
-                            onChange={handleCheckBox}
-
+                            // onChange={handleCheckBox}
+                            onChange={(e)=> setCheckbox(e.target.name)}
                             // onClick={test}
                           />
                           <label
@@ -627,9 +664,10 @@ const AdminTable = () => {
                             class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox"
                             id="inlineCheckbox1"
-                            value={checkBox}
+                            // value={checkBox}
                             name="notificationManagement"
-                            onChange={handleCheckBox}
+                            // onChange={handleCheckBox}
+                            onChange={(e)=> setCheckbox(e.target.name)}
                             // onClick={test}
                           />
                           <label
@@ -644,9 +682,10 @@ const AdminTable = () => {
                             class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox"
                             id="inlineCheckbox2"
-                            value={checkBox}
+                            // value={checkBox}
                             name="systemConfiguration"
-                            onChange={handleCheckBox}
+                            // onChange={handleCheckBox}
+                            onChange={(e)=> setCheckbox(e.target.name)}
                           />
                           <label
                             class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -663,7 +702,7 @@ const AdminTable = () => {
                     <button
                       className=" bg-black text-white w-1/2 font-bold uppercase px-6 py-2 text-sm outline-none rounded shadow hover:shadow-lg focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
-                      onClick={filter}
+                      onClick={applyFilter}
                     >
                       Apply
                     </button>
