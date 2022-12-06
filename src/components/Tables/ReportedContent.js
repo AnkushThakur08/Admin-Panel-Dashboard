@@ -14,7 +14,7 @@ import { Header } from '../../components';
 
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
-import {reportedContentListData} from '../../helper/Table/TableHelper'
+import { reportedContentListData } from '../../helper/Table/TableHelper';
 
 const ReportedContent = () => {
   // const navigate = useNavigate();
@@ -34,19 +34,18 @@ const ReportedContent = () => {
     setShow(true);
     localStorage.setItem("adminId", adminId);
   }; */
-const reportContent = () =>{
-  reportedContentListData(data.accessToken)
-    .then((data) => {
-      console.log('responseeee', data);
-      setContentData(data.data.data.rows);
-      setFilterData(data.data.data.rows);
-      console.log('THIS IS DATA', data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-
+  const reportContent = () => {
+    reportedContentListData(data.accessToken)
+      .then((data) => {
+        console.log('responseeee', data);
+        setContentData(data.data.data.rows);
+        setFilterData(data.data.data.rows);
+        console.log('THIS IS DATA', data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   /*  async function deleteAdmin() {
     let uId = localStorage.getItem("adminId");
@@ -188,15 +187,15 @@ const reportContent = () =>{
     reportContent();
   }, []);
 
-  console.log(contentData,"contentData888888")
+  console.log(contentData, 'contentData888888');
 
   useEffect(() => {
-    console.log(contentData,"contentData")
+    console.log(contentData, 'contentData');
     const result = contentData.filter((value) => {
       return (
         value.itemType.toLowerCase().match(search.toLowerCase()) ||
         value.id.toLowerCase().match(search.toLowerCase()) ||
-        value.description.toLowerCase().match(search.toLowerCase()) 
+        value.description.toLowerCase().match(search.toLowerCase())
       );
     });
     setFilterData(result);

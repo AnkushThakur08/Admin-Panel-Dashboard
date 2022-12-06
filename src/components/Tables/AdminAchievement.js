@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 // React Data Table
-import DataTable from "react-data-table-component";
+import DataTable from 'react-data-table-component';
 
 // React Router
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 // React Toastify
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 // Axios
-import axios from "axios";
+import axios from 'axios';
 
 // Components
-import { Header } from "../../components";
+import { Header } from '../../components';
 
 // API
-import { isAuthenticated } from "../../helper/login/loginHelper";
-import { achievementListData } from "../../helper/Table/TableHelper";
-import {deleteAchievementData} from "../../helper/adminAchievementHelper/AdminAchievement"
+import { isAuthenticated } from '../../helper/login/loginHelper';
+import { achievementListData } from '../../helper/Table/TableHelper';
+import { deleteAchievementData } from '../../helper/adminAchievementHelper/AdminAchievement';
 
 const AdminAchievement = () => {
   const { data, token } = isAuthenticated();
 
-// useNavigate
+  // useNavigate
   const navigate = useNavigate();
 
   // STATES
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [adminData, setAdminData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [showDeleteModal, setshowDeleteModal] = useState(false);
@@ -35,10 +35,10 @@ const AdminAchievement = () => {
   // SHOW DELETE MODAL
   const handleShow = (id) => {
     setshowDeleteModal(true);
-    localStorage.setItem("achievementId", id);
+    localStorage.setItem('achievementId', id);
   };
 
-  // FETCHING TABLE DATA 
+  // FETCHING TABLE DATA
   const preload = () => {
     achievementListData(data.accessToken)
       .then((data) => {
@@ -52,15 +52,15 @@ const AdminAchievement = () => {
 
   // DELETE ADMIN ACHIEVEMENT
   async function deleteAdminAchievement() {
-    let id = localStorage.getItem("achievementId");
-    console.log("id", id);
+    let id = localStorage.getItem('achievementId');
+    console.log('id', id);
     deleteAchievementData(data.accessToken, id).then((result) => {
       console.log(result);
       toast(result.data.data);
       preload();
     });
     setshowDeleteModal(false);
-    localStorage.removeItem("achievementId");
+    localStorage.removeItem('achievementId');
   }
 
   const colunms = [
@@ -102,19 +102,19 @@ const AdminAchievement = () => {
       selector: (row) => (
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "110px",
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '110px',
           }}
         >
           <button
-            style={{ border: "none", background: "none" }}
+            style={{ border: 'none', background: 'none' }}
             onClick={() => navigate(`/editAdminAchievement/${row.id}`)}
           >
             <i className="fa-solid fa-pen fa-lg"></i>
           </button>
           <button
-            style={{ border: "none", background: "none" }}
+            style={{ border: 'none', background: 'none' }}
             onClick={() => handleShow(row.id)}
           >
             <i className="fa-regular fa-trash-can fa-lg"></i>
@@ -126,9 +126,9 @@ const AdminAchievement = () => {
   ];
 
   const paginationComponentOptions = {
-    rangeSeparatorText: "Total",
+    rangeSeparatorText: 'Total',
     selectAllRowsItem: true,
-    selectAllRowsItemText: "All",
+    selectAllRowsItemText: 'All',
   };
 
   useEffect(() => {
@@ -174,9 +174,9 @@ const AdminAchievement = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             style={{
-              width: "100%",
-              padding: "10px",
-              border: "1px solid black",
+              width: '100%',
+              padding: '10px',
+              border: '1px solid black',
             }}
           />
         }
