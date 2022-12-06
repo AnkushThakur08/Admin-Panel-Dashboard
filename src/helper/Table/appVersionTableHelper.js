@@ -21,6 +21,27 @@ export const getAppVersionIndividualDetail = async (token, id) => {
     });
 };
 
+export const createAppVersion = async (token, appData) => {
+  console.log(token, appData);
+  return await fetch(`${API}admin/v1/systemConfiguration/appVersion`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      name: appData.name,
+      version: appData.version,
+      minimumVersion: appData.minVersion,
+    }),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => console.log(error));
+};
+
 export const updateAppVersion = async (token, id, appData) => {
   console.log(token, id, appData);
   return await fetch(`${API}admin/v1/systemConfiguration/appVersion`, {

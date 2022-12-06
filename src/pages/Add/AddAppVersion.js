@@ -9,18 +9,9 @@ import { Header } from '../../components';
 
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
-import {
-  getAppVersionIndividualDetail,
-  updateAppVersion,
-} from '../../helper/Table/appVersionTableHelper';
+import { createAppVersion } from '../../helper/Table/appVersionTableHelper';
 
-const EditAppVersion = () => {
-  // Params
-  const params = useParams();
-  const appid = params.id;
-
-  console.log(appid);
-
+const AddAppVersion = () => {
   // Authentication
   const { data } = isAuthenticated();
 
@@ -37,34 +28,18 @@ const EditAppVersion = () => {
   // Destructure the State
   const { name, version, minVersion } = values;
 
-  // preload App Data
-  const preload = () => {
-    getAppVersionIndividualDetail(data.accessToken, appid).then((data) => {
-      console.log(data);
-
-      console.log(data.data.name);
-
-      setValues({
-        ...values,
-        name: data.data.name,
-        version: data.data.version,
-        minVersion: data.data.minimumVersion,
-      });
-    });
-  };
-
   // HandleChange
   const handleChange = (name) => (event) => {
     const value = event.target.value;
     setValues({ ...values, [name]: value });
   };
 
-  // UPDATE App-Version
+  // ADD App Version
   const onSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values });
 
-    updateAppVersion(data.accessToken, appid, values).then((data) => {
+    createAppVersion(data.accessToken, values).then((data) => {
       console.log(data);
       if (data.message == 'success') {
         setValues({
@@ -85,14 +60,10 @@ const EditAppVersion = () => {
     });
   };
 
-  useEffect(() => {
-    preload();
-  }, []);
-
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-        <Header category="Page" title="Edit App Version" />
+        <Header category="Page" title="Add App Version" />
         <div class="max-w-full max-w-full">
           <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
             <div class="flex ">
@@ -165,4 +136,4 @@ const EditAppVersion = () => {
   );
 };
 
-export default EditAppVersion;
+export default AddAppVersion;

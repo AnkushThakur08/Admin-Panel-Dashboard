@@ -51,6 +51,9 @@ import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 // Edit Pages
 import EditAdmin from './pages/Edit/EditAdmin';
 
+// ADD PAGES
+import AddAppVersion from './pages/Add/AddAppVersion';
+
 // Custom CSS
 import './App.css';
 import EditAppVersion from './pages/Edit/EditAppVersion';
@@ -167,8 +170,14 @@ const App = () => {
 
                   {/* EDIT ROUTES */}
 
-                  <Route path='/editadmin/:id' element={<EditAdmin/>} />
-                  <Route path='/editappversion/:id' element={<EditAppVersion/>} />
+                  <Route path="/editadmin/:id" element={<EditAdmin />} />
+                  <Route
+                    path="/editappversion/:id"
+                    element={<EditAppVersion />}
+                  />
+
+                  {/* ADD ROUTES */}
+                  <Route path="/addAppVersion" element={<AddAppVersion />} />
                 </Routes>
               </div>
               {/* <Footer /> */}

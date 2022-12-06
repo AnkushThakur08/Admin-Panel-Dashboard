@@ -181,6 +181,7 @@ const AppVersionTable = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <Header category="Page" title="App Version" />
+
       <DataTable
         // title="Admin"
         columns={colunms}
@@ -255,6 +256,16 @@ const AppVersionTable = () => {
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
+
+      <div className="pb-10">
+        <button
+          className="fixed right-28 bg-[#333333] text-white rounded-full py-0 px-3 text-4xl mt-5 float-right"
+          onClick={() => navigate('/addAppVersion')}
+          title="Add"
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 };
