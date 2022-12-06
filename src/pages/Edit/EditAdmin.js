@@ -25,8 +25,7 @@ const EditAdmin = () => {
   // Navigate
   const navigate = useNavigate();
 
-  // STATE
-  const [adminData, setAdminData] = useState([]);
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -39,33 +38,32 @@ const EditAdmin = () => {
         permission: '0',
       },
     ],
+    permission: []
   });
 
   // Destructure
-  const { firstName, lastName, id, admin_permissions, email, adminType } =
+  const { firstName, lastName, id, admin_permissions, permission, email, adminType } =
     formData;
 
   const preload = () => {
     console.log(userid);
-
     adminIndividualData(userid, data.accessToken)
       .then((data) => {
-        console.log(data.data.admin_permissions[0], '6666');
 
-        setAdminData(...adminData, data.data.admin_permissions[0]);
+        setFormData({...formData, 
+          firstName: data.data.firstName,
+          lastName: data.data.lastName,
+          email: data.data.email,
+          adminType: data.data.adminType,
+          permission: data.data.admin_permissions[0],
+          });
       })
       .catch((error) => {
         console.log(error);
       });
 
-    // adminData.map((individualData, index) => {
-    //   console.log(individualData, "individualData")
-
-    // })
-    console.log(adminData.dashboard, '5555555555');
+    console.log(permission, '5555555555');
   };
-
-  console.log(adminData.dashboard, 'data.data.admin_permissions[]');
 
   useEffect(() => {
     preload();
@@ -75,13 +73,12 @@ const EditAdmin = () => {
   const edit = () => {
     editAdmin(userid, formData, data.accessToken)
       .then((result) => {
-        // setAdminData(data.data.rows);
-        toast.success('edit successful');
+        toast.success(result.data);
         console.log('resulttt', result);
 
         setTimeout(() => {
           navigate('/admin');
-        }, 2000);
+        }, 2500);
       })
       .catch((error) => {
         console.log(error);
@@ -89,7 +86,7 @@ const EditAdmin = () => {
   };
 
   const handleCheck = (e) => {
-    console.log(e.target.value, 'valueeeee'); /* Dashbaord */
+    console.log(e.target.checked, 'valueeeee'); /* Dashbaord */
   };
 
   // Setting object in Item
@@ -230,6 +227,8 @@ const EditAdmin = () => {
             Admin Access
           </label>
 
+          {console.log(permission, "permission")}
+
           <div className="flex justify-between mb-2.5">
             <div class="flex flex-col">
               <div class="form-check form-check-inline">
@@ -238,10 +237,12 @@ const EditAdmin = () => {
                   type="checkbox"
                   id="dashboard"
                   value="dashboard"
-                  onChange={test}
+                  // onChange={test}
                   name="permissions"
-                  defaultChecked={adminData.dashboard == 1 ? true : false}
-                  // onClick={test}
+                  defaultChecked = {
+                    permission.dashboard === 1 ? true : console.log("false")
+                  }
+                  onClick={test}
                 />
                 <label
                   class="form-check-label mr-1.5 mb-2 inline-block text-gray-800 opacity-50"
@@ -258,11 +259,11 @@ const EditAdmin = () => {
                   id="report"
                   value="reportManagement"
                   name="permissions"
-                  onChange={test}
+                  // onChange={test}
                   defaultChecked={
-                    adminData.reportManagement === 1 ? true : false
+                    permission.reportManagement === 1 ? true : console.log("false")
                   }
-                  // onClick={test}
+                  onClick={test}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -281,9 +282,9 @@ const EditAdmin = () => {
                   id="inlineCheckbox1"
                   value="userManagement"
                   name="permissions"
-                  onChange={test}
-                  defaultChecked={adminData.userManagement === 1 ? true : false}
-                  // onClick={test}
+                  // onChange={test}
+                  defaultChecked={permission.userManagement === 1 ? true : console.log("false")}
+                  onClick={test}
                 />
                 <label
                   class="form-check-label mr-1.5 mb-2 inline-block text-gray-800 opacity-50 "
@@ -299,11 +300,11 @@ const EditAdmin = () => {
                   id="inlineCheckbox2"
                   value="adminManagement"
                   name="permissions"
-                  onChange={test}
+                  // onChange={test}
                   defaultChecked={
-                    adminData.adminManagement === 1 ? true : false
+                    permission.adminManagement === 1 ? true : console.log("false")
                   }
-                  // onClick={test}
+                  onClick={test}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
@@ -322,11 +323,11 @@ const EditAdmin = () => {
                   id="inlineCheckbox1"
                   value="notificationManagement"
                   name="permissions"
-                  onChange={test}
+                  // onChange={test}
                   defaultChecked={
-                    adminData.notificationManagement === 1 ? true : false
+                    permission.notificationManagement === 1 ? true : console.log("false")
                   }
-                  // onClick={test}
+                  onClick={test}
                 />
                 <label
                   class="form-check-label mr-1.5 mb-2 inline-block text-gray-800 opacity-50"
@@ -343,11 +344,11 @@ const EditAdmin = () => {
                   value="systemConfiguration"
                   name="permissions"
                   // onChange={(e)=> setSystemConfiguration(e.target.checked)}
-                  onChange={test}
+                  // onChange={test}
                   defaultChecked={
-                    adminData.systemConfiguration === 1 ? true : false
+                    permission.systemConfiguration === 1 ? true : console.log("false")  
                   }
-                  // onClick={test}
+                  onClick={test}
                 />
                 <label
                   class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
