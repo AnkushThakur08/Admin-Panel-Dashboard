@@ -1,7 +1,64 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+// React Router
+import { useNavigate, useParams } from 'react-router-dom';
+
+// Components
 import { Header } from '../../components';
 
+// API
+import { isAuthenticated } from '../../helper/login/loginHelper';
+import { getAppVersionIndividualDetail } from '../../helper/Table/appVersionTableHelper';
+
 const EditAppVersion = () => {
+  // Params
+  const params = useParams();
+  const appid = params.id;
+
+  console.log(appid);
+
+  // Authentication
+  const { data } = isAuthenticated();
+
+  // Navigate
+  const navigate = useNavigate();
+
+  // STATE
+  const [values, setValues] = useState({
+    name: [],
+    version: '',
+    minVersion: '',
+  });
+
+  // Destructure
+  const { name, version, minVersion } = values;
+
+  // preload App Data
+  const preload = () => {
+    getAppVersionIndividualDetail(data.accessToken, appid).then((data) => {
+      console.log(data);
+
+      console.log(data.data.name);
+
+      setValues({
+        ...values,
+        name: data.data.name,
+        version: data.data.version,
+        minVersion: data.data.minimumVersion,
+      });
+    });
+  };
+
+  // HandleChange
+  const handleChange = (name) => (event) => {
+    const value = event.target.value;
+    setValues({ ...values, [name]: value });
+  };
+
+  useEffect(() => {
+    preload();
+  }, []);
+
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
@@ -39,6 +96,8 @@ const EditAppVersion = () => {
                 id="version"
                 type="text"
                 placeholder="1"
+                onChange={handleChange('version')}
+                value={version}
               />
             </div>
             <div class="mb-4">
@@ -53,6 +112,8 @@ const EditAppVersion = () => {
                 id="minimumversion"
                 type="text"
                 placeholder="1.0.0"
+                onChange={handleChange('minVersion')}
+                value={minVersion}
               />
             </div>
             <div class="flex ">
