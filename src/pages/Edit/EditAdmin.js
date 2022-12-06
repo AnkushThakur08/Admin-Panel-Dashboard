@@ -52,7 +52,7 @@ const EditAdmin = () => {
       .then((data) => {
         console.log(data.data.admin_permissions[0], '6666');
 
-        setAdminData(data.data.admin_permissions[0]);
+        setAdminData(...adminData, data.data.admin_permissions[0]);
       })
       .catch((error) => {
         console.log(error);
@@ -240,7 +240,7 @@ const EditAdmin = () => {
                   value="dashboard"
                   onChange={test}
                   name="permissions"
-                  defaultChecked={adminData.dashboard === '1' ? true : false}
+                  defaultChecked={adminData.dashboard == 1 ? true : false}
                   // onClick={test}
                 />
                 <label

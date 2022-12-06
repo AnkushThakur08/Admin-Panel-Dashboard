@@ -3,10 +3,12 @@ import { API } from '../../backend';
 // import {adminListData} from "../Helper/ApiCall.js"
 
 // Admin list api
-export const adminListData = async (token) => {
-  console.log(API);
-  console.log(token);
-  return await fetch(`${API}admin/v1/admin/list?limit=100&skip=0`, {
+export const adminListData = async (token, permission, adminType) => {
+  console.log("permission", adminType)
+  const role = adminType.adminType
+  console.log("role", role)
+
+  return await fetch(`${API}admin/v1/admin/list?limit=100&skip=0&accessPermissions=${permission}&adminType=${adminType}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
