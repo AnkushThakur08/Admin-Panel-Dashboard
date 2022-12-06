@@ -30,7 +30,7 @@ const EditAppVersion = () => {
     minVersion: '',
   });
 
-  // Destructure
+  // Destructure the State
   const { name, version, minVersion } = values;
 
   // preload App Data
