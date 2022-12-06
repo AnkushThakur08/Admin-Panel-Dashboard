@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react';
 
 // React Router
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 // Components
 import { Header } from '../../components';
 
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
-import { getAppVersionIndividualDetail } from '../../helper/Table/appVersionTableHelper';
+import {
+  getAppVersionIndividualDetail,
+  updateAppVersion,
+} from '../../helper/Table/appVersionTableHelper';
 
 const EditAppVersion = () => {
   // Params
@@ -25,7 +29,7 @@ const EditAppVersion = () => {
 
   // STATE
   const [values, setValues] = useState({
-    name: [],
+    name: '',
     version: '',
     minVersion: '',
   });
@@ -55,6 +59,32 @@ const EditAppVersion = () => {
     setValues({ ...values, [name]: value });
   };
 
+  // UPDATE Prdoduct
+  const onSubmit = (event) => {
+    event.preventDefault();
+    setValues({ ...values });
+
+    updateAppVersion(data.accessToken, appid, values).then((data) => {
+      console.log(data);
+      if (data.message == 'success') {
+        setValues({
+          ...values,
+          name: '',
+          version: '',
+          minVersion: '',
+        });
+
+        toast.success(data.message);
+
+        setTimeout(() => {
+          navigate('/appVersion');
+        }, 2000);
+      } else {
+        toast.error(data.message);
+      }
+    });
+  };
+
   useEffect(() => {
     preload();
   }, []);
@@ -76,10 +106,12 @@ const EditAppVersion = () => {
                 <select
                   class=" w-full form-select appearance-none block max-w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   aria-label="Name"
+                  onChange={handleChange('name')}
+                  value={name}
                 >
-                  <option value="1">IOS</option>
-                  <option value="2">ANDROID</option>
-                  <option value="3">WEB</option>
+                  <option value="IOS">IOS</option>
+                  <option value="ANDROID">ANDROID</option>
+                  <option value="WEB">WEB</option>
                 </select>
               </div>
             </div>
@@ -119,7 +151,8 @@ const EditAppVersion = () => {
             <div class="flex ">
               <button
                 class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold mt-6 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
+                type="submit"
+                onClick={onSubmit}
               >
                 Save
               </button>
