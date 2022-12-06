@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 // React Data Table
-import DataTable from 'react-data-table-component';
+import DataTable from "react-data-table-component";
 
 // React Router
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 //React Icons
-import {FiFilter} from "react-icons/fi";
+import { FiFilter } from "react-icons/fi";
 
 // React Toastify
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 // Components
-import { Header } from '../../components';
+import { Header } from "../../components";
 
 // API
-import { isAuthenticated } from '../../helper/login/loginHelper';
-import { adminListData } from '../../helper/Table/TableHelper';
-import { deleteAdminData } from '../../helper/Table/adminTableHelper';
-import { blockOrUnblockAdmin } from '../../helper/Table/adminTableHelper';
+import { isAuthenticated } from "../../helper/login/loginHelper";
+import { adminListData } from "../../helper/Table/TableHelper";
+import { deleteAdminData } from "../../helper/Table/adminTableHelper";
+import { blockOrUnblockAdmin } from "../../helper/Table/adminTableHelper";
+
+var userType;
 
 const AdminTable = () => {
   // Authorization
@@ -31,64 +33,114 @@ const AdminTable = () => {
   const navigate = useNavigate();
 
   // STATE
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [adminData, setAdminData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [showDeleteModal, setshowDeleteModal] = useState(false);
   const [showBlockModal, setShowBlockModal] = useState(false);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [adminType, setAdminType] = useState("");
+
+
+  // State for checkboxes
+  const [checkBox, setCheckbox] = useState("");
+  const checkBoxValue = checkBox;
+
+  const handleCheckBox = (e) => {
+    console.log(e.target.name, "2222");
+    setCheckbox(e.target.name);
+  };
 
   // DELETE MODAL
   const handleShow = (id) => {
     setshowDeleteModal(true);
-    localStorage.setItem('adminId', id);
+    localStorage.setItem("adminId", id);
   };
 
   async function deleteAdmin() {
-    let uId = localStorage.getItem('adminId');
-    console.log('UID', uId);
+    let uId = localStorage.getItem("adminId");
+    console.log("UID", uId);
     deleteAdminData(data.accessToken, uId).then((result) => {
       console.log(result);
-      toast('Deletion successful.');
+      toast("Deletion successful.");
       preload();
     });
     setshowDeleteModal(false);
-    localStorage.removeItem('adminId');
+    localStorage.removeItem("adminId");
   }
 
   // BLOCK MODAL
   const handleShowBlockModal = (id, isBlocked) => {
     console.log(id, isBlocked);
     setShowBlockModal(true);
-    localStorage.setItem('id', id);
-    localStorage.setItem('isBlocked', isBlocked);
+    localStorage.setItem("id", id);
+    localStorage.setItem("isBlocked", isBlocked);
   };
 
   async function blockOrUnblock() {
-    let uId = localStorage.getItem('id');
-    const blockValue = localStorage.getItem('isBlocked');
+    let uId = localStorage.getItem("id");
+    const blockValue = localStorage.getItem("isBlocked");
     blockOrUnblockAdmin(uId, blockValue, data.accessToken).then((data) => {
-      console.log('117', data);
-      toast.success('Success');
+      console.log("117", data);
+      toast.success("Success");
       preload();
     });
     setShowBlockModal(false);
-    localStorage.removeItem('isBlocked');
-    localStorage.removeItem('id');
+    localStorage.removeItem("isBlocked");
+    localStorage.removeItem("id");
   }
+
+  //Filter Modal
+  const handleShowFilterModal = () => {
+    setShowFilterModal(true);
+  };
+
 
   // Preload Admin Function
   const preload = () => {
-    adminListData(data.accessToken)
+    adminListData(data.accessToken, checkBoxValue, adminType)
       .then((data) => {
         setAdminData(data.data.rows);
         setFilterData(data.data.rows);
-
-        // preload2();
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  const filter = () => {
+    preload();
+    setShowFilterModal(false);
+    setCheckbox("");
+    setAdminType("");
+    console.log(checkBox, adminType, "after clearing the state in preload");
+  };
+
+ 
+
+    // Handle adminType dropdown
+    const handleAdminType = (name) => (event) => {
+      userType = event.target.value;
+      console.log(userType);
+  
+      setAdminType({...adminType, userType});
+  
+      console.log("LINE 57",adminType)
+  
+    };
+
+    const clearFilter =  (e) => {
+      setAdminType({...adminType, userType});
+  
+      console.log("LINE 57",adminType)
+
+      console.log(checkBox, "inside clear filter");
+      setCheckbox("");
+      setAdminType("");
+      preload();
+      console.log(checkBox, adminType, "after clearing the state");
+      setShowFilterModal(false);
+    };
 
   // const preload2 = () => {
   //   adminData.map((individualData, index) => {
@@ -180,34 +232,34 @@ const AdminTable = () => {
         row.admin_permissions[0]?.adminManagement == 1 ? (
           <span className="badge bg-secondary access">Admin</span>
         ) : (
-          ''
+          ""
         ),
         row.admin_permissions[0]?.dashboard == 1 ? (
           <span className="badge bg-secondary access">Dashboard</span>
         ) : (
-          ''
+          ""
         ),
         row.admin_permissions[0]?.notificationManagement == 1 ? (
           <span className="badge bg-secondary access">Notification</span>
         ) : (
-          ''
+          ""
         ),
         row.admin_permissions[0]?.userManagement == 1 ? (
           <span className="badge bg-secondary access">User Management</span>
         ) : (
-          ''
+          ""
         ),
         row.admin_permissions[0]?.systemConfiguration == 1 ? (
           <span className="badge bg-secondary access">
             System Configuration
           </span>
         ) : (
-          ''
+          ""
         ),
         row.admin_permissions[0]?.systemConfiguration == 1 ? (
           <span className="badge bg-secondary access">Report</span>
         ) : (
-          ''
+          ""
         ),
       ],
 
@@ -222,51 +274,51 @@ const AdminTable = () => {
       ),
       selector: (row) =>
         row.id === userId ? (
-          ''
+          ""
         ) : (
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '110px',
+              display: "flex",
+              justifyContent: "space-between",
+              width: "110px",
             }}
           >
             {/* EDIT */}
             <button
-              style={{ border: 'none', background: 'none' }}
+              style={{ border: "none", background: "none" }}
               onClick={() => navigate(`/editadmin/${row.id}`)}
             >
               <i
                 className="fa-solid fa-pen fa-lg"
-                style={{ color: '#001f4d' }}
+                style={{ color: "#001f4d" }}
               ></i>
             </button>
 
             {/* DELETE */}
             <button
-              style={{ border: 'none', background: 'none' }}
+              style={{ border: "none", background: "none" }}
               onClick={() => handleShow(row.id)}
             >
               <i
                 className="fa-regular fa-trash-can fa-lg"
-                style={{ color: '#242B2E' }}
+                style={{ color: "#242B2E" }}
               ></i>
             </button>
 
             {/* BLOCK */}
             <button
-              style={{ border: 'none', background: 'none' }}
+              style={{ border: "none", background: "none" }}
               onClick={() => handleShowBlockModal(row.id, row.isBlocked)}
             >
               {row.isBlocked == 0 ? (
                 <i
                   className="fa-sharp fa-solid fa-check fa-lg"
-                  style={{ color: '#3DBE29' }}
+                  style={{ color: "#3DBE29" }}
                 ></i>
               ) : (
                 <i
                   class="fa-sharp fa-solid fa-xmark fa-lg"
-                  style={{ color: '#E21717' }}
+                  style={{ color: "#E21717" }}
                 ></i>
               )}
             </button>
@@ -277,19 +329,19 @@ const AdminTable = () => {
   ];
 
   const paginationComponentOptions = {
-    rangeSeparatorText: 'Total',
+    rangeSeparatorText: "Total",
     selectAllRowsItem: true,
-    selectAllRowsItemText: 'All',
+    selectAllRowsItemText: "All",
   };
 
   useEffect(() => {
     preload();
   }, []);
-
-  // useEffect(() => {
-  //   preload2();
-  // }, [preload]);
-
+  /* 
+  useEffect(() => {
+    clearFilter();
+  }, [checkBox]);
+ */
   useEffect(() => {
     const result = adminData.filter((value) => {
       return (
@@ -312,11 +364,14 @@ const AdminTable = () => {
       {/* {console.log(adminData)} */}
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
         <Header category="Page" title="Admin" data={adminData} />
-        <div style={{float: "right"}} className="mr-6">
-          < FiFilter size={25}/>
+        <div style={{ float: "right" }} className="mr-6">
+          <FiFilter
+            size={25}
+            style={{ cursor: "pointer" }}
+            onClick={handleShowFilterModal}
+          />
         </div>
         <DataTable
-          // title="Admin"
           columns={colunms}
           data={filterData}
           pagination
@@ -333,7 +388,7 @@ const AdminTable = () => {
               className="  form-control"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              style={{ width: '100%', padding: '10px' }}
+              style={{ width: "100%", padding: "10px" }}
             />
           }
         />
@@ -399,7 +454,7 @@ const AdminTable = () => {
                       className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                       onClick={() => {
                         setShowBlockModal(false);
-                        localStorage.removeItem('isBlocked');
+                        localStorage.removeItem("isBlocked");
                       }}
                     >
                       <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
@@ -410,7 +465,7 @@ const AdminTable = () => {
                   {/*body*/}
 
                   <div className="relative p-6 flex-auto">
-                    {localStorage.getItem('isBlocked') == 0 ? (
+                    {localStorage.getItem("isBlocked") == 0 ? (
                       <p className="my-4 text-slate-500 text-lg leading-relaxed">
                         Are you sure, you want to block this user?
                       </p>
@@ -434,10 +489,201 @@ const AdminTable = () => {
                       type="button"
                       onClick={() => {
                         setShowBlockModal(false);
-                        localStorage.removeItem('isBlocked');
+                        localStorage.removeItem("isBlocked");
                       }}
                     >
                       No
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          </>
+        ) : null}
+
+        {showFilterModal ? (
+          <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+              <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                {/*content*/}
+                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                  {/*header*/}
+                  <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                    <h3 className="text-3xl font-semibold">Filter</h3>
+                    <button
+                      className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                      onClick={() => {
+                        setShowFilterModal(false);
+                      }}
+                    >
+                      <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  {/*body*/}
+
+                  <div className="relative p-6 flex-auto">
+                    {/* <label for="underline_select" >
+                      Admin Type
+                    </label> */}
+                    <div class="mb-3 xl:w-full ">
+                      <label
+                        class="block text-gray-700 text-sm font-bold mb-2 "
+                        for=""
+                      >
+                        Admin Type
+                      </label>
+                      <select
+                        class="form-select w-full appearance-non block  px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        aria-label=""
+                        onChange={handleAdminType("adminType")}
+                      >
+                        <option value=""></option>
+                        <option value="SUPER_ADMIN">Super Admin</option>
+                        <option value="SUB_ADMIN">Sub Admin</option>
+                      </select>
+                    </div>
+
+                    <label 
+                    class="block text-gray-700 text-sm font-bold mb-2 ">
+                      Admin Access
+                    </label>
+
+                    <div className="flex justify-between mb-2.5 gap-28">
+                      <div class="flex flex-col">
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox"
+                            id="dashboard"
+                            value={checkBox}
+                            onChange={handleCheckBox}
+                            name="dashboard"
+                          />
+                          <label
+                            class="form-check-label mr-1.5 mb-2 inline-block text-gray-800 opacity-50"
+                            for="inlineCheckbox1"
+                          >
+                            Dashboard
+                          </label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox"
+                            id="report"
+                            value={checkBox}
+                            name="reportManagement"
+                            onChange={handleCheckBox}
+                            // onClick={test}
+                          />
+                          <label
+                            class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
+                            for="inlineCheckbox2"
+                          >
+                            Report
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="flex flex-col">
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox"
+                            id="inlineCheckbox1"
+                            value={checkBox}
+                            name="userManagement"
+                            onChange={handleCheckBox}
+                            // onClick={test}
+                          />
+                          <label
+                            class="form-check-label mr-1.5 mb-2 inline-block text-gray-800 opacity-50 "
+                            for="inlineCheckbox1"
+                          >
+                            User Mangement
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox"
+                            id="inlineCheckbox2"
+                            value={checkBox}
+                            name="adminManagement"
+                            onChange={handleCheckBox}
+
+                            // onClick={test}
+                          />
+                          <label
+                            class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
+                            for="inlineCheckbox2"
+                          >
+                            Admin
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="flex flex-col">
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox"
+                            id="inlineCheckbox1"
+                            value={checkBox}
+                            name="notificationManagement"
+                            onChange={handleCheckBox}
+                            // onClick={test}
+                          />
+                          <label
+                            class="form-check-label mr-1.5 mb-2 inline-block text-gray-800 opacity-50"
+                            for="inlineCheckbox1"
+                          >
+                            Notification
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            type="checkbox"
+                            id="inlineCheckbox2"
+                            value={checkBox}
+                            name="systemConfiguration"
+                            onChange={handleCheckBox}
+                          />
+                          <label
+                            class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
+                            for="inlineCheckbox2"
+                          >
+                            System Configuration
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/*footer*/}
+                  <div className="flex justify-between items-center w-full p-6 border-t border-solid border-slate-200 rounded-b">
+                    <button
+                      className=" bg-black text-white w-1/2 font-bold uppercase px-6 py-2 text-sm outline-none rounded shadow hover:shadow-lg focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={filter}
+                    >
+                      Apply
+                    </button>
+                    <button
+                      className="bg-red-500 text-white active:bg-emerald-600  w-1/2 font-bold uppercase text-sm px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      // onClick={() => {
+                      //   setCheckbox("")
+                      //   setShowFilterModal(false)
+                      //   filter()
+                      // }}
+                      onClick={clearFilter}
+                    >
+                      Clear Filter
                     </button>
                   </div>
                 </div>
