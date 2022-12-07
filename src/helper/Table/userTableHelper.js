@@ -47,3 +47,23 @@ export const blockOrUnblockUser = async (id, isBlocked, token) => {
       console.log(error);
     });
 };
+
+  // GET INDIVIDUAL USER DATA
+  export const userIndividualData = async (id, token) => {
+    console.log(API);
+    console.log(token);
+    return await fetch(`${API}admin/v1/users/${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };

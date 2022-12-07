@@ -358,6 +358,7 @@ const AdminTable = () => {
           onRowClicked={handleRowClicked}
           selectableRowsHighlight
           highlightOnHover
+          pointerOnHover
           subHeader
           subHeaderComponent={
             <input

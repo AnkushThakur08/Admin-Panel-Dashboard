@@ -59,8 +59,11 @@ import AddAdminAchievement from './pages/Add/AddAdminAchievement';
 
 // View Pages
 import ViewAdminAchievement from './pages/ViewDetails/ViewAdminAchievement';
-import AdminDetails from './pages/ViewDetails/AdminDetails';
 import ViewAppVersion from './pages/ViewDetails/ViewAppVersion';
+
+import AdminDetails from './pages/ViewDetails/AdminDetails';
+import UserDetails from './pages/ViewDetails/UserDetails';
+import CategoryDetails from './pages/ViewDetails/CategoryDetails';
 
 // Custom CSS
 import './App.css';
@@ -92,8 +95,6 @@ const App = () => {
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <ToastContainer position="top-right" />
       <BrowserRouter>
-        {/* {data.accessToken ? :} */}
-        {/* {console.log(data.accessToken)} */}
         {!localStorage.getItem('jwt') ? (
           <Routes>
             <Route path="/login" element={<Login />} />
@@ -209,6 +210,14 @@ const App = () => {
                   <Route
                     path="viewAppVersion/:id"
                     element={<ViewAppVersion />}
+                  />
+                  <Route
+                    path="/viewUserDetails/:id"
+                    element={<UserDetails />}
+                  />
+                  <Route
+                    path="/viewCategory/:id"
+                    element={<CategoryDetails />}
                   />
                 </Routes>
               </div>
