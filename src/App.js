@@ -58,6 +58,7 @@ import AddAppVersion from './pages/Add/AddAppVersion';
 import './App.css';
 import EditAppVersion from './pages/Edit/EditAppVersion';
 import EditAdminAchievement from './pages/Edit/EditAdminAchievement';
+import AdminDetails from './pages/ViewDetails/AdminDetails';
 
 const App = () => {
   const {
@@ -172,6 +173,7 @@ const App = () => {
                   {/* EDIT ROUTES */}
 
                   <Route path="/editadmin/:id" element={<EditAdmin />} />
+                  <Route path="/admindetails/:id" element={<AdminDetails />} />
                   <Route
                     path="/editappversion/:id"
                     element={<EditAppVersion />}

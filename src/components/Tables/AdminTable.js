@@ -334,11 +334,10 @@ const AdminTable = () => {
     setFilterData(result);
   }, [search]);
 
-  // console.log(admin);
 
-  // const handleRowClicked = (row) => {
-  //   navigate(`/admindetails/${row.uId}`);
-  // };
+  const handleRowClicked = (row) => {
+    navigate(`/admindetails/${row.id}`);
+  };
 
   return (
     <>
@@ -357,7 +356,7 @@ const AdminTable = () => {
           pagination
           paginationComponentOptions={paginationComponentOptions}
           fixedHeader
-          // onRowClicked={handleRowClicked}
+          onRowClicked={handleRowClicked}
           selectableRowsHighlight
           highlightOnHover
           subHeader
