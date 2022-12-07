@@ -232,7 +232,8 @@ const AdminAchievement = () => {
 
       <button
         title="Add"
-        class="fixed z-90 bottom-24 right-3.5 bg-cyan-400 w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl "
+        class="fixed z-90 bottom-24 right-3.5 bg-[#1A97F5] w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl"
+        onClick={() => navigate('/addAdminAchievement')}
       >
         +
       </button>

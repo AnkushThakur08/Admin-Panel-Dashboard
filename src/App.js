@@ -53,6 +53,7 @@ import EditAdmin from './pages/Edit/EditAdmin';
 
 // ADD PAGES
 import AddAppVersion from './pages/Add/AddAppVersion';
+import AddAdminAchievement from './pages/Add/AddAdminAchievement';
 
 // Custom CSS
 import './App.css';
@@ -131,6 +132,7 @@ const App = () => {
 
                 <Routes>
                   {/* dashboard  */}
+
                   {/* <Route path="/dashboard" element={<Ecommerce />} /> */}
                   <Route path="/ecommerce" element={<Ecommerce />} />
 
@@ -142,10 +144,12 @@ const App = () => {
                   <Route path="/admin" element={<AdminTable />} />
                   <Route path="/appVersion" element={<AppVersionTable />} />
                   <Route path="/category" element={<Category />} />
+
                   <Route
                     path="/adminAchievement"
                     element={<AdminAchievement />}
                   />
+
                   <Route path="/customers" element={<Customers />} />
 
                   {/* apps  */}
@@ -158,10 +162,12 @@ const App = () => {
                   <Route path="/line" element={<Line />} />
                   <Route path="/area" element={<Area />} />
                   <Route path="/reportedBugs" element={<ReportedBugs />} />
+
                   <Route
                     path="/reportedContent"
                     element={<ReportedContent />}
                   />
+
                   <Route path="/bar" element={<Bar />} />
                   <Route path="/pie" element={<Pie />} />
                   <Route path="/financial" element={<Financial />} />
@@ -172,6 +178,7 @@ const App = () => {
                   {/* EDIT ROUTES */}
 
                   <Route path="/editadmin/:id" element={<EditAdmin />} />
+
                   <Route
                     path="/editappversion/:id"
                     element={<EditAppVersion />}
@@ -182,6 +189,11 @@ const App = () => {
                   <Route
                     path="/editAdminAchievement/:id"
                     element={<EditAdminAchievement />}
+                  />
+
+                  <Route
+                    path="/addAdminAchievement"
+                    element={<AddAdminAchievement />}
                   />
                 </Routes>
               </div>
