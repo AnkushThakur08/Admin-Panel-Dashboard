@@ -49,7 +49,7 @@ const EditAdmin = () => {
     console.log(userid);
     adminIndividualData(userid, data.accessToken)
       .then((data) => {
-
+        console.log(data,"DATA")
         setFormData({...formData, 
           firstName: data.data.firstName,
           lastName: data.data.lastName,
