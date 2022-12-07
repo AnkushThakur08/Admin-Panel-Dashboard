@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 // REACT ROUTER DOM
-import { useParams } from "react-router-dom";
+import { useParams, Link} from "react-router-dom";
 
 // HEADER COMPONENT
 import { Header } from "../../components";
@@ -61,6 +61,9 @@ const AdminDetails = () => {
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+      <Link to="/admin">
+        <IoIosArrowBack size={25} className="mb-3" />
+      </Link>
       <Header category="Details" title="Admin Details" />
       <div class="max-w-full rounded overflow-hidden shadow-lg pb-10">
         {/* <div class="px-6 py-4">
@@ -69,19 +72,19 @@ const AdminDetails = () => {
         <div class="px-6 pt-4 pb-2">
           <table class="border-none ">
             <tbody>
-              <tr >
+              <tr>
                 <td class="border-none pr-32  py-2">First Name</td>
                 <td class="border-none">{firstName}</td>
               </tr>
-              <tr >
+              <tr>
                 <td class="border-none pr-32 py-2">Last Name</td>
                 <td class="border-none">{lastName}</td>
               </tr>
-              <tr >
+              <tr>
                 <td class="border-none pr-32 py-2">Email</td>
                 <td class="border-none">{email}</td>
               </tr>
-              <tr >
+              <tr>
                 <td class="border-none pr-32 py-2">Admin Type</td>
                 <td class="border-none">{adminType}</td>
               </tr>

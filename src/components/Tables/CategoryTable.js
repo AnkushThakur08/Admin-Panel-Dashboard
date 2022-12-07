@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 // React Table
-import DataTable from 'react-data-table-component';
+import DataTable from "react-data-table-component";
 
 // React Router
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 // React Toastify
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 // Components
-import { Header } from '../../components';
+import { Header } from "../../components";
 
 // API
-import { categoryListData } from '../../helper/Table/TableHelper';
-import { isAuthenticated } from '../../helper/login/loginHelper';
-import { blockOrUnblockAdmin } from '../../helper/Table/categoryTableHelper';
+import { categoryListData } from "../../helper/Table/TableHelper";
+import { isAuthenticated } from "../../helper/login/loginHelper";
+import { blockOrUnblockCategories } from "../../helper/Table/categoryTableHelper";
+import { deleteCategoryData } from "../../helper/Table/categoryTableHelper";
 
 const CategoryTable = () => {
   // Navigate
@@ -27,62 +28,68 @@ const CategoryTable = () => {
   console.log(data.accessToken);
 
   // STATE
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [categoryData, setCategoryData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [showBlockModal, setShowBlockModal] = useState(false);
-  const [showDeleteModel, setshowDeleteModel] = useState(false);
+  const [showDeleteModel, setshowDeleteModal] = useState(false);
 
   // BLOCK MODEL
   const handleShowBlockModal = (id, isBlocked) => {
     console.log(id, isBlocked);
     setShowBlockModal(true);
-    localStorage.setItem('id', id);
-    localStorage.setItem('isBlocked', isBlocked);
+    localStorage.setItem("id", id);
+    localStorage.setItem("isBlocked", isBlocked);
   };
 
   async function blockOrUnblock() {
-    let userID = localStorage.getItem('id');
-    const blockValue = localStorage.getItem('isBlocked');
-    blockOrUnblockAdmin(userID, blockValue, data.accessToken).then((data) => {
-      console.log('117', data);
-      toast.success('Success');
-      Preload();
-    });
+    let userID = localStorage.getItem("id");
+    const blockValue = localStorage.getItem("isBlocked");
+    blockOrUnblockCategories(userID, blockValue, data.accessToken).then(
+      (data) => {
+        console.log("117", data);
+        toast.success("Success");
+        preload();
+      }
+    );
     setShowBlockModal(false);
-    localStorage.removeItem('isBlocked');
-    localStorage.removeItem('id');
+    localStorage.removeItem("isBlocked");
+    localStorage.removeItem("id");
   }
   // const blockedvalue = localStorage.getItem('isBlocked');
 
   // Preload Category Function
-  const Preload = () => {
+  const preload = () => {
     categoryListData(data.accessToken)
       .then((data) => {
-        console.log('responseeee', data);
+        console.log("responseeee", data);
         setCategoryData(data.data.data.rows);
         setFilterData(data.data.data.rows);
-        console.log('THIS IS DATA', data);
+        console.log("THIS IS DATA", data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  /*  async function deleteAdmin() {
-    let uId = localStorage.getItem("adminId");
-    await fetch(`http://localhost:3002/admin/deleteAdmin/${uId}`, {
-      method: "DELETE",
-    }).then((result) => {
-      result.json().then((resq) => {
-        toast.success("Admin deleted successfully", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-        admin();
-        handleClose();
-      });
+  // DELETE CATEGORY
+
+  const handleShow = (id) => {
+    setshowDeleteModal(true);
+    localStorage.setItem("categoryId", id);
+  };
+
+  async function deleteCategory() {
+    let ID = localStorage.getItem("categoryId");
+    console.log("ID", ID);
+    deleteCategoryData(data.accessToken, ID).then((result) => {
+      console.log(result,"78");
+      toast(result.data.message);
+      preload();
     });
-  } */
+    setshowDeleteModal(false);
+    localStorage.removeItem("categoryId");
+  }
 
   const colunms = [
     {
@@ -151,39 +158,38 @@ const CategoryTable = () => {
         // ) : (
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '110px',
+            display: "flex",
+            justifyContent: "space-between",
+            width: "110px",
           }}
         >
           <button
-            style={{ border: 'none', background: 'none' }}
+            style={{ border: "none", background: "none" }}
             // onClick={() => navigate(`/editadmin/${row.uId}`)}
           >
             <i className="fa-solid fa-pen fa-lg"></i>
           </button>
           <button
-            style={{ border: 'none', background: 'none' }}
-            // onClick={() => deleteAdmin(row.uId)}
-            // onClick={() => handleShow(row.uId)}
+            style={{ border: "none", background: "none" }}
+            onClick={() => handleShow(row.id)}
           >
             <i className="fa-regular fa-trash-can fa-lg"></i>
           </button>
 
           {/* BLOCK */}
           <button
-            style={{ border: 'none', background: 'none' }}
+            style={{ border: "none", background: "none" }}
             onClick={() => handleShowBlockModal(row.id, row.isBlocked)}
           >
             {row.isBlocked == 0 ? (
               <i
                 className="fa-sharp fa-solid fa-check fa-lg"
-                style={{ color: '#3DBE29' }}
+                style={{ color: "#3DBE29" }}
               ></i>
             ) : (
               <i
                 class="fa-sharp fa-solid fa-xmark fa-lg"
-                style={{ color: '#E21717' }}
+                style={{ color: "#E21717" }}
               ></i>
             )}
           </button>
@@ -194,13 +200,13 @@ const CategoryTable = () => {
   ];
 
   const paginationComponentOptions = {
-    rangeSeparatorText: 'Total',
+    rangeSeparatorText: "Total",
     selectAllRowsItem: true,
-    selectAllRowsItemText: 'All',
+    selectAllRowsItemText: "All",
   };
 
   useEffect(() => {
-    Preload();
+    preload();
   }, []);
 
   useEffect(() => {
@@ -214,21 +220,21 @@ const CategoryTable = () => {
   }, [search]);
   // console.log(admin);
 
-  // const handleRowClicked = (row) => {
-  //   navigate(`/admindetails/${row.uId}`);
-  // };
+  const handleRowClicked = (row) => {
+    navigate(`/viewCategory/${row.id}`);
+  };
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <Header category="Table" title="Category" />
       <DataTable
-        // title="Admin"
         columns={colunms}
         data={filterData}
         pagination
         paginationComponentOptions={paginationComponentOptions}
         fixedHeader
-        // onRowClicked={handleRowClicked}
+        onRowClicked={handleRowClicked}
+        pointerOnHover
         selectableRowsHighlight
         highlightOnHover
         subHeader
@@ -239,7 +245,7 @@ const CategoryTable = () => {
             className="  form-control"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{ width: '100%', padding: '10px' }}
+            style={{ width: "100%", padding: "10px" }}
           />
         }
       />
@@ -252,14 +258,14 @@ const CategoryTable = () => {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">Confirmation</h3>
-                  <button
+                  {/* <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={handleClose}
                   >
                     <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
                       ×
                     </span>
-                  </button>
+                  </button> */}
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
@@ -272,14 +278,14 @@ const CategoryTable = () => {
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={deleteAdmin}
+                    onClick={deleteCategory}
                   >
                     Yes
                   </button>
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => setshowDeleteModal(false)}
                   >
                     No
                   </button>
@@ -304,7 +310,7 @@ const CategoryTable = () => {
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => {
                       setShowBlockModal(false);
-                      localStorage.removeItem('isBlocked');
+                      localStorage.removeItem("isBlocked");
                     }}
                   >
                     <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
@@ -315,7 +321,7 @@ const CategoryTable = () => {
                 {/*body*/}
 
                 <div className="relative p-6 flex-auto">
-                  {localStorage.getItem('isBlocked') == 0 ? (
+                  {localStorage.getItem("isBlocked") == 0 ? (
                     <p className="my-4 text-slate-500 text-lg leading-relaxed">
                       Are you sure, you want to block this user?
                     </p>
@@ -339,7 +345,7 @@ const CategoryTable = () => {
                     type="button"
                     onClick={() => {
                       setShowBlockModal(false);
-                      localStorage.removeItem('isBlocked');
+                      localStorage.removeItem("isBlocked");
                     }}
                   >
                     No

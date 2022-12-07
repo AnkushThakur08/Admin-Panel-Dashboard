@@ -50,16 +50,21 @@ import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 
 // Edit Pages
 import EditAdmin from './pages/Edit/EditAdmin';
+import EditAppVersion from './pages/Edit/EditAppVersion';
+import EditAdminAchievement from './pages/Edit/EditAdminAchievement';
 
 // ADD PAGES
 import AddAppVersion from './pages/Add/AddAppVersion';
 import AddAdminAchievement from './pages/Add/AddAdminAchievement';
 
+// VIEW PAGES
+import AdminDetails from './pages/ViewDetails/AdminDetails';
+import UserDetails from './pages/ViewDetails/UserDetails';
+import CategoryDetails from './pages/ViewDetails/CategoryDetails';
+
 // Custom CSS
 import './App.css';
-import EditAppVersion from './pages/Edit/EditAppVersion';
-import EditAdminAchievement from './pages/Edit/EditAdminAchievement';
-import AdminDetails from './pages/ViewDetails/AdminDetails';
+
 
 const App = () => {
   const {
@@ -88,8 +93,6 @@ const App = () => {
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <ToastContainer position="top-right" />
       <BrowserRouter>
-        {/* {data.accessToken ? :} */}
-        {/* {console.log(data.accessToken)} */}
         {!localStorage.getItem('jwt') ? (
           <Routes>
             <Route path="/login" element={<Login />} />
@@ -197,6 +200,8 @@ const App = () => {
 
                   {/* Views Routes */}
                   <Route path="/admindetails/:id" element={<AdminDetails />} />
+                  <Route path='/viewUserDetails/:id' element={<UserDetails/>}/>
+                  <Route path='/viewCategory/:id' element={<CategoryDetails/>}/>
                 </Routes>
               </div>
               {/* <Footer /> */}
