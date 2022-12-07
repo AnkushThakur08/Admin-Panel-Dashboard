@@ -179,11 +179,10 @@ const App = () => {
                   {/* EDIT ROUTES */}
 
                   <Route path="/editadmin/:id" element={<EditAdmin />} />
-<<<<<<< HEAD
-
-=======
-                  <Route path="/admindetails/:id" element={<AdminDetails />} />
->>>>>>> remotes/origin/7thDec
+                  <Route
+                    path="/editAdminAchievement/:id"
+                    element={<EditAdminAchievement />}
+                  />
                   <Route
                     path="/editappversion/:id"
                     element={<EditAppVersion />}
@@ -192,14 +191,12 @@ const App = () => {
                   {/* ADD ROUTES */}
                   <Route path="/addAppVersion" element={<AddAppVersion />} />
                   <Route
-                    path="/editAdminAchievement/:id"
-                    element={<EditAdminAchievement />}
-                  />
-
-                  <Route
                     path="/addAdminAchievement"
                     element={<AddAdminAchievement />}
                   />
+
+                  {/* Views Routes */}
+                  <Route path="/admindetails/:id" element={<AdminDetails />} />
                 </Routes>
               </div>
               {/* <Footer /> */}
