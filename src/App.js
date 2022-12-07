@@ -50,16 +50,20 @@ import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 
 // Edit Pages
 import EditAdmin from './pages/Edit/EditAdmin';
+import EditAppVersion from './pages/Edit/EditAppVersion';
+import EditAdminAchievement from './pages/Edit/EditAdminAchievement';
 
 // ADD PAGES
 import AddAppVersion from './pages/Add/AddAppVersion';
 import AddAdminAchievement from './pages/Add/AddAdminAchievement';
 
+// View Pages
+import ViewAdminAchievement from './pages/ViewDetails/ViewAdminAchievement';
+import AdminDetails from './pages/ViewDetails/AdminDetails';
+import ViewAppVersion from './pages/ViewDetails/ViewAppVersion';
+
 // Custom CSS
 import './App.css';
-import EditAppVersion from './pages/Edit/EditAppVersion';
-import EditAdminAchievement from './pages/Edit/EditAdminAchievement';
-import AdminDetails from './pages/ViewDetails/AdminDetails';
 
 const App = () => {
   const {
@@ -197,6 +201,15 @@ const App = () => {
 
                   {/* Views Routes */}
                   <Route path="/admindetails/:id" element={<AdminDetails />} />
+                  <Route
+                    path="viewAdminAchievement/:id"
+                    element={<ViewAdminAchievement />}
+                  />
+
+                  <Route
+                    path="viewAppVersion/:id"
+                    element={<ViewAppVersion />}
+                  />
                 </Routes>
               </div>
               {/* <Footer /> */}

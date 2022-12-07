@@ -50,6 +50,11 @@ const AppVersionTable = () => {
     localStorage.removeItem('AppID');
   };
 
+  // HANDLE ROW CLICK
+  const handleRowClick = (row) => {
+    navigate(`/viewAppVersion/${row.id}`);
+  };
+
   // Preload App Function
   const preload = () => {
     appVersionListData(data.accessToken)
@@ -189,9 +194,10 @@ const AppVersionTable = () => {
         pagination
         paginationComponentOptions={paginationComponentOptions}
         fixedHeader
-        // onRowClicked={handleRowClicked}
+        onRowClicked={handleRowClick}
         selectableRowsHighlight
         highlightOnHover
+        pointerOnHover
         subHeader
         subHeaderComponent={
           <input

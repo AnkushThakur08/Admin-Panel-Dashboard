@@ -9,9 +9,6 @@ import { useNavigate } from 'react-router-dom';
 // React Toastify
 import { toast } from 'react-toastify';
 
-// Axios
-import axios from 'axios';
-
 // Components
 import { Header } from '../../components';
 
@@ -21,7 +18,7 @@ import { achievementListData } from '../../helper/Table/TableHelper';
 import { deleteAchievementData } from '../../helper/adminAchievementHelper/AdminAchievement';
 
 const AdminAchievement = () => {
-  const { data, token } = isAuthenticated();
+  const { data } = isAuthenticated();
 
   // useNavigate
   const navigate = useNavigate();
@@ -36,6 +33,11 @@ const AdminAchievement = () => {
   const handleShow = (id) => {
     setshowDeleteModal(true);
     localStorage.setItem('achievementId', id);
+  };
+
+  // HANDLE ROW CLICK
+  const handleRowClick = (row) => {
+    navigate(`/viewAdminAchievement/${row.id}`);
   };
 
   // FETCHING TABLE DATA
@@ -161,10 +163,10 @@ const AdminAchievement = () => {
         pagination
         paginationComponentOptions={paginationComponentOptions}
         fixedHeader
-        // onRowClicked={handleRowClicked}
+        onRowClicked={handleRowClick}
         selectableRowsHighlight
         highlightOnHover
-        // progressPending
+        pointerOnHover
         subHeader
         subHeaderComponent={
           <input
@@ -230,6 +232,7 @@ const AdminAchievement = () => {
         </>
       ) : null}
 
+      {/* ADD Button */}
       <button
         title="Add"
         class="fixed z-90 bottom-24 right-3.5 bg-[#1A97F5] w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl"

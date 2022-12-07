@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API } from '../../backend';
 
-export const getAppVersionIndividualDetail = async (token, id) => {
+export const getAppVersionIndividualDetail = async (id, token) => {
   return await fetch(
     `${API}admin/v1/systemConfiguration/appVersion/detail/${id}`,
     {

@@ -334,7 +334,6 @@ const AdminTable = () => {
     setFilterData(result);
   }, [search]);
 
-
   const handleRowClicked = (row) => {
     navigate(`/admindetails/${row.id}`);
   };
