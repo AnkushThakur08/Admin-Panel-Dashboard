@@ -64,7 +64,7 @@ const AddAdminAchievement = () => {
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-        <Header category="Page" title="ADD Admin Achievement" />
+        <Header category="Page" title="Add Admin Achievement" />
         {/* <div class="w-full max-w-xs  "> */}
         <form
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full"

@@ -117,47 +117,6 @@ const ReportedBugs = () => {
       selector: (row) => row.status,
       sortable: true,
     },
-    {
-      name: (
-        <h6>
-          <b>Action</b>
-        </h6>
-      ),
-      selector: (row) => (
-        // row.uId === userid ? (
-        //   ""
-        // ) : (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '110px',
-          }}
-        >
-          <button
-            style={{ border: 'none', background: 'none' }}
-            // onClick={() => navigate(`/editadmin/${row.uId}`)}
-          >
-            <i className="fa-solid fa-pen fa-lg"></i>
-          </button>
-          <button
-            style={{ border: 'none', background: 'none' }}
-            // onClick={() => deleteAdmin(row.uId)}
-            // onClick={() => handleShow(row.uId)}
-          >
-            <i className="fa-regular fa-trash-can fa-lg"></i>
-          </button>
-          <button
-            style={{ border: 'none', background: 'none' }}
-            // onClick={() => blockAdmin(row.uId)}
-          >
-            <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
-          </button>
-        </div>
-      ),
-      // ),
-      grow: 1.5
-    },
   ];
 
   const paginationComponentOptions = {
@@ -215,6 +174,7 @@ useEffect(() => {
         fixedHeader
         // onRowClicked={handleRowClicked}
         selectableRowsHighlight
+        pointerOnHover
         highlightOnHover
         subHeader
         subHeaderComponent={
@@ -229,20 +189,6 @@ useEffect(() => {
         }
       />
 
-      {/* <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmation Message</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure, you want to delete this record?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={deleteAdmin}>
-            Yes
-          </Button>
-          <Button variant="secondary" onClick={handleClose}>
-            No
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
     </div>
   );
 };

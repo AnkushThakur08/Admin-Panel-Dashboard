@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 // React Table
-import DataTable from 'react-data-table-component';
+import DataTable from "react-data-table-component";
 
 // React-Router-DOM
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 // React Toastify
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 // COomponents
-import { Header } from '../../components';
+import { Header } from "../../components";
+
+// REACT ICON 
+import {FiFilter} from "react-icons/fi"
 
 // API
-import { isAuthenticated } from '../../helper/login/loginHelper';
-import { userListData } from '../../helper/Table/TableHelper';
-import { blockOrUnblockUser } from '../../helper/Table/userTableHelper';
-import { deleteUserData } from '../../helper/Table/userTableHelper';
+import { isAuthenticated } from "../../helper/login/loginHelper";
+import { userListData } from "../../helper/Table/TableHelper";
+import { blockOrUnblockUser } from "../../helper/Table/userTableHelper";
+import { deleteUserData } from "../../helper/Table/userTableHelper";
 
 const UserTable = () => {
   // Navigation
@@ -26,11 +29,13 @@ const UserTable = () => {
   const { data } = isAuthenticated();
 
   // STATE
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [userData, setUserData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [showBlockModal, setShowBlockModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [isBlock, setIsBlock] = useState("")
 
   // const blockedvalue = localStorage.getItem('isBlocked');
 
@@ -38,53 +43,58 @@ const UserTable = () => {
   const handleShowDeleteModal = (id) => {
     console.log(id);
     setShowDeleteModal(true);
-    localStorage.setItem('userId', id);
+    localStorage.setItem("userId", id);
   };
 
   const deleteUser = () => {
-    let uId = localStorage.getItem('userId');
-    console.log('UID', uId);
+    let uId = localStorage.getItem("userId");
+    console.log("UID", uId);
     deleteUserData(data.accessToken, uId).then((result) => {
       console.log(result);
-      toast('Deletion successful.');
+      toast("Deletion successful.");
       preload();
     });
     setShowDeleteModal(false);
-    localStorage.removeItem('userId');
+    localStorage.removeItem("userId");
   };
 
   // BLOCK MODAL
   const handleShowBlockModal = (id, isBlocked) => {
     console.log(id, isBlocked);
     setShowBlockModal(true);
-    localStorage.setItem('id', id);
-    localStorage.setItem('isBlocked', isBlocked);
+    localStorage.setItem("id", id);
+    localStorage.setItem("isBlocked", isBlocked);
   };
 
   async function blockOrUnblock() {
-    let uId = localStorage.getItem('id');
-    const blockValue = localStorage.getItem('isBlocked');
+    let uId = localStorage.getItem("id");
+    const blockValue = localStorage.getItem("isBlocked");
     blockOrUnblockUser(uId, blockValue, data.accessToken).then((data) => {
-      console.log('117', data);
-      toast.success('Success');
+      console.log("117", data);
+      toast.success("Success");
       preload();
     });
     setShowBlockModal(false);
-    localStorage.removeItem('isBlocked');
-    localStorage.removeItem('id');
+    localStorage.removeItem("isBlocked");
+    localStorage.removeItem("id");
   }
 
   // Preload User Function
   const preload = () => {
     userListData(data.accessToken)
       .then((data) => {
-        console.log('DATA', data.data.data.rows);
+        console.log("DATA", data.data.data.rows);
         setUserData(data.data.data.rows);
         setFilterData(data.data.data.rows);
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  // FILTER MODAL
+  const handleChange = (name) => (event) => {
+    setIsBlock(event.target.value);
   };
 
   const colunms = [
@@ -169,14 +179,14 @@ const UserTable = () => {
       selector: (row) => (
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '110px',
+            display: "flex",
+            justifyContent: "space-evenly",
+            width: "110px",
           }}
         >
           {/* DELETE */}
           <button
-            style={{ border: 'none', background: 'none' }}
+            style={{ border: "none", background: "none" }}
             onClick={() => handleShowDeleteModal(row.id)}
           >
             <i className="fa-regular fa-trash-can fa-lg"></i>
@@ -184,18 +194,18 @@ const UserTable = () => {
 
           {/* BLOCK */}
           <button
-            style={{ border: 'none', background: 'none' }}
+            style={{ border: "none", background: "none" }}
             onClick={() => handleShowBlockModal(row.id, row.isBlocked)}
           >
             {row.isBlocked == 0 ? (
               <i
                 className="fa-sharp fa-solid fa-check fa-lg"
-                style={{ color: '#3DBE29' }}
+                style={{ color: "#3DBE29" }}
               ></i>
             ) : (
               <i
                 class="fa-sharp fa-solid fa-xmark fa-lg"
-                style={{ color: '#E21717' }}
+                style={{ color: "#E21717" }}
               ></i>
             )}
           </button>
@@ -205,9 +215,9 @@ const UserTable = () => {
   ];
 
   const paginationComponentOptions = {
-    rangeSeparatorText: 'Total',
+    rangeSeparatorText: "Total",
     selectAllRowsItem: true,
-    selectAllRowsItemText: 'All',
+    selectAllRowsItemText: "All",
   };
 
   useEffect(() => {
@@ -218,7 +228,9 @@ const UserTable = () => {
     const result = userData.filter((value) => {
       return (
         value.firstName.toLowerCase().match(search.toLowerCase()) ||
-        value.email.toLowerCase().match(search.toLowerCase())
+        value.email.toLowerCase().match(search.toLowerCase()) ||
+        value.phoneNumber.match(search) ||
+        value.id.toLowerCase().match(search.toLowerCase())
       );
     });
     setFilterData(result);
@@ -231,6 +243,13 @@ const UserTable = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <Header category="Page" title="User" />
+      <div style={{ float: "right" }} className="mr-6">
+        <FiFilter
+          size={25}
+          style={{ cursor: "pointer" }}
+          onClick={() => setShowFilterModal(true)}
+        />
+      </div>
       <DataTable
         columns={colunms}
         data={filterData}
@@ -249,7 +268,7 @@ const UserTable = () => {
             className="  form-control"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{ width: '100%', padding: '10px' }}
+            style={{ width: "100%", padding: "10px" }}
           />
         }
       />
@@ -315,7 +334,7 @@ const UserTable = () => {
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => {
                       setShowBlockModal(false);
-                      localStorage.removeItem('isBlocked');
+                      localStorage.removeItem("isBlocked");
                     }}
                   >
                     <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
@@ -326,7 +345,7 @@ const UserTable = () => {
                 {/*body*/}
 
                 <div className="relative p-6 flex-auto">
-                  {localStorage.getItem('isBlocked') == 0 ? (
+                  {localStorage.getItem("isBlocked") == 0 ? (
                     <p className="my-4 text-slate-500 text-lg leading-relaxed">
                       Are you sure, you want to block this user?
                     </p>
@@ -350,10 +369,95 @@ const UserTable = () => {
                     type="button"
                     onClick={() => {
                       setShowBlockModal(false);
-                      localStorage.removeItem('isBlocked');
+                      localStorage.removeItem("isBlocked");
                     }}
                   >
                     No
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
+
+      {showFilterModal ? (
+        <>
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="relative w-full my-6 mx-auto max-w-3xl">
+              {/*content*/}
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                {/*header*/}
+                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                  <h3 className="text-3xl font-semibold">Filter</h3>
+                  <button
+                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    onClick={() => {
+                      setShowFilterModal(false);
+                    }}
+                  >
+                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      ×
+                    </span>
+                  </button>
+                </div>
+                {/*body*/}
+
+                <div className="relative p-6 flex-auto">
+                  {/* <label for="underline_select" >
+                      Admin Type
+                    </label> */}
+                  <div class="mb-3 xl:w-full ">
+                    <label
+                      class="block text-gray-700 text-sm font-bold mb-2 "
+                      for=""
+                    >
+                      Choose Option
+                    </label>
+                    <select
+                      class="form-select w-full appearance-non block  px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                      aria-label=""
+                      onChange={handleChange("isBlock")}
+                      value={isBlock}
+                      name="isBlock"
+                    >
+                      <option value="">--</option>
+                      <option value="0">UnBlock</option>
+                      <option value="1">Block</option>
+                    </select>
+                  </div>
+                </div>
+                {/*footer*/}
+                <div className="flex justify-between items-center w-full p-6 border-t border-solid border-slate-200 rounded-b">
+                  <button
+                    className=" bg-black text-white w-1/2 font-bold uppercase px-6 py-2 text-sm outline-none rounded shadow hover:shadow-lg focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={()=>{
+                      setShowFilterModal(false);
+                      // preload();
+                      setIsBlock("");
+                    }}
+                  >
+                    Apply
+                  </button>
+                  <button
+                    className="bg-red-500 text-white active:bg-emerald-600  w-1/2 font-bold uppercase text-sm px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    // onClick={() => {
+                    //   setCheckbox("")
+                    //   setShowFilterModal(false)
+                    //   filter()
+                    // }}
+                    onClick={()=>{
+                      // isBlock == 0 ? setIsBlock("") : setIsBlock("")
+                      // isBlock == 1 ? setIsBlock("") : setIsBlock("")
+                      setIsBlock("");
+                      // preload();
+                      setShowFilterModal(false);
+                    }}
+                  >
+                    Clear Filter
                   </button>
                 </div>
               </div>

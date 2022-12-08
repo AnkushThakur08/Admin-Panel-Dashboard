@@ -56,6 +56,7 @@ import EditAdminAchievement from './pages/Edit/EditAdminAchievement';
 // ADD PAGES
 import AddAppVersion from './pages/Add/AddAppVersion';
 import AddAdminAchievement from './pages/Add/AddAdminAchievement';
+import AddAdmin from './pages/Add/AddAdmin';
 
 // View Pages
 import ViewAdminAchievement from './pages/ViewDetails/ViewAdminAchievement';
@@ -199,6 +200,7 @@ const App = () => {
                     path="/addAdminAchievement"
                     element={<AddAdminAchievement />}
                   />
+                  <Route path="/addAdmin" element={<AddAdmin/>} />
 
                   {/* Views Routes */}
                   <Route path="/admindetails/:id" element={<AdminDetails />} />

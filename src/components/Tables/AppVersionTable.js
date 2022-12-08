@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 // React Table
-import DataTable from 'react-data-table-component';
+import DataTable from "react-data-table-component";
 
 // React Router
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 // React Toastify
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 // Components
-import { Header } from '../../components';
+import { Header } from "../../components";
 
 // API
-import { appVersionListData } from '../../helper/Table/TableHelper';
-import { isAuthenticated } from '../../helper/login/loginHelper';
-import { deleteAppVersion } from '../../helper/Table/appVersionTableHelper';
+import { appVersionListData } from "../../helper/Table/TableHelper";
+import { isAuthenticated } from "../../helper/login/loginHelper";
+import { deleteAppVersion } from "../../helper/Table/appVersionTableHelper";
 
 const AppVersionTable = () => {
   // Navigate
@@ -25,7 +25,7 @@ const AppVersionTable = () => {
   const { data } = isAuthenticated();
 
   // STATE
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [appVersionData, setAppVersionData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -34,20 +34,20 @@ const AppVersionTable = () => {
   const handleShowDeleteModal = (id) => {
     console.log(id);
     setShowDeleteModal(true);
-    localStorage.setItem('AppID', id);
+    localStorage.setItem("AppID", id);
   };
 
   const deleteAppVersionData = () => {
-    const appId = localStorage.getItem('AppID');
-    console.log('APPID', appId);
+    const appId = localStorage.getItem("AppID");
+    console.log("APPID", appId);
     deleteAppVersion(data.accessToken, appId).then((result) => {
       console.log(result);
-      toast('Deletion Successfully');
+      toast("Deletion Successfully");
       preload();
     });
 
     setShowDeleteModal(false);
-    localStorage.removeItem('AppID');
+    localStorage.removeItem("AppID");
   };
 
   // HANDLE ROW CLICK
@@ -59,10 +59,10 @@ const AppVersionTable = () => {
   const preload = () => {
     appVersionListData(data.accessToken)
       .then((data) => {
-        console.log('responseeee', data);
+        console.log("responseeee", data);
         setAppVersionData(data.data.data.rows);
         setFilterData(data.data.data.rows);
-        console.log('THIS IS DATA', data);
+        console.log("THIS IS DATA", data);
       })
       .catch((error) => {
         console.log(error);
@@ -124,14 +124,14 @@ const AppVersionTable = () => {
       selector: (row) => (
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            width: '110px',
+            display: "flex",
+            justifyContent: "space-around",
+            width: "110px",
           }}
         >
           {/* EDIT */}
           <button
-            style={{ border: 'none', background: 'none' }}
+            style={{ border: "none", background: "none" }}
             onClick={() => navigate(`/editappversion/${row.id}`)}
           >
             <i className="fa-solid fa-pen fa-lg"></i>
@@ -139,7 +139,7 @@ const AppVersionTable = () => {
 
           {/* DELETE */}
           <button
-            style={{ border: 'none', background: 'none' }}
+            style={{ border: "none", background: "none" }}
             onClick={() => handleShowDeleteModal(row.id)}
           >
             <i className="fa-regular fa-trash-can fa-lg"></i>
@@ -158,9 +158,9 @@ const AppVersionTable = () => {
   ];
 
   const paginationComponentOptions = {
-    rangeSeparatorText: 'Total',
+    rangeSeparatorText: "Total",
     selectAllRowsItem: true,
-    selectAllRowsItemText: 'All',
+    selectAllRowsItemText: "All",
   };
 
   useEffect(() => {
@@ -207,9 +207,9 @@ const AppVersionTable = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             style={{
-              width: '100%',
-              padding: '10px',
-              border: '1px solid black',
+              width: "100%",
+              padding: "10px",
+              border: "1px solid black",
             }}
           />
         }
@@ -266,7 +266,7 @@ const AppVersionTable = () => {
       <div className="pb-10">
         <button
           className="fixed right-28 bg-[#333333] text-white rounded-full py-0 px-3 text-4xl mt-5 float-right"
-          onClick={() => navigate('/addAppVersion')}
+          onClick={() => navigate("/addAppVersion")}
           title="Add"
         >
           +

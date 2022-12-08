@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 // react router dom
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 
 // React Toastify
 import { toast } from 'react-toastify';
+
+//REACT ICONS
+import { IoIosArrowBack } from "react-icons/io";
 
 // Components
 import { Header } from '../../components';
@@ -90,7 +93,10 @@ const EditAdminAchievement = () => {
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-        <Header category="Page" title="Edit Admin" />
+      <Link to="/adminAchievement">
+        <IoIosArrowBack size={25} className="mb-3" />
+      </Link>
+        <Header category="Page" title="Edit Admin Achievement" />
         {/* <div class="w-full max-w-xs  "> */}
         <form
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full"

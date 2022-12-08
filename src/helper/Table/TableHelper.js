@@ -26,9 +26,10 @@ export const adminListData = async (token, permission, adminType) => {
 
 
 // user list
-export const userListData = async (token) => {
+export const userListData = async (token ) => {
+  // console.log(isBlocked, "isBlockedd")
   return await axios
-    .get(`${API}admin/v1/users?limit=100&skip=0`, {
+    .get(`${API}admin/v1/users?limit=1000&skip=0`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
