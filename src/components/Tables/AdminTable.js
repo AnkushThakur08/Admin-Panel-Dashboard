@@ -15,6 +15,9 @@ import { toast } from 'react-toastify';
 // Components
 import { Header } from '../../components';
 
+// Context
+import { useStateContext } from '../../contexts/ContextProvider';
+
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
 import { adminListData } from '../../helper/Table/TableHelper';
@@ -22,6 +25,9 @@ import { deleteAdminData } from '../../helper/Table/adminTableHelper';
 import { blockOrUnblockAdmin } from '../../helper/Table/adminTableHelper';
 
 const AdminTable = () => {
+  // Context
+  const { currentMode } = useStateContext();
+
   // Authorization
   const { data } = isAuthenticated();
 
@@ -271,7 +277,7 @@ const AdminTable = () => {
             >
               <i
                 className="fa-solid fa-pen fa-lg"
-                style={{ color: '#001f4d' }}
+                // style={{ color: '#001f4d' }}
               ></i>
             </button>
 
@@ -282,7 +288,7 @@ const AdminTable = () => {
             >
               <i
                 className="fa-regular fa-trash-can fa-lg"
-                style={{ color: '#242B2E' }}
+                // style={{ color: '#242B2E' }}
               ></i>
             </button>
 
@@ -340,7 +346,11 @@ const AdminTable = () => {
 
   return (
     <>
-      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+      <div
+        className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
+          currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
+        }  rounded-3xl`}
+      >
         <Header category="Page" title="Admin" data={adminData} />
         <div style={{ float: 'right' }} className="mr-6">
           <FiFilter
@@ -360,11 +370,16 @@ const AdminTable = () => {
           highlightOnHover
           pointerOnHover
           subHeader
+          theme={currentMode === 'Dark' ? 'dark' : 'light'}
           subHeaderComponent={
             <input
               type="text"
               placeholder="Search..."
-              className="  form-control"
+              className={`${
+                currentMode === 'Dark'
+                  ? 'bg-[#424242] text-white'
+                  : 'form-control'
+              } `}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               style={{ width: '100%', padding: '10px' }}

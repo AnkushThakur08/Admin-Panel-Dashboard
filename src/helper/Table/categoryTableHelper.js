@@ -1,5 +1,69 @@
-import { API } from "../../backend";
-import axios from "axios"
+import { API } from '../../backend';
+import axios from 'axios';
+
+// GET INDIVIDUAL CATEGORY DATA
+export const categoryIndividualData = async (token, id) => {
+  console.log(API);
+  console.log(token);
+  return await fetch(`${API}admin/v1/categories/detail/${id}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+// Create Category
+export const createCategory = async (token, category) => {
+  console.log('TOKEN', token);
+  console.log('CATEGORY', category);
+  return await fetch(`${API}admin/v1/categories/`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      name: category.name,
+      image: category.image.name,
+    }),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => console.log(error));
+};
+
+// Update Category
+export const updateCategory = async (token, id, category) => {
+  console.log(token, id);
+  return await fetch(`${API}admin/v1/categories/`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      id: id,
+      name: category.name,
+      image: category.image,
+    }),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => console.log(error));
+};
 
 // BLOCK OR UNBLOCK CATEGORIES
 export const blockOrUnblockCategories = async (id, isBlocked, token) => {
@@ -10,34 +74,14 @@ export const blockOrUnblockCategories = async (id, isBlocked, token) => {
   }
 
   return fetch(`${API}admin/v1/categories/blockUnblock`, {
-    method: "PUT",
+    method: 'PUT',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
 
     body: JSON.stringify({ id: id, isBlocked: isBlocked }),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
-
-// GET INDIVIDUAL CATEGORY DATA
-export const categoryIndividualData = async (id, token) => {
-  console.log(API);
-  console.log(token);
-  return await fetch(`${API}admin/v1/categories/detail/${id}`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
   })
     .then((response) => {
       return response.json();

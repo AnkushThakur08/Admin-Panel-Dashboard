@@ -13,16 +13,22 @@ import { toast } from 'react-toastify';
 // Components
 import { Header } from '../../components';
 
+// Context
+import { useStateContext } from '../../contexts/ContextProvider';
+
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
-import {reportedBugsListData} from '../../helper/Table/TableHelper'
+import { reportedBugsListData } from '../../helper/Table/TableHelper';
 
 const ReportedBugs = () => {
+  // Context
+  const { currentMode } = useStateContext();
+
   // const navigate = useNavigate();
   const { data, token } = isAuthenticated();
 
   const [search, setSearch] = useState('');
-  const [getBugsData, setGetBugsData] = useState([])
+  const [getBugsData, setGetBugsData] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
   // const [show, setShow] = useState(false);
@@ -40,17 +46,14 @@ const ReportedBugs = () => {
   const preload = () => {
     reportedBugsListData(data.accessToken)
       .then((data) => {
-        console.log("NEW",data.data.data.rows); 
+        console.log('NEW', data.data.data.rows);
         setGetBugsData(data.data.data.rows);
-        setFilterData(data.data.data.rows)
+        setFilterData(data.data.data.rows);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
-
-
 
   /*  async function deleteAdmin() {
     let uId = localStorage.getItem("adminId");
@@ -76,7 +79,7 @@ const ReportedBugs = () => {
       ),
       selector: (row) => row.id,
       sortable: true,
-      grow: 1.5
+      grow: 1.5,
     },
     {
       name: (
@@ -91,13 +94,10 @@ const ReportedBugs = () => {
       name: (
         <h6>
           <b>Reported By</b>
-        </h6> 
+        </h6>
       ),
-      selector: (row) => [
-        row.user.firstName
-      ],
-      sortable: true
-
+      selector: (row) => [row.user.firstName],
+      sortable: true,
     },
     {
       name: (
@@ -156,7 +156,7 @@ const ReportedBugs = () => {
         </div>
       ),
       // ),
-      grow: 1.5
+      grow: 1.5,
     },
   ];
 
@@ -166,27 +166,25 @@ const ReportedBugs = () => {
     selectAllRowsItemText: 'All',
   };
 
-// useEffect(() => {
-//   reportBug();
-  
-// }, [])
+  // useEffect(() => {
+  //   reportBug();
 
-// useEffect(() => {
-//   preload();
-// }, [reportBug])
+  // }, [])
 
+  // useEffect(() => {
+  //   preload();
+  // }, [reportBug])
 
-useEffect(() => {
-  let isApiSubscribed = true;
-  if(isApiSubscribed){
-    preload();
-  }
-  return () => {
-    // cancel the subscription
-    isApiSubscribed = false;
-};
-}, []);
-
+  useEffect(() => {
+    let isApiSubscribed = true;
+    if (isApiSubscribed) {
+      preload();
+    }
+    return () => {
+      // cancel the subscription
+      isApiSubscribed = false;
+    };
+  }, []);
 
   useEffect(() => {
     const result = getBugsData.filter((value) => {
@@ -204,7 +202,11 @@ useEffect(() => {
   // };
 
   return (
-    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+    <div
+      className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
+        currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
+      }  rounded-3xl`}
+    >
       <Header category="Page" title="Reported Bugs" />
       <DataTable
         // title="Admin"
@@ -217,11 +219,16 @@ useEffect(() => {
         selectableRowsHighlight
         highlightOnHover
         subHeader
+        theme={currentMode === 'Dark' ? 'dark' : 'light'}
         subHeaderComponent={
           <input
             type="text"
             placeholder="Search..."
-            className="  form-control"
+            className={`${
+              currentMode === 'Dark'
+                ? 'bg-[#424242] text-white'
+                : 'form-control'
+            } `}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             style={{ width: '100%', padding: '10px' }}

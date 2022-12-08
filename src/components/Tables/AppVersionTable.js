@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom';
 // React Toastify
 import { toast } from 'react-toastify';
 
+// Context
+import { useStateContext } from '../../contexts/ContextProvider';
+
 // Components
 import { Header } from '../../components';
 
@@ -18,6 +21,9 @@ import { isAuthenticated } from '../../helper/login/loginHelper';
 import { deleteAppVersion } from '../../helper/Table/appVersionTableHelper';
 
 const AppVersionTable = () => {
+  // Context
+  const { currentMode } = useStateContext();
+
   // Navigate
   const navigate = useNavigate();
 
@@ -184,7 +190,11 @@ const AppVersionTable = () => {
   // };
 
   return (
-    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+    <div
+      className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
+        currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
+      }  rounded-3xl`}
+    >
       <Header category="Page" title="App Version" />
 
       <DataTable
@@ -199,17 +209,21 @@ const AppVersionTable = () => {
         highlightOnHover
         pointerOnHover
         subHeader
+        theme={currentMode === 'Dark' ? 'dark' : 'light'}
         subHeaderComponent={
           <input
             type="text"
             placeholder="Search..."
-            className="  form-control"
+            className={`${
+              currentMode === 'Dark'
+                ? 'bg-[#424242] text-white'
+                : 'form-control'
+            } `}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             style={{
               width: '100%',
               padding: '10px',
-              border: '1px solid black',
             }}
           />
         }
@@ -263,15 +277,14 @@ const AppVersionTable = () => {
         </>
       ) : null}
 
-      <div className="pb-10">
-        <button
-          className="fixed right-28 bg-[#333333] text-white rounded-full py-0 px-3 text-4xl mt-5 float-right"
-          onClick={() => navigate('/addAppVersion')}
-          title="Add"
-        >
-          +
-        </button>
-      </div>
+      {/* ADD Button */}
+      <button
+        title="Add"
+        class="fixed z-90 bottom-24 right-3.5 bg-[#1A97F5] w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl"
+        onClick={() => navigate('/addAppVersion')}
+      >
+        +
+      </button>
     </div>
   );
 };

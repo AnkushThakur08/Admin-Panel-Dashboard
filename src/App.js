@@ -52,15 +52,16 @@ import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 import EditAdmin from './pages/Edit/EditAdmin';
 import EditAppVersion from './pages/Edit/EditAppVersion';
 import EditAdminAchievement from './pages/Edit/EditAdminAchievement';
+import EditCategory from './pages/Edit/EditCategory';
 
 // ADD PAGES
 import AddAppVersion from './pages/Add/AddAppVersion';
 import AddAdminAchievement from './pages/Add/AddAdminAchievement';
+import AddCategory from './pages/Add/AddCategory';
 
 // View Pages
 import ViewAdminAchievement from './pages/ViewDetails/ViewAdminAchievement';
 import ViewAppVersion from './pages/ViewDetails/ViewAppVersion';
-
 import AdminDetails from './pages/ViewDetails/AdminDetails';
 import UserDetails from './pages/ViewDetails/UserDetails';
 import CategoryDetails from './pages/ViewDetails/CategoryDetails';
@@ -193,12 +194,16 @@ const App = () => {
                     element={<EditAppVersion />}
                   />
 
+                  <Route path="/editCategory/:id" element={<EditCategory />} />
+
                   {/* ADD ROUTES */}
                   <Route path="/addAppVersion" element={<AddAppVersion />} />
                   <Route
                     path="/addAdminAchievement"
                     element={<AddAdminAchievement />}
                   />
+
+                  <Route path="/addCategory" element={<AddCategory />} />
 
                   {/* Views Routes */}
                   <Route path="/admindetails/:id" element={<AdminDetails />} />

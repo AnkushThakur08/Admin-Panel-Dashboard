@@ -1,32 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // react router dom
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // React Toastify
 import { toast } from 'react-toastify';
-
-//REACT ICONS
-import { IoIosArrowBack } from 'react-icons/io';
 
 // Components
 import { Header } from '../../components';
 
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
-import {
-  createCategory,
-  updateCategory,
-  categoryIndividualData,
-} from '../../helper/Table/categoryTableHelper';
+import { createCategory } from '../../helper/Table/categoryTableHelper';
 
-const EditCategory = () => {
-  // PARAMS
-  const params = useParams();
-  const categoryId = params.id;
-
-  console.log(categoryId);
-
+const AddCategory = () => {
   // Authentication
   const { data } = isAuthenticated();
 
@@ -40,19 +27,6 @@ const EditCategory = () => {
 
   // Destructure
   const { name, image } = values;
-
-  //   Preload
-  const preload = () => {
-    categoryIndividualData(data.accessToken, categoryId).then((data) => {
-      console.log(data);
-
-      setValues({
-        ...values,
-        name: data.data.name,
-        image: data.data.image,
-      });
-    });
-  };
 
   //   Handle Change
   const onChange = (name) => (event) => {
@@ -69,7 +43,7 @@ const EditCategory = () => {
     if (!image || !name) {
       return toast.error('Please Fill Out The Required Fields.');
     }
-    updateCategory(data.accessToken, categoryId, values).then((data) => {
+    createCategory(data.accessToken, values).then((data) => {
       if (data.message == 'success') {
         setValues({
           ...values,
@@ -88,17 +62,10 @@ const EditCategory = () => {
     });
   };
 
-  useEffect(() => {
-    preload();
-  }, []);
-
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-        <Link to="/category">
-          <IoIosArrowBack size={25} className="mb-3" />
-        </Link>
-        <Header category="Page" title="Edit Category" />
+        <Header category="Page" title="ADD Category" />
         {/* <div class="w-full max-w-xs  "> */}
         <form
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full"
@@ -155,4 +122,4 @@ const EditCategory = () => {
   );
 };
 
-export default EditCategory;
+export default AddCategory;

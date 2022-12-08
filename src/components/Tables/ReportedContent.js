@@ -12,13 +12,19 @@ import { toast } from 'react-toastify';
 // Components
 import { Header } from '../../components';
 
+// Context
+import { useStateContext } from '../../contexts/ContextProvider';
+
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
 import { reportedContentListData } from '../../helper/Table/TableHelper';
 
 const ReportedContent = () => {
+  // Context
+  const { currentMode } = useStateContext();
+
   // const navigate = useNavigate();
-  const { data, token } = isAuthenticated();
+  const { data } = isAuthenticated();
 
   const [search, setSearch] = useState('');
   const [contentData, setContentData] = useState([]);
@@ -207,7 +213,11 @@ const ReportedContent = () => {
   // };
 
   return (
-    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+    <div
+      className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
+        currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
+      }  rounded-3xl`}
+    >
       <Header category="Page" title="Reported Content" />
       <DataTable
         // title="Admin"
@@ -220,11 +230,16 @@ const ReportedContent = () => {
         selectableRowsHighlight
         highlightOnHover
         subHeader
+        theme={currentMode === 'Dark' ? 'dark' : 'light'}
         subHeaderComponent={
           <input
             type="text"
             placeholder="Search..."
-            className="  form-control"
+            className={`${
+              currentMode === 'Dark'
+                ? 'bg-[#424242] text-white'
+                : 'form-control'
+            } `}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             style={{ width: '100%', padding: '10px' }}

@@ -9,12 +9,18 @@ import { Header } from '../../components';
 //REACT ICONS
 import { IoIosArrowBack } from 'react-icons/io';
 
+// Context
+import { useStateContext } from '../../contexts/ContextProvider';
+
 // HELPER FILES
 import { isAuthenticated } from '../../helper/login/loginHelper';
 import { getAppVersionIndividualDetail } from '../../helper/Table/appVersionTableHelper';
 import { toast } from 'react-toastify';
 
 const ViewAppVersion = () => {
+  // Context
+  const { currentMode } = useStateContext();
+
   // PARAMS
   const params = useParams();
   const ID = params.id;
@@ -58,7 +64,11 @@ const ViewAppVersion = () => {
   }, []);
 
   return (
-    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+    <div
+      className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl ${
+        currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
+      }`}
+    >
       <Link to="/appVersion">
         <IoIosArrowBack size={25} className="mb-3" />
       </Link>
@@ -69,7 +79,7 @@ const ViewAppVersion = () => {
         </div> */}
         <div class="px-6 pt-4 pb-2">
           <table class="border-none ">
-            <tbody>
+            <tbody className={`${currentMode === 'Dark' ? 'text-white' : ''}`}>
               <tr>
                 <td class="border-none pr-32  py-2">Name</td>
                 <td class="border-none">{name}</td>

@@ -9,17 +9,23 @@ import { toast } from 'react-toastify';
 // Components
 import { Header } from '../../components';
 
+// Context
+import { useStateContext } from '../../contexts/ContextProvider';
+
 // API
 import { getIndividualData } from '../../helper/adminAchievementHelper/AdminAchievement';
 import { Edit } from '../../helper/adminAchievementHelper/AdminAchievement';
 import { isAuthenticated } from '../../helper/login/loginHelper';
 
 const EditAdminAchievement = () => {
+  // Context
+  const { currentMode } = useStateContext();
+
   // PARAMS
   const params = useParams();
   const ID = params.id;
 
-  console.log(ID, "000000")
+  console.log(ID, '000000');
 
   // Authentication
   const { data } = isAuthenticated();
@@ -27,26 +33,26 @@ const EditAdminAchievement = () => {
   // Navigate
   const navigate = useNavigate();
 
-
   const [formData, setFormData] = useState({
-    id: "",
+    id: '',
     name: '',
     type: '',
   });
 
   // Destructure
-  const { id, name , type } = formData;
+  const { id, name, type } = formData;
 
   const preload = () => {
     console.log(ID);
     getIndividualData(ID, data.accessToken)
       .then((data) => {
-        console.log(data, "dataaa")
-        setFormData({...formData, 
+        console.log(data, 'dataaa');
+        setFormData({
+          ...formData,
           id: ID,
           name: data.data.name,
           type: data.data.type,
-          });
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -73,12 +79,10 @@ const EditAdminAchievement = () => {
       });
   };
 
-
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     console.log('formData', formData);
   };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -89,24 +93,29 @@ const EditAdminAchievement = () => {
 
   return (
     <>
-      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+      <div
+        className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl ${
+          currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
+        }  `}
+      >
         <Header category="Page" title="Edit Admin" />
         {/* <div class="w-full max-w-xs  "> */}
         <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full"
+          className={`shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full ${
+            currentMode === 'Dark'
+              ? 'bg-[#424242] text-white'
+              : 'bg-[#ffffff] text-gray-700'
+          }`}
           onSubmit={handleSubmit}
           method="POST"
           encType="multipart/form-data"
         >
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2 "
-              for="name"
-            >
+            <label class="block  text-sm font-bold mb-2 " for="name">
               Name
             </label>
             <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
               id="firstname"
               type="text"
               value={name}
@@ -117,9 +126,7 @@ const EditAdminAchievement = () => {
 
           <div class="flex w-full mb-3">
             <div class="mb-3 w-full ">
-              <label class="block text-gray-700 text-sm font-bold mb-2 ">
-                Type
-              </label>
+              <label class="block  text-sm font-bold mb-2 ">Type</label>
               <select
                 class="form-select appearance-none
                 block

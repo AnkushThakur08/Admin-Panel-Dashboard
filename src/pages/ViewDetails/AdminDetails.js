@@ -1,19 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 // REACT ROUTER DOM
-import { useParams, Link} from "react-router-dom";
+import { useParams, Link } from 'react-router-dom';
 
 // HEADER COMPONENT
-import { Header } from "../../components";
+import { Header } from '../../components';
 
 //REACT ICONS
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowBack } from 'react-icons/io';
+
+// Context
+import { useStateContext } from '../../contexts/ContextProvider';
 
 // HELPER FILES
-import { isAuthenticated } from "../../helper/login/loginHelper";
-import { adminIndividualData } from "../../helper/adminHelper/admin";
+import { isAuthenticated } from '../../helper/login/loginHelper';
+import { adminIndividualData } from '../../helper/adminHelper/admin';
 
 const AdminDetails = () => {
+  // Context
+  const { currentMode } = useStateContext();
+
   // PARAMS
   const params = useParams();
   const ID = params.id;
@@ -23,12 +29,12 @@ const AdminDetails = () => {
 
   // STATE
   const [values, setValues] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    adminType: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    adminType: '',
     permission: [],
-    isBlocked: "",
+    isBlocked: '',
   });
 
   const { firstName, lastName, email, adminType, permission, isBlocked } =
@@ -52,7 +58,7 @@ const AdminDetails = () => {
         console.log(error);
       });
 
-    console.log(permission, "5555555555");
+    console.log(permission, '5555555555');
   };
 
   useEffect(() => {
@@ -60,7 +66,11 @@ const AdminDetails = () => {
   }, []);
 
   return (
-    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+    <div
+      className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl ${
+        currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
+      }`}
+    >
       <Link to="/admin">
         <IoIosArrowBack size={25} className="mb-3" />
       </Link>
@@ -70,8 +80,8 @@ const AdminDetails = () => {
           <span></span>
         </div> */}
         <div class="px-6 pt-4 pb-2">
-          <table class="border-none ">
-            <tbody>
+          <table class="border-none">
+            <tbody className={`${currentMode === 'Dark' ? 'text-white' : ''}`}>
               <tr>
                 <td class="border-none pr-32  py-2">First Name</td>
                 <td class="border-none">{firstName}</td>
@@ -113,42 +123,42 @@ const AdminDetails = () => {
                         Dashboard
                       </span>
                     ) : (
-                      ""
+                      ''
                     )}
                     {permission.userManagement == 1 ? (
                       <span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ">
                         User Management
                       </span>
                     ) : (
-                      ""
+                      ''
                     )}
                     {permission.adminManagement == 1 ? (
                       <span class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ">
                         Admin Management
                       </span>
                     ) : (
-                      ""
+                      ''
                     )}
                     {permission.notificationManagement == 1 ? (
                       <span class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ">
                         Notification
                       </span>
                     ) : (
-                      ""
+                      ''
                     )}
                     {permission.systemConfiguration == 1 ? (
                       <span class="bg-[#03C9D7] text-white-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ">
                         System Configuration
                       </span>
                     ) : (
-                      ""
+                      ''
                     )}
                     {permission.reportManagement == 1 ? (
                       <span class="bg-[#03C9D7] text-white-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ">
                         Report Management
                       </span>
                     ) : (
-                      ""
+                      ''
                     )}
                   </div>
                 </td>

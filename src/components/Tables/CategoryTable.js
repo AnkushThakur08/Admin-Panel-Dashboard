@@ -1,24 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 // React Table
-import DataTable from "react-data-table-component";
+import DataTable from 'react-data-table-component';
 
 // React Router
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 // React Toastify
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 // Components
-import { Header } from "../../components";
+import { Header } from '../../components';
+
+// Context
+import { useStateContext } from '../../contexts/ContextProvider';
 
 // API
-import { categoryListData } from "../../helper/Table/TableHelper";
-import { isAuthenticated } from "../../helper/login/loginHelper";
-import { blockOrUnblockCategories } from "../../helper/Table/categoryTableHelper";
-import { deleteCategoryData } from "../../helper/Table/categoryTableHelper";
+import { categoryListData } from '../../helper/Table/TableHelper';
+import { isAuthenticated } from '../../helper/login/loginHelper';
+import { blockOrUnblockCategories } from '../../helper/Table/categoryTableHelper';
+import { deleteCategoryData } from '../../helper/Table/categoryTableHelper';
 
 const CategoryTable = () => {
+  // Context
+  const { currentMode } = useStateContext();
+
   // Navigate
   const navigate = useNavigate();
 
@@ -28,7 +34,7 @@ const CategoryTable = () => {
   console.log(data.accessToken);
 
   // STATE
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [categoryData, setCategoryData] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [showBlockModal, setShowBlockModal] = useState(false);
@@ -38,58 +44,61 @@ const CategoryTable = () => {
   const handleShowBlockModal = (id, isBlocked) => {
     console.log(id, isBlocked);
     setShowBlockModal(true);
-    localStorage.setItem("id", id);
-    localStorage.setItem("isBlocked", isBlocked);
+    localStorage.setItem('id', id);
+    localStorage.setItem('isBlocked', isBlocked);
   };
 
   async function blockOrUnblock() {
-    let userID = localStorage.getItem("id");
-    const blockValue = localStorage.getItem("isBlocked");
+    let userID = localStorage.getItem('id');
+    const blockValue = localStorage.getItem('isBlocked');
     blockOrUnblockCategories(userID, blockValue, data.accessToken).then(
       (data) => {
-        console.log("117", data);
-        toast.success("Success");
+        console.log('117', data);
+        toast.success('Success');
         preload();
       }
     );
     setShowBlockModal(false);
-    localStorage.removeItem("isBlocked");
-    localStorage.removeItem("id");
+    localStorage.removeItem('isBlocked');
+    localStorage.removeItem('id');
   }
-  // const blockedvalue = localStorage.getItem('isBlocked');
+
+  // DELETE CATEGORY
+  const handleShow = (id) => {
+    setshowDeleteModal(true);
+    localStorage.setItem('categoryId', id);
+  };
+
+  async function deleteCategory() {
+    let ID = localStorage.getItem('categoryId');
+    console.log('ID', ID);
+    deleteCategoryData(data.accessToken, ID).then((result) => {
+      console.log(result, '78');
+      toast(result.data.message);
+      preload();
+    });
+    setshowDeleteModal(false);
+    localStorage.removeItem('categoryId');
+  }
+
+  // Handle Row Click
+  const handleRowClicked = (row) => {
+    navigate(`/viewCategory/${row.id}`);
+  };
 
   // Preload Category Function
   const preload = () => {
     categoryListData(data.accessToken)
       .then((data) => {
-        console.log("responseeee", data);
+        console.log('responseeee', data);
         setCategoryData(data.data.data.rows);
         setFilterData(data.data.data.rows);
-        console.log("THIS IS DATA", data);
+        console.log('THIS IS DATA', data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
-  // DELETE CATEGORY
-
-  const handleShow = (id) => {
-    setshowDeleteModal(true);
-    localStorage.setItem("categoryId", id);
-  };
-
-  async function deleteCategory() {
-    let ID = localStorage.getItem("categoryId");
-    console.log("ID", ID);
-    deleteCategoryData(data.accessToken, ID).then((result) => {
-      console.log(result,"78");
-      toast(result.data.message);
-      preload();
-    });
-    setshowDeleteModal(false);
-    localStorage.removeItem("categoryId");
-  }
 
   const colunms = [
     {
@@ -158,19 +167,20 @@ const CategoryTable = () => {
         // ) : (
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "110px",
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '110px',
           }}
         >
+          {/* EDIT */}
           <button
-            style={{ border: "none", background: "none" }}
-            // onClick={() => navigate(`/editadmin/${row.uId}`)}
+            style={{ border: 'none', background: 'none' }}
+            onClick={() => navigate(`/editCategory/${row.id}`)}
           >
             <i className="fa-solid fa-pen fa-lg"></i>
           </button>
           <button
-            style={{ border: "none", background: "none" }}
+            style={{ border: 'none', background: 'none' }}
             onClick={() => handleShow(row.id)}
           >
             <i className="fa-regular fa-trash-can fa-lg"></i>
@@ -178,18 +188,18 @@ const CategoryTable = () => {
 
           {/* BLOCK */}
           <button
-            style={{ border: "none", background: "none" }}
+            style={{ border: 'none', background: 'none' }}
             onClick={() => handleShowBlockModal(row.id, row.isBlocked)}
           >
             {row.isBlocked == 0 ? (
               <i
                 className="fa-sharp fa-solid fa-check fa-lg"
-                style={{ color: "#3DBE29" }}
+                style={{ color: '#3DBE29' }}
               ></i>
             ) : (
               <i
                 class="fa-sharp fa-solid fa-xmark fa-lg"
-                style={{ color: "#E21717" }}
+                style={{ color: '#E21717' }}
               ></i>
             )}
           </button>
@@ -200,9 +210,9 @@ const CategoryTable = () => {
   ];
 
   const paginationComponentOptions = {
-    rangeSeparatorText: "Total",
+    rangeSeparatorText: 'Total',
     selectAllRowsItem: true,
-    selectAllRowsItemText: "All",
+    selectAllRowsItemText: 'All',
   };
 
   useEffect(() => {
@@ -220,12 +230,12 @@ const CategoryTable = () => {
   }, [search]);
   // console.log(admin);
 
-  const handleRowClicked = (row) => {
-    navigate(`/viewCategory/${row.id}`);
-  };
-
   return (
-    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+    <div
+      className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
+        currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
+      }  rounded-3xl`}
+    >
       <Header category="Table" title="Category" />
       <DataTable
         columns={colunms}
@@ -238,14 +248,19 @@ const CategoryTable = () => {
         selectableRowsHighlight
         highlightOnHover
         subHeader
+        theme={currentMode === 'Dark' ? 'dark' : 'light'}
         subHeaderComponent={
           <input
             type="text"
             placeholder="Search..."
-            className="  form-control"
+            className={`${
+              currentMode === 'Dark'
+                ? 'bg-[#424242] text-white'
+                : 'form-control'
+            } `}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{ width: "100%", padding: "10px" }}
+            style={{ width: '100%', padding: '10px' }}
           />
         }
       />
@@ -310,7 +325,7 @@ const CategoryTable = () => {
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => {
                       setShowBlockModal(false);
-                      localStorage.removeItem("isBlocked");
+                      localStorage.removeItem('isBlocked');
                     }}
                   >
                     <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
@@ -321,7 +336,7 @@ const CategoryTable = () => {
                 {/*body*/}
 
                 <div className="relative p-6 flex-auto">
-                  {localStorage.getItem("isBlocked") == 0 ? (
+                  {localStorage.getItem('isBlocked') == 0 ? (
                     <p className="my-4 text-slate-500 text-lg leading-relaxed">
                       Are you sure, you want to block this user?
                     </p>
@@ -345,7 +360,7 @@ const CategoryTable = () => {
                     type="button"
                     onClick={() => {
                       setShowBlockModal(false);
-                      localStorage.removeItem("isBlocked");
+                      localStorage.removeItem('isBlocked');
                     }}
                   >
                     No
@@ -357,6 +372,15 @@ const CategoryTable = () => {
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
+
+      {/* ADD Button */}
+      <button
+        title="Add"
+        class="fixed z-90 bottom-24 right-3.5 bg-[#1A97F5] w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl"
+        onClick={() => navigate('/addCategory')}
+      >
+        +
+      </button>
     </div>
   );
 };

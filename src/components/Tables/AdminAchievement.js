@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom';
 // React Toastify
 import { toast } from 'react-toastify';
 
+// Context
+import { useStateContext } from '../../contexts/ContextProvider';
+
 // Components
 import { Header } from '../../components';
 
@@ -18,6 +21,10 @@ import { achievementListData } from '../../helper/Table/TableHelper';
 import { deleteAchievementData } from '../../helper/adminAchievementHelper/AdminAchievement';
 
 const AdminAchievement = () => {
+  // Context
+  const { currentMode } = useStateContext();
+
+  // Authorization
   const { data } = isAuthenticated();
 
   // useNavigate
@@ -154,7 +161,11 @@ const AdminAchievement = () => {
   // };
 
   return (
-    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+    <div
+      className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
+        currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
+      }  rounded-3xl`}
+    >
       <Header category="Page" title="Admin Achievements" />
       <DataTable
         // title="Admin"
@@ -168,17 +179,21 @@ const AdminAchievement = () => {
         highlightOnHover
         pointerOnHover
         subHeader
+        theme={currentMode === 'Dark' ? 'dark' : 'light'}
         subHeaderComponent={
           <input
             type="text"
             placeholder="Search..."
-            className="  form-control"
+            className={`${
+              currentMode === 'Dark'
+                ? 'bg-[#424242] text-white'
+                : 'form-control'
+            } `}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             style={{
               width: '100%',
               padding: '10px',
-              border: '1px solid black',
             }}
           />
         }

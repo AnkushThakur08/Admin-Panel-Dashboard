@@ -1,10 +1,23 @@
 import React from 'react';
 
-const Header = ({ category, title, data }) => (
-  <div className=" mb-10">
-    <p className="text-lg text-gray-400">{category}</p>
+// Context
+import { useStateContext } from '../contexts/ContextProvider';
 
-    {/* {data.length > 0
+const Header = ({ category, title, data }) => {
+  // Context
+  const { currentMode } = useStateContext();
+
+  return (
+    <div className=" mb-10">
+      <p
+        className={`text-lg ${
+          currentMode === 'Dark' ? 'text-white' : 'text-gray-400'
+        } `}
+      >
+        {category}
+      </p>
+
+      {/* {data.length > 0
       ? data.map((IndividualData, index) => {
           console.log(IndividualData);
           return (
@@ -18,12 +31,17 @@ const Header = ({ category, title, data }) => (
         })
       : ''} */}
 
-    {/* <p className="text-lg text-gray-400">{firstName}</p>
+      {/* <p className="text-lg text-gray-400">{firstName}</p>
     <p className="text-lg text-gray-400">{lastName}</p> */}
-    <p className="text-3xl font-extrabold tracking-tight text-slate-900">
-      {title}
-    </p>
-  </div>
-);
+      <p
+        className={`text-3xl font-extrabold tracking-tight ${
+          currentMode === 'Dark' ? 'text-white' : 'text-slate-900'
+        } `}
+      >
+        {title}
+      </p>
+    </div>
+  );
+};
 
 export default Header;
