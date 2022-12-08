@@ -58,6 +58,7 @@ import EditCategory from './pages/Edit/EditCategory';
 import AddAppVersion from './pages/Add/AddAppVersion';
 import AddAdminAchievement from './pages/Add/AddAdminAchievement';
 import AddCategory from './pages/Add/AddCategory';
+import AddAdmin from './pages/Add/AddAdmin';
 
 // View Pages
 import ViewAdminAchievement from './pages/ViewDetails/ViewAdminAchievement';
@@ -202,6 +203,7 @@ const App = () => {
                     path="/addAdminAchievement"
                     element={<AddAdminAchievement />}
                   />
+                  <Route path="/addAdmin" element={<AddAdmin />} />
 
                   <Route path="/addCategory" element={<AddCategory />} />
 

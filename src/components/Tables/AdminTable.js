@@ -162,6 +162,7 @@ const AdminTable = () => {
       ),
       selector: (row) => row.firstName,
       sortable: true,
+      grow: 0,
     },
     {
       name: (
@@ -171,6 +172,7 @@ const AdminTable = () => {
       ),
       selector: (row) => row.lastName,
       sortable: true,
+      grow: 0,
     },
     {
       name: (
@@ -217,40 +219,50 @@ const AdminTable = () => {
       ),
       selector: (row) => [
         row.admin_permissions[0]?.adminManagement == 1 ? (
-          <span className="badge bg-secondary access">Admin</span>
+          <span class="bg-red-200 text-red-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
+            Admin
+          </span>
         ) : (
           ''
         ),
         row.admin_permissions[0]?.dashboard == 1 ? (
-          <span className="badge bg-secondary access">Dashboard</span>
+          <span class="bg-cyan-200 text-cyan-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
+            Dashboard
+          </span>
         ) : (
           ''
         ),
         row.admin_permissions[0]?.notificationManagement == 1 ? (
-          <span className="badge bg-secondary access">Notification</span>
+          <span class="bg-green-200 text-green-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
+            Notification
+          </span>
         ) : (
           ''
         ),
         row.admin_permissions[0]?.userManagement == 1 ? (
-          <span className="badge bg-secondary access">User Management</span>
-        ) : (
-          ''
-        ),
-        row.admin_permissions[0]?.systemConfiguration == 1 ? (
-          <span className="badge bg-secondary access">
-            System Configuration
+          <span class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
+            User Management
           </span>
         ) : (
           ''
         ),
         row.admin_permissions[0]?.systemConfiguration == 1 ? (
-          <span className="badge bg-secondary access">Report</span>
+          <span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
+            System Configuration
+          </span>
+        ) : (
+          ''
+        ),
+        row.admin_permissions[0]?.reportManagement == 1 ? (
+          <span class="bg-[#03C9D7] text-white text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
+            Report
+          </span>
         ) : (
           ''
         ),
       ],
 
-      grow: 3,
+      grow: 4,
       sortable: true,
     },
     {
@@ -277,7 +289,7 @@ const AdminTable = () => {
             >
               <i
                 className="fa-solid fa-pen fa-lg"
-                // style={{ color: '#001f4d' }}
+                // style={{ color: "#001f4d" }}
               ></i>
             </button>
 
@@ -334,7 +346,8 @@ const AdminTable = () => {
       return (
         value.firstName.toLowerCase().match(search.toLowerCase()) ||
         value.email.toLowerCase().match(search.toLowerCase()) ||
-        value.lastName.toLowerCase().match(search.toLowerCase())
+        value.lastName.toLowerCase().match(search.toLowerCase()) ||
+        value.id.toLowerCase().match(search.toLowerCase())
       );
     });
     setFilterData(result);
@@ -690,6 +703,15 @@ const AdminTable = () => {
             <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
           </>
         ) : null}
+
+        {/* ADD Button */}
+        <button
+          title="Add"
+          class="fixed z-90 bottom-24 right-3.5 bg-[#1A97F5] w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl"
+          onClick={() => navigate('/addAdmin')}
+        >
+          +
+        </button>
       </div>
     </>
   );

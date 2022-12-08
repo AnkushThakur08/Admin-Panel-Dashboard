@@ -217,6 +217,7 @@ const ReportedBugs = () => {
         fixedHeader
         // onRowClicked={handleRowClicked}
         selectableRowsHighlight
+        pointerOnHover
         highlightOnHover
         subHeader
         theme={currentMode === 'Dark' ? 'dark' : 'light'}
@@ -235,21 +236,6 @@ const ReportedBugs = () => {
           />
         }
       />
-
-      {/* <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmation Message</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure, you want to delete this record?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={deleteAdmin}>
-            Yes
-          </Button>
-          <Button variant="secondary" onClick={handleClose}>
-            No
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
     </div>
   );
 };
