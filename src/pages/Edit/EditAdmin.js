@@ -207,6 +207,8 @@ const EditAdmin = () => {
           </div>
 
           <div class="flex w-full mb-3">
+
+            
             <div class="mb-3 w-full">
               <label class="block text-sm font-bold mb-2" for="">
                 Admin Type
