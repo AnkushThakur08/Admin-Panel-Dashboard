@@ -8,13 +8,19 @@ import { toast } from 'react-toastify';
 import { Header } from '../../components';
 
 // REACT ICONS
-import {IoIosArrowBack} from "react-icons/io" 
+import { IoIosArrowBack } from 'react-icons/io';
+
+// Context
+import { useStateContext } from '../../contexts/ContextProvider';
 
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
 import { createAppVersion } from '../../helper/Table/appVersionTableHelper';
 
 const AddAppVersion = () => {
+  // Context
+  const { currentMode } = useStateContext();
+
   // Authentication
   const { data } = isAuthenticated();
 
@@ -65,23 +71,51 @@ const AddAppVersion = () => {
 
   return (
     <>
-      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Link to="/appVersion">
-        <IoIosArrowBack size={25} className="mb-3" />
-      </Link>
+      <div
+        className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl ${
+          currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-white'
+        }`}
+      >
+        <Link to="/appVersion">
+          <IoIosArrowBack
+            size={25}
+            className={`mb-3  ${currentMode === 'Dark' ? 'text-white' : ''}`}
+          />
+        </Link>
         <Header category="Page" title="Add App Version" />
-        <div class="max-w-full max-w-full">
-          <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
-            <div class="flex ">
-              <div class="mb-3 w-full ">
-                <label
-                  class="block text-gray-700 text-sm font-bold mb-2 "
-                  for=""
-                >
+        <div className="max-w-full max-w-full">
+          <form
+            className={`shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full ${
+              currentMode === 'Dark'
+                ? 'bg-[#424242] text-white'
+                : 'bg-white text-black'
+            }`}
+          >
+            <div className="flex ">
+              <div className="mb-3 w-full ">
+                <label className="block  text-sm font-bold mb-2 " for="">
                   Name
                 </label>
                 <select
-                  class=" w-full form-select appearance-none block max-w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  class={`form-select appearance-none
+                     block
+                     w-full
+                     px-3
+                     py-1.5
+                     text-base
+                     font-normal
+                     border border-solid border-gray-300
+                     rounded
+                     transition
+                     ease-in-out
+                     m-0
+                     focus:text-gray-700  focus:border-blue-600 focus:outline-none
+                     ${
+                       currentMode === 'Dark'
+                         ? 'bg-[#424242] text-white focus:text-white focus:border-white'
+                         : 'bg-white text-black'
+                     }
+                   `}
                   aria-label="Name"
                   onChange={handleChange('name')}
                   value={name}
@@ -93,15 +127,16 @@ const AddAppVersion = () => {
               </div>
             </div>
 
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2 "
-                for="version"
-              >
+            <div className="mb-4">
+              <label className="block  text-sm font-bold mb-2 " for="version">
                 Version
               </label>
               <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={`shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline ${
+                  currentMode === 'Dark'
+                    ? 'bg-[#424242] text-white'
+                    : 'bg-white text-black'
+                }`}
                 id="version"
                 type="text"
                 placeholder="1"
@@ -109,15 +144,19 @@ const AddAppVersion = () => {
                 value={version}
               />
             </div>
-            <div class="mb-4">
+            <div className="mb-4">
               <label
-                class="block text-gray-700 text-sm font-bold mb-2 "
+                className="block  text-sm font-bold mb-2 "
                 for="minimumversion"
               >
                 Minimum Version
               </label>
               <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={`shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline ${
+                  currentMode === 'Dark'
+                    ? 'bg-[#424242] text-white'
+                    : 'bg-white text-black'
+                }`}
                 id="minimumversion"
                 type="text"
                 placeholder="1.0.0"
@@ -125,9 +164,9 @@ const AddAppVersion = () => {
                 value={minVersion}
               />
             </div>
-            <div class="flex ">
+            <div className="flex ">
               <button
-                class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold mt-6 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold mt-6 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
                 onClick={onSubmit}
               >
@@ -135,7 +174,7 @@ const AddAppVersion = () => {
               </button>
             </div>
           </form>
-          <p class="text-center text-gray-500 text-xs"></p>
+          <p className="text-center text-gray-500 text-xs"></p>
         </div>
       </div>
     </>

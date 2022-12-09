@@ -219,42 +219,42 @@ const AdminTable = () => {
       ),
       selector: (row) => [
         row.admin_permissions[0]?.adminManagement == 1 ? (
-          <span class="bg-red-200 text-red-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
+          <span className="bg-red-200 text-red-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
             Admin
           </span>
         ) : (
           ''
         ),
         row.admin_permissions[0]?.dashboard == 1 ? (
-          <span class="bg-cyan-200 text-cyan-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
+          <span className="bg-cyan-200 text-cyan-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
             Dashboard
           </span>
         ) : (
           ''
         ),
         row.admin_permissions[0]?.notificationManagement == 1 ? (
-          <span class="bg-green-200 text-green-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
+          <span className="bg-green-200 text-green-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
             Notification
           </span>
         ) : (
           ''
         ),
         row.admin_permissions[0]?.userManagement == 1 ? (
-          <span class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
+          <span className="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
             User Management
           </span>
         ) : (
           ''
         ),
         row.admin_permissions[0]?.systemConfiguration == 1 ? (
-          <span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
+          <span className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
             System Configuration
           </span>
         ) : (
           ''
         ),
         row.admin_permissions[0]?.reportManagement == 1 ? (
-          <span class="bg-[#03C9D7] text-white text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
+          <span className="bg-[#03C9D7] text-white text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
             Report
           </span>
         ) : (
@@ -565,12 +565,12 @@ const AdminTable = () => {
                     {/* <label for="underline_select" >
                       Admin Type
                     </label> */}
-                    <div class="mb-3 xl:w-full ">
-                      <label class="block text-sm font-bold mb-2 " for="">
+                    <div className="mb-3 xl:w-full ">
+                      <label className="block text-sm font-bold mb-2 " for="">
                         Admin Type
                       </label>
                       <select
-                        class={`form-select w-full block  px-3 py-1.5 text-base font-normal 
+                        className={`form-select w-full block  px-3 py-1.5 text-base font-normal 
                          ${
                            currentMode === 'Dark'
                              ? 'bg-[#424242] text-white'
@@ -589,7 +589,7 @@ const AdminTable = () => {
                       </select>
                     </div>
 
-                    <label class="block text-sm font-bold mb-2 ">
+                    <label className="block text-sm font-bold mb-2 ">
                       Admin Access
                     </label>
 
@@ -598,10 +598,10 @@ const AdminTable = () => {
                         currentMode === 'Dark' ? 'text-white' : ''
                       }`}
                     >
-                      <div class="flex flex-col">
-                        <div class="form-check form-check-inline">
+                      <div className="flex flex-col">
+                        <div className="form-check form-check-inline">
                           <input
-                            class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            className="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox"
                             id="dashboard"
                             // value={checkBox}
@@ -610,16 +610,16 @@ const AdminTable = () => {
                             name="dashboard"
                           />
                           <label
-                            class="form-check-label mr-1.5 mb-2 inline-block"
+                            className="form-check-label mr-1.5 mb-2 inline-block"
                             for="inlineCheckbox1"
                           >
                             Dashboard
                           </label>
                         </div>
 
-                        <div class="form-check form-check-inline">
+                        <div className="form-check form-check-inline">
                           <input
-                            class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            className="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox"
                             id="report"
                             value={checkBox}
@@ -629,7 +629,7 @@ const AdminTable = () => {
                             // onClick={test}
                           />
                           <label
-                            class="form-check-label mr-1.5 inline-block"
+                            className="form-check-label mr-1.5 inline-block"
                             for="inlineCheckbox2"
                           >
                             Report
@@ -637,10 +637,10 @@ const AdminTable = () => {
                         </div>
                       </div>
 
-                      <div class="flex flex-col">
-                        <div class="form-check form-check-inline">
+                      <div className="flex flex-col">
+                        <div className="form-check form-check-inline">
                           <input
-                            class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            className="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox"
                             id="inlineCheckbox1"
                             // value={checkBox}
@@ -650,15 +650,15 @@ const AdminTable = () => {
                             // onClick={test}
                           />
                           <label
-                            class="form-check-label mr-1.5 mb-2 inline-block"
+                            className="form-check-label mr-1.5 mb-2 inline-block"
                             for="inlineCheckbox1"
                           >
                             User Mangement
                           </label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div className="form-check form-check-inline">
                           <input
-                            class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            className="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox"
                             id="inlineCheckbox2"
                             // value={checkBox}
@@ -668,7 +668,7 @@ const AdminTable = () => {
                             // onClick={test}
                           />
                           <label
-                            class="form-check-label mr-1.5 inline-block"
+                            className="form-check-label mr-1.5 inline-block"
                             for="inlineCheckbox2"
                           >
                             Admin
@@ -676,10 +676,10 @@ const AdminTable = () => {
                         </div>
                       </div>
 
-                      <div class="flex flex-col">
-                        <div class="form-check form-check-inline">
+                      <div className="flex flex-col">
+                        <div className="form-check form-check-inline">
                           <input
-                            class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            className="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox"
                             id="inlineCheckbox1"
                             // value={checkBox}
@@ -689,15 +689,15 @@ const AdminTable = () => {
                             // onClick={test}
                           />
                           <label
-                            class="form-check-label mr-1.5 mb-2 inline-block"
+                            className="form-check-label mr-1.5 mb-2 inline-block"
                             for="inlineCheckbox1"
                           >
                             Notification
                           </label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div className="form-check form-check-inline">
                           <input
-                            class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            className="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             type="checkbox"
                             id="inlineCheckbox2"
                             // value={checkBox}
@@ -706,7 +706,7 @@ const AdminTable = () => {
                             onChange={(e) => setCheckbox(e.target.name)}
                           />
                           <label
-                            class="form-check-label mr-1.5 inline-block"
+                            className="form-check-label mr-1.5 inline-block"
                             for="inlineCheckbox2"
                           >
                             System Configuration
@@ -747,7 +747,7 @@ const AdminTable = () => {
         {/* ADD Button */}
         <button
           title="Add"
-          class="fixed z-90 bottom-24 right-3.5 bg-[#1A97F5] w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl"
+          className="fixed z-90 bottom-24 right-3.5 bg-[#1A97F5] w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl"
           onClick={() => navigate('/addAdmin')}
         >
           +

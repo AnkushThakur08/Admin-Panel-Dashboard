@@ -70,7 +70,10 @@ const ViewAppVersion = () => {
       }`}
     >
       <Link to="/appVersion">
-        <IoIosArrowBack size={25} className="mb-3" />
+        <IoIosArrowBack
+          size={25}
+          className={`mb-3 ${currentMode === 'Dark' ? 'text-white' : ''}`}
+        />
       </Link>
       <Header category="Details" title="App Version Details" />
       <div class="max-w-full rounded overflow-hidden shadow-lg pb-10">

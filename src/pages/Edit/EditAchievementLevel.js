@@ -12,7 +12,7 @@ import { Header } from '../../components';
 //REACT ICONS
 import { IoIosArrowBack } from 'react-icons/io';
 
-// COntext
+// Context
 import { useStateContext } from '../../contexts/ContextProvider';
 
 // API
@@ -20,13 +20,12 @@ import { isAuthenticated } from '../../helper/login/loginHelper';
 import { EditAchievementLevelData } from '../../helper/adminAchievementHelper/AdminAchievement';
 
 const EditAchievementLevel = () => {
-
   // Context
   const { currentMode } = useStateContext();
 
   // Authentication
   const { data } = isAuthenticated();
-  console.log(data.accessToken, 'LINE 29')
+  console.log(data.accessToken, 'LINE 29');
 
   // Navigate
   const navigate = useNavigate();
@@ -36,7 +35,7 @@ const EditAchievementLevel = () => {
   const id = params.id;
   const achievementId = params.achievementId;
 
-  console.log(id)
+  console.log(id);
 
   const [formData, setFormData] = useState({
     id: id,
@@ -45,7 +44,7 @@ const EditAchievementLevel = () => {
   });
 
   // Destructure
-  const { name} = formData;
+  const { name } = formData;
 
   //   Handle Change
   const onChange = (e) => {
@@ -79,27 +78,42 @@ const EditAchievementLevel = () => {
 
   return (
     <>
-      <div className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl ${currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-white'}`}>
+      <div
+        className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl ${
+          currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-white'
+        }`}
+      >
         <Link to={`/viewAdminAchievement/${id}`}>
-          <IoIosArrowBack size={25} className={`mb-3 ${currentMode === 'Dark'? 'text-white' : ''}`} />
+          <IoIosArrowBack
+            size={25}
+            className={`mb-3 ${currentMode === 'Dark' ? 'text-white' : ''}`}
+          />
         </Link>
         <Header category="Page" title="Edit Admin Achievement Level" />
-        {/* <div class="w-full max-w-xs  "> */}
+        {/* <div className="w-full max-w-xs  "> */}
         <form
-          className={`shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full ${currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-white'}`}
+          className={`shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full ${
+            currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-white'
+          }`}
           method="POST"
           encType="multipart/form-data"
         >
-          <div class="mb-4">
+          <div className="mb-4">
             <label
-              class={`block text-sm font-bold mb-2 ${currentMode === 'Dark' ? ' text-white' : ' text-gray-700'}`}
+              className={`block text-sm font-bold mb-2 ${
+                currentMode === 'Dark' ? ' text-white' : ' text-gray-700'
+              }`}
               for="name"
             >
               Name
             </label>
             <input
-              class={`shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  
-              ${currentMode === 'Dark' ? 'bg-[#424242] text-white' : 'text-gray-700'}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline  
+              ${
+                currentMode === 'Dark'
+                  ? 'bg-[#424242] text-white'
+                  : 'text-gray-700'
+              }`}
               id="firstname"
               type="text"
               value={name}
@@ -108,10 +122,14 @@ const EditAchievementLevel = () => {
               placeholder="Enter Achievement"
             />
           </div>
-          <div class="flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <button
-              class={`w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-3
-               ${currentMode === 'Dark' ? 'text-white bg-black hover:bg-[#20232a]' : 'text-white bg-blue-500 hover:bg-blue-700'}`}
+              className={`w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-3
+               ${
+                 currentMode === 'Dark'
+                   ? 'text-white bg-black hover:bg-[#20232a]'
+                   : 'text-white bg-blue-500 hover:bg-blue-700'
+               }`}
               type="submit"
               onClick={handleSubmit}
             >
@@ -119,7 +137,7 @@ const EditAchievementLevel = () => {
             </button>
           </div>
         </form>
-        <p class="text-center text-gray-500 text-xs"></p>
+        <p className="text-center text-gray-500 text-xs"></p>
         {/* </div> */}
       </div>
     </>

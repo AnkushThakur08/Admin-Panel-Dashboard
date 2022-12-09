@@ -234,7 +234,16 @@ const AppVersionTable = () => {
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+
+              <div
+                className={`border-0 rounded-lg shadow-lg relative flex flex-col w-full outline-none focus:outline-none 
+                ${
+                  currentMode === 'Dark'
+                    ? 'bg-[#424242] text-white'
+                    : 'bg-white'
+                }
+                `}
+              >
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">Confirmation</h3>
@@ -249,7 +258,7 @@ const AppVersionTable = () => {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                  <p className="my-4  text-lg leading-relaxed">
                     Are you sure, you want to delete this record?
                   </p>
                 </div>
@@ -280,7 +289,7 @@ const AppVersionTable = () => {
       {/* ADD Button */}
       <button
         title="Add"
-        class="fixed z-90 bottom-24 right-3.5 bg-[#1A97F5] w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl"
+        className="fixed z-90 bottom-24 right-3.5 bg-[#1A97F5] w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl"
         onClick={() => navigate('/addAppVersion')}
       >
         +

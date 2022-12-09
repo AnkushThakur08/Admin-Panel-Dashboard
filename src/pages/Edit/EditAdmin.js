@@ -159,7 +159,7 @@ const EditAdmin = () => {
           />
         </Link>
         <Header category="Page" title="Edit Admin" />
-        {/* <div class="w-full max-w-xs  "> */}
+        {/* <div className="w-full max-w-xs  "> */}
         <form
           className={` shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full ${
             currentMode === 'Dark'
@@ -170,12 +170,12 @@ const EditAdmin = () => {
           method="POST"
           encType="multipart/form-data"
         >
-          <div class="mb-4">
-            <label class={`block text-sm font-bold mb-2`} for="firstname">
+          <div className="mb-4">
+            <label className={`block text-sm font-bold mb-2`} for="firstname">
               First Name
             </label>
             <input
-              class={`shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline ${
+              className={`shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline ${
                 currentMode === 'Dark'
                   ? 'bg-[#424242] text-white'
                   : 'bg-white text-black'
@@ -188,12 +188,12 @@ const EditAdmin = () => {
               onChange={onChange}
             />
           </div>
-          <div class="mb-4">
-            <label class="block text-sm font-bold mb-2" for="lastname">
+          <div className="mb-4">
+            <label className="block text-sm font-bold mb-2" for="lastname">
               Last Name
             </label>
             <input
-              class={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
+              className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
                 currentMode === 'Dark'
                   ? 'bg-[#424242] text-white'
                   : 'bg-white text-black'
@@ -206,12 +206,12 @@ const EditAdmin = () => {
               onChange={onChange}
             />
           </div>
-          <div class="mb-4">
-            <label class="block text-sm font-bold mb-2" for="username">
+          <div className="mb-4">
+            <label className="block text-sm font-bold mb-2" for="username">
               Email
             </label>
             <input
-              class={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
+              className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
                 currentMode === 'Dark'
                   ? 'bg-[#424242] text-white'
                   : 'bg-white text-black'
@@ -226,13 +226,13 @@ const EditAdmin = () => {
             />
           </div>
 
-          <div class="flex w-full mb-3">
-            <div class="mb-3 w-full">
-              <label class="block text-sm font-bold mb-2" for="">
+          <div className="flex w-full mb-3">
+            <div className="mb-3 w-full">
+              <label className="block text-sm font-bold mb-2" for="">
                 Admin Type
               </label>
               <select
-                class={`form-select appearance-none
+                className={`form-select appearance-none
                 block
                 w-full
                 px-3
@@ -261,15 +261,15 @@ const EditAdmin = () => {
             </div>
           </div>
 
-          <label class={`block text-sm font-bold mb-2`}>Admin Access</label>
+          <label className={`block text-sm font-bold mb-2`}>Admin Access</label>
 
           {console.log(permission, 'permission')}
 
           <div className="flex justify-between mb-2.5">
-            <div class="flex flex-col">
-              <div class="form-check form-check-inline">
+            <div className="flex flex-col">
+              <div className="form-check form-check-inline">
                 <input
-                  class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer "
+                  className="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer "
                   type="checkbox"
                   id="dashboard"
                   value="dashboard"
@@ -281,7 +281,7 @@ const EditAdmin = () => {
                   onClick={test}
                 />
                 <label
-                  class={`form-check-label mr-1.5 mb-2 inline-block  ${
+                  className={`form-check-label mr-1.5 mb-2 inline-block  ${
                     currentMode === 'Dark'
                       ? 'text-white'
                       : 'text-gray-800 opacity-50'
@@ -292,9 +292,9 @@ const EditAdmin = () => {
                 </label>
               </div>
 
-              <div class="form-check form-check-inline">
+              <div className="form-check form-check-inline">
                 <input
-                  class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  className="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   id="report"
                   value="reportManagement"
@@ -308,7 +308,7 @@ const EditAdmin = () => {
                   onClick={test}
                 />
                 <label
-                  class={`form-check-label mr-1.5 inline-block  ${
+                  className={`form-check-label mr-1.5 inline-block  ${
                     currentMode === 'Dark'
                       ? 'text-white'
                       : 'text-gray-800 opacity-50'
@@ -320,10 +320,10 @@ const EditAdmin = () => {
               </div>
             </div>
 
-            <div class="flex flex-col">
-              <div class="form-check form-check-inline">
+            <div className="flex flex-col">
+              <div className="form-check form-check-inline">
                 <input
-                  class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  className="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   id="inlineCheckbox1"
                   value="userManagement"
@@ -337,7 +337,7 @@ const EditAdmin = () => {
                   onClick={test}
                 />
                 <label
-                  class={`form-check-label mr-1.5 mb-2 inline-block ${
+                  className={`form-check-label mr-1.5 mb-2 inline-block ${
                     currentMode === 'Dark'
                       ? 'text-white'
                       : 'text-gray-800 opacity-50'
@@ -347,9 +347,9 @@ const EditAdmin = () => {
                   User Mangement
                 </label>
               </div>
-              <div class="form-check form-check-inline">
+              <div className="form-check form-check-inline">
                 <input
-                  class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  className="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   id="inlineCheckbox2"
                   value="adminManagement"
@@ -363,7 +363,7 @@ const EditAdmin = () => {
                   onClick={test}
                 />
                 <label
-                  class={`form-check-label mr-1.5 inline-block ${
+                  className={`form-check-label mr-1.5 inline-block ${
                     currentMode === 'Dark'
                       ? 'text-white'
                       : 'text-gray-800 opacity-50'
@@ -375,10 +375,10 @@ const EditAdmin = () => {
               </div>
             </div>
 
-            <div class="flex flex-col">
-              <div class="form-check form-check-inline">
+            <div className="flex flex-col">
+              <div className="form-check form-check-inline">
                 <input
-                  class="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  className="form-check-input h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   id="inlineCheckbox1"
                   value="notificationManagement"
@@ -392,7 +392,7 @@ const EditAdmin = () => {
                   onClick={test}
                 />
                 <label
-                  class={`form-check-label mr-1.5 mb-2 inline-block ${
+                  className={`form-check-label mr-1.5 mb-2 inline-block ${
                     currentMode === 'Dark'
                       ? 'text-white'
                       : 'text-gray-800 opacity-50'
@@ -402,9 +402,9 @@ const EditAdmin = () => {
                   Notification
                 </label>
               </div>
-              <div class="form-check form-check-inline">
+              <div className="form-check form-check-inline">
                 <input
-                  class="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  className="form-check-input  h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   id="inlineCheckbox2"
                   value="systemConfiguration"
@@ -419,7 +419,7 @@ const EditAdmin = () => {
                   onClick={test}
                 />
                 <label
-                  class={`form-check-label mr-1.5 inline-block ${
+                  className={`form-check-label mr-1.5 inline-block ${
                     currentMode === 'Dark'
                       ? 'text-white'
                       : 'text-gray-800 opacity-50'
@@ -432,9 +432,9 @@ const EditAdmin = () => {
             </div>
           </div>
 
-          <div class="flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <button
-              class={` w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-3 ${
+              className={` w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-3 ${
                 currentMode === 'Dark'
                   ? 'text-white bg-black hover:bg-black-700'
                   : 'text-white bg-blue-500 hover:bg-blue-700'
@@ -446,7 +446,7 @@ const EditAdmin = () => {
             </button>
           </div>
         </form>
-        <p class="text-center text-gray-500 text-xs"></p>
+        <p className="text-center text-gray-500 text-xs"></p>
         {/* </div> */}
       </div>
     </>
