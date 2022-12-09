@@ -18,14 +18,14 @@ export const ContextProvider = ({ children }) => {
   const [isClicked, setIsClicked] = useState(initialState);
 
   const setMode = (e, color) => {
+    console.log('IN MODE');
     setCurrentMode(e.target.value);
-    setCurrentColor(color);
     localStorage.setItem('themeMode', e.target.value);
-
-    localStorage.setItem('colorMode', color);
   };
 
   const setColor = (color) => {
+    console.log('IN COLOR');
+
     setCurrentColor(color);
     console.log(currentColor);
     localStorage.setItem('colorMode', color);
@@ -38,7 +38,6 @@ export const ContextProvider = ({ children }) => {
     // eslint-disable-next-line react/jsx-no-constructed-context-values
     <StateContext.Provider
       value={{
-
         currentColor,
         currentMode,
         activeMenu,
