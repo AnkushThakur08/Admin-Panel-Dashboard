@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
 // react router dom
-import { useNavigate, useParams,Link } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 
 // React Toastify
 import { toast } from 'react-toastify';
 
 //REACT ICONS
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowBack } from 'react-icons/io';
 
 // Components
 import { Header } from '../../components';
 
-// COntext
+// Context
 import { useStateContext } from '../../contexts/ContextProvider';
 
 // API
@@ -21,7 +21,6 @@ import { editAdmin } from '../../helper/adminHelper/admin';
 import { isAuthenticated } from '../../helper/login/loginHelper';
 
 const EditAdmin = () => {
-
   // Context
   const { currentMode } = useStateContext();
 
@@ -35,7 +34,6 @@ const EditAdmin = () => {
   // Navigate
   const navigate = useNavigate();
 
-
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -48,25 +46,33 @@ const EditAdmin = () => {
         permission: '0',
       },
     ],
-    permission: []
+    permission: [],
   });
 
   // Destructure
-  const { firstName, lastName, id, admin_permissions, permission, email, adminType } =
-    formData;
+  const {
+    firstName,
+    lastName,
+    id,
+    admin_permissions,
+    permission,
+    email,
+    adminType,
+  } = formData;
 
   const preload = () => {
     console.log(userid);
     adminIndividualData(userid, data.accessToken)
       .then((data) => {
-        console.log(data,"DATA")
-        setFormData({...formData, 
+        console.log(data, 'DATA');
+        setFormData({
+          ...formData,
           firstName: data.data.firstName,
           lastName: data.data.lastName,
           email: data.data.email,
           adminType: data.data.adminType,
           permission: data.data.admin_permissions[0],
-          });
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -141,27 +147,39 @@ const EditAdmin = () => {
 
   return (
     <>
-      <div className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-white'} rounded-3xl`}>
-      <Link to="/admin">
-        <IoIosArrowBack size={25} className="mb-3" />
-      </Link>
+      <div
+        className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
+          currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-white'
+        } rounded-3xl`}
+      >
+        <Link to="/admin">
+          <IoIosArrowBack
+            size={25}
+            className={`mb-3 ${currentMode === 'Dark' ? 'text-white' : ''}`}
+          />
+        </Link>
         <Header category="Page" title="Edit Admin" />
         {/* <div class="w-full max-w-xs  "> */}
         <form
-          className={` shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full ${currentMode === 'Dark' ? 'bg-[#424242] text-white' : 'bg-white text-black'}`}
+          className={` shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full ${
+            currentMode === 'Dark'
+              ? 'bg-[#424242] text-white'
+              : 'bg-white text-black'
+          }`}
           onSubmit={handleSubmit}
           method="POST"
           encType="multipart/form-data"
         >
           <div class="mb-4">
-            <label
-              class={`block text-sm font-bold mb-2` }
-              for="firstname"
-            >
+            <label class={`block text-sm font-bold mb-2`} for="firstname">
               First Name
             </label>
             <input
-              class={`shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline ${currentMode === 'Dark' ? 'bg-[#424242] text-white' : 'bg-white text-black'}`}
+              class={`shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline ${
+                currentMode === 'Dark'
+                  ? 'bg-[#424242] text-white'
+                  : 'bg-white text-black'
+              }`}
               id="firstname"
               type="text"
               value={firstName}
@@ -171,14 +189,15 @@ const EditAdmin = () => {
             />
           </div>
           <div class="mb-4">
-            <label
-              class="block text-sm font-bold mb-2"
-              for="lastname"
-            >
+            <label class="block text-sm font-bold mb-2" for="lastname">
               Last Name
             </label>
             <input
-              class={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${currentMode === 'Dark' ? 'bg-[#424242] text-white' : 'bg-white text-black'}`}
+              class={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
+                currentMode === 'Dark'
+                  ? 'bg-[#424242] text-white'
+                  : 'bg-white text-black'
+              }`}
               id="lastname"
               type="text"
               value={lastName}
@@ -188,14 +207,15 @@ const EditAdmin = () => {
             />
           </div>
           <div class="mb-4">
-            <label
-              class="block text-sm font-bold mb-2"
-              for="username"
-            >
+            <label class="block text-sm font-bold mb-2" for="username">
               Email
             </label>
             <input
-              class={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${currentMode === 'Dark' ? 'bg-[#424242] text-white' : 'bg-white text-black'}`}
+              class={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
+                currentMode === 'Dark'
+                  ? 'bg-[#424242] text-white'
+                  : 'bg-white text-black'
+              }`}
               id="username"
               type="text"
               name="email"
@@ -207,8 +227,6 @@ const EditAdmin = () => {
           </div>
 
           <div class="flex w-full mb-3">
-
-            
             <div class="mb-3 w-full">
               <label class="block text-sm font-bold mb-2" for="">
                 Admin Type
@@ -227,7 +245,11 @@ const EditAdmin = () => {
                 ease-in-out
                 m-0
                 focus:text-gray-700  focus:border-blue-600 focus:outline-none
-                ${currentMode === 'Dark'? 'bg-[#424242] text-white focus:text-white focus:border-white' : 'bg-white text-black'}
+                ${
+                  currentMode === 'Dark'
+                    ? 'bg-[#424242] text-white focus:text-white focus:border-white'
+                    : 'bg-white text-black'
+                }
               `}
                 onChange={onChange}
                 value={adminType}
@@ -239,11 +261,9 @@ const EditAdmin = () => {
             </div>
           </div>
 
-          <label class={`block text-sm font-bold mb-2`}>
-            Admin Access
-          </label>
+          <label class={`block text-sm font-bold mb-2`}>Admin Access</label>
 
-          {console.log(permission, "permission")}
+          {console.log(permission, 'permission')}
 
           <div className="flex justify-between mb-2.5">
             <div class="flex flex-col">
@@ -255,13 +275,17 @@ const EditAdmin = () => {
                   value="dashboard"
                   // onChange={test}
                   name="permissions"
-                  defaultChecked = {
-                    permission.dashboard === 1 ? true : console.log("false")
+                  defaultChecked={
+                    permission.dashboard === 1 ? true : console.log('false')
                   }
                   onClick={test}
                 />
                 <label
-                  class={`form-check-label mr-1.5 mb-2 inline-block  ${currentMode === 'Dark' ? 'text-white' : 'text-gray-800 opacity-50'}`}
+                  class={`form-check-label mr-1.5 mb-2 inline-block  ${
+                    currentMode === 'Dark'
+                      ? 'text-white'
+                      : 'text-gray-800 opacity-50'
+                  }`}
                   for="inlineCheckbox1"
                 >
                   Dashboard
@@ -277,12 +301,18 @@ const EditAdmin = () => {
                   name="permissions"
                   // onChange={test}
                   defaultChecked={
-                    permission.reportManagement === 1 ? true : console.log("false")
+                    permission.reportManagement === 1
+                      ? true
+                      : console.log('false')
                   }
                   onClick={test}
                 />
                 <label
-                  class={`form-check-label mr-1.5 inline-block  ${currentMode === 'Dark' ? 'text-white' : 'text-gray-800 opacity-50'}`}
+                  class={`form-check-label mr-1.5 inline-block  ${
+                    currentMode === 'Dark'
+                      ? 'text-white'
+                      : 'text-gray-800 opacity-50'
+                  }`}
                   for="inlineCheckbox2"
                 >
                   Report
@@ -299,11 +329,19 @@ const EditAdmin = () => {
                   value="userManagement"
                   name="permissions"
                   // onChange={test}
-                  defaultChecked={permission.userManagement === 1 ? true : console.log("false")}
+                  defaultChecked={
+                    permission.userManagement === 1
+                      ? true
+                      : console.log('false')
+                  }
                   onClick={test}
                 />
                 <label
-                  class={`form-check-label mr-1.5 mb-2 inline-block ${currentMode === 'Dark' ? 'text-white' : 'text-gray-800 opacity-50'}`}
+                  class={`form-check-label mr-1.5 mb-2 inline-block ${
+                    currentMode === 'Dark'
+                      ? 'text-white'
+                      : 'text-gray-800 opacity-50'
+                  }`}
                   for="inlineCheckbox1"
                 >
                   User Mangement
@@ -318,12 +356,18 @@ const EditAdmin = () => {
                   name="permissions"
                   // onChange={test}
                   defaultChecked={
-                    permission.adminManagement === 1 ? true : console.log("false")
+                    permission.adminManagement === 1
+                      ? true
+                      : console.log('false')
                   }
                   onClick={test}
                 />
                 <label
-                  class={`form-check-label mr-1.5 inline-block ${currentMode === 'Dark' ? 'text-white' : 'text-gray-800 opacity-50'}`}
+                  class={`form-check-label mr-1.5 inline-block ${
+                    currentMode === 'Dark'
+                      ? 'text-white'
+                      : 'text-gray-800 opacity-50'
+                  }`}
                   for="inlineCheckbox2"
                 >
                   Admin
@@ -341,12 +385,18 @@ const EditAdmin = () => {
                   name="permissions"
                   // onChange={test}
                   defaultChecked={
-                    permission.notificationManagement === 1 ? true : console.log("false")
+                    permission.notificationManagement === 1
+                      ? true
+                      : console.log('false')
                   }
                   onClick={test}
                 />
                 <label
-                  class={`form-check-label mr-1.5 mb-2 inline-block ${currentMode === 'Dark' ? 'text-white' : 'text-gray-800 opacity-50'}`}
+                  class={`form-check-label mr-1.5 mb-2 inline-block ${
+                    currentMode === 'Dark'
+                      ? 'text-white'
+                      : 'text-gray-800 opacity-50'
+                  }`}
                   for="inlineCheckbox1"
                 >
                   Notification
@@ -362,12 +412,18 @@ const EditAdmin = () => {
                   // onChange={(e)=> setSystemConfiguration(e.target.checked)}
                   // onChange={test}
                   defaultChecked={
-                    permission.systemConfiguration === 1 ? true : console.log("false")  
+                    permission.systemConfiguration === 1
+                      ? true
+                      : console.log('false')
                   }
                   onClick={test}
                 />
                 <label
-                  class={`form-check-label mr-1.5 inline-block ${currentMode === 'Dark' ? 'text-white' : 'text-gray-800 opacity-50'}`}
+                  class={`form-check-label mr-1.5 inline-block ${
+                    currentMode === 'Dark'
+                      ? 'text-white'
+                      : 'text-gray-800 opacity-50'
+                  }`}
                   for="inlineCheckbox2"
                 >
                   System Configuration
@@ -378,7 +434,11 @@ const EditAdmin = () => {
 
           <div class="flex items-center justify-between">
             <button
-              class={` w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-3 ${currentMode === 'Dark' ? 'text-white bg-black hover:bg-black-700' : 'text-white bg-blue-500 hover:bg-blue-700'}`}
+              class={` w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-3 ${
+                currentMode === 'Dark'
+                  ? 'text-white bg-black hover:bg-black-700'
+                  : 'text-white bg-blue-500 hover:bg-blue-700'
+              }`}
               type="submit"
               onClick={edit}
             >

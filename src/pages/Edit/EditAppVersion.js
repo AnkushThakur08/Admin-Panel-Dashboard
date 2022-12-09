@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { Header } from '../../components';
 
 // REACT ICONS
-import {IoIosArrowBack} from "react-icons/io" 
+import { IoIosArrowBack } from 'react-icons/io';
 
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
@@ -95,9 +95,12 @@ const EditAppVersion = () => {
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Link to="/appVersion">
-        <IoIosArrowBack size={25} className="mb-3" />
-      </Link>
+        <Link to="/appVersion">
+          <IoIosArrowBack
+            size={25}
+            className={`mb-3 ${currentMode === 'Dark' ? 'text-white' : ''}`}
+          />
+        </Link>
         <Header category="Page" title="Edit App Version" />
         <div class="max-w-full max-w-full">
           <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">

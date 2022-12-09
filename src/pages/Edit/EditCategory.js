@@ -12,6 +12,9 @@ import { IoIosArrowBack } from 'react-icons/io';
 // Components
 import { Header } from '../../components';
 
+// Context
+import { useStateContext } from '../../contexts/ContextProvider';
+
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
 import {
@@ -21,6 +24,9 @@ import {
 } from '../../helper/Table/categoryTableHelper';
 
 const EditCategory = () => {
+  // Context
+  const { currentMode } = useStateContext();
+
   // PARAMS
   const params = useParams();
   const categoryId = params.id;
@@ -94,26 +100,38 @@ const EditCategory = () => {
 
   return (
     <>
-      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+      <div
+        className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl ${
+          currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-white'
+        }`}
+      >
         <Link to="/category">
-          <IoIosArrowBack size={25} className="mb-3" />
+          <IoIosArrowBack
+            size={25}
+            className={`mb-3 ${currentMode === 'Dark' ? 'text-white' : ''}`}
+          />
         </Link>
         <Header category="Page" title="Edit Category" />
         {/* <div class="w-full max-w-xs  "> */}
         <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full"
+          className={` shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full ${
+            currentMode === 'Dark'
+              ? 'bg-[#424242] text-white'
+              : 'bg-white text-black'
+          }`}
           method="POST"
           encType="multipart/form-data"
         >
           <div class="mb-4">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2 "
-              for="name"
-            >
+            <label class="block text-sm font-bold mb-2 " for="name">
               Name
             </label>
             <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class={`shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline ${
+                currentMode === 'Dark'
+                  ? 'bg-[#424242] text-white'
+                  : 'bg-white text-black'
+              }`}
               id="firstname"
               type="text"
               value={name}
@@ -125,9 +143,7 @@ const EditCategory = () => {
 
           <div class="flex w-full mb-3">
             <div class="mb-3 w-full ">
-              <label class="block text-gray-700 text-sm font-bold mb-2 ">
-                image
-              </label>
+              <label class="block  text-sm font-bold mb-2 ">image</label>
               <input
                 onChange={onChange('image')}
                 type="file"

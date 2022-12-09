@@ -73,7 +73,10 @@ const UserDetails = () => {
       }`}
     >
       <Link to="/user">
-        <IoIosArrowBack size={25} className="mb-3" />
+        <IoIosArrowBack
+          size={25}
+          className={`mb-3 ${currentMode === 'Dark' ? 'text-white' : ''}`}
+        />
       </Link>
       <Header category="Details" title="User Details" />
       <div className="max-w-full rounded overflow-hidden shadow-lg pb-10">

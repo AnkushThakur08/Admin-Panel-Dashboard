@@ -370,6 +370,7 @@ const AdminTable = () => {
             size={25}
             style={{ cursor: 'pointer' }}
             onClick={() => setShowFilterModal(true)}
+            className={`${currentMode === 'Dark' ? 'text-white' : ''}`}
           />
         </div>
         <DataTable
@@ -405,7 +406,15 @@ const AdminTable = () => {
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
               <div className="relative w-auto my-6 mx-auto max-w-3xl">
                 {/*content*/}
-                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div
+                  className={`border-0 rounded-lg shadow-lg relative flex flex-col w-full outline-none focus:outline-none 
+                ${
+                  currentMode === 'Dark'
+                    ? 'bg-[#424242] text-white'
+                    : 'bg-white'
+                }
+                `}
+                >
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                     <h3 className="text-3xl font-semibold">Confirmation</h3>
@@ -420,7 +429,7 @@ const AdminTable = () => {
                   </div>
                   {/*body*/}
                   <div className="relative p-6 flex-auto">
-                    <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                    <p className="my-4 text-lg leading-relaxed">
                       Are you sure, you want to delete this record?
                     </p>
                   </div>
@@ -453,7 +462,15 @@ const AdminTable = () => {
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
               <div className="relative w-auto my-6 mx-auto max-w-3xl">
                 {/*content*/}
-                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div
+                  className={`border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none 
+                 ${
+                   currentMode === 'Dark'
+                     ? 'bg-[#424242] text-white'
+                     : 'bg-white'
+                 }
+                focus:outline-none`}
+                >
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                     <h3 className="text-3xl font-semibold">Confirmation</h3>
@@ -473,11 +490,11 @@ const AdminTable = () => {
 
                   <div className="relative p-6 flex-auto">
                     {localStorage.getItem('isBlocked') == 0 ? (
-                      <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                      <p className="my-4  text-lg leading-relaxed">
                         Are you sure, you want to block this user?
                       </p>
                     ) : (
-                      <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                      <p className="my-4  text-lg leading-relaxed">
                         Are you sure, you want to Unblock this user?
                       </p>
                     )}
@@ -514,7 +531,16 @@ const AdminTable = () => {
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
               <div className="relative w-auto my-6 mx-auto max-w-3xl">
                 {/*content*/}
-                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div
+                  className={`border-0 rounded-lg shadow-lg relative flex flex-col w-full  outline-none focus:outline-none
+                ${
+                  currentMode === 'Dark'
+                    ? 'bg-[#424242] text-white'
+                    : 'bg-white'
+                }
+                
+                `}
+                >
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                     <h3 className="text-3xl font-semibold">Filter</h3>
@@ -531,33 +557,47 @@ const AdminTable = () => {
                   </div>
                   {/*body*/}
 
-                  <div className="relative p-6 flex-auto">
+                  <div
+                    className={`relative p-6 flex-auto ${
+                      currentMode === 'Dark' ? 'text-white' : ''
+                    }`}
+                  >
                     {/* <label for="underline_select" >
                       Admin Type
                     </label> */}
                     <div class="mb-3 xl:w-full ">
-                      <label
-                        class="block text-gray-700 text-sm font-bold mb-2 "
-                        for=""
-                      >
+                      <label class="block text-sm font-bold mb-2 " for="">
                         Admin Type
                       </label>
                       <select
-                        class="form-select w-full appearance-non block  px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        class={`form-select w-full block  px-3 py-1.5 text-base font-normal 
+                         ${
+                           currentMode === 'Dark'
+                             ? 'bg-[#424242] text-white'
+                             : 'text-gray-700'
+                         } bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 ${
+                          currentMode === 'Dark'
+                            ? ' bg-[#424242] text-white focus:text-white focus:bg-[#424242] focus:border-white '
+                            : 'focus:text-gray-700 focus:bg-white focus:border-blue-600 '
+                        }  focus:outline-none`}
                         aria-label=""
                         onChange={handleAdminType('adminType')}
                       >
-                        <option value=""></option>
+                        <option value="">--Choose--</option>
                         <option value="SUPER_ADMIN">Super Admin</option>
                         <option value="SUB_ADMIN">Sub Admin</option>
                       </select>
                     </div>
 
-                    <label class="block text-gray-700 text-sm font-bold mb-2 ">
+                    <label class="block text-sm font-bold mb-2 ">
                       Admin Access
                     </label>
 
-                    <div className="flex justify-between mb-2.5 gap-28">
+                    <div
+                      className={`flex justify-between mb-2.5 gap-28 ${
+                        currentMode === 'Dark' ? 'text-white' : ''
+                      }`}
+                    >
                       <div class="flex flex-col">
                         <div class="form-check form-check-inline">
                           <input
@@ -570,7 +610,7 @@ const AdminTable = () => {
                             name="dashboard"
                           />
                           <label
-                            class="form-check-label mr-1.5 mb-2 inline-block text-gray-800 opacity-50"
+                            class="form-check-label mr-1.5 mb-2 inline-block"
                             for="inlineCheckbox1"
                           >
                             Dashboard
@@ -589,7 +629,7 @@ const AdminTable = () => {
                             // onClick={test}
                           />
                           <label
-                            class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
+                            class="form-check-label mr-1.5 inline-block"
                             for="inlineCheckbox2"
                           >
                             Report
@@ -610,7 +650,7 @@ const AdminTable = () => {
                             // onClick={test}
                           />
                           <label
-                            class="form-check-label mr-1.5 mb-2 inline-block text-gray-800 opacity-50 "
+                            class="form-check-label mr-1.5 mb-2 inline-block"
                             for="inlineCheckbox1"
                           >
                             User Mangement
@@ -628,7 +668,7 @@ const AdminTable = () => {
                             // onClick={test}
                           />
                           <label
-                            class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
+                            class="form-check-label mr-1.5 inline-block"
                             for="inlineCheckbox2"
                           >
                             Admin
@@ -649,7 +689,7 @@ const AdminTable = () => {
                             // onClick={test}
                           />
                           <label
-                            class="form-check-label mr-1.5 mb-2 inline-block text-gray-800 opacity-50"
+                            class="form-check-label mr-1.5 mb-2 inline-block"
                             for="inlineCheckbox1"
                           >
                             Notification
@@ -666,7 +706,7 @@ const AdminTable = () => {
                             onChange={(e) => setCheckbox(e.target.name)}
                           />
                           <label
-                            class="form-check-label mr-1.5 inline-block text-gray-800 opacity-50"
+                            class="form-check-label mr-1.5 inline-block"
                             for="inlineCheckbox2"
                           >
                             System Configuration

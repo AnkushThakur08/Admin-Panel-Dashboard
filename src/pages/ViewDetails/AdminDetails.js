@@ -72,7 +72,10 @@ const AdminDetails = () => {
       }`}
     >
       <Link to="/admin">
-        <IoIosArrowBack size={25} className="mb-3" />
+        <IoIosArrowBack
+          size={25}
+          className={`mb-3 ${currentMode === 'Dark' ? 'text-white' : ''}`}
+        />
       </Link>
       <Header category="Details" title="Admin Details" />
       <div class="max-w-full rounded overflow-hidden shadow-lg pb-10">
