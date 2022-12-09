@@ -378,7 +378,7 @@ const EditAdmin = () => {
 
           <div class="flex items-center justify-between">
             <button
-              class={` w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-3 ${currentMode === 'Dark' ? 'text-white bg-black hover:bg-black-700' : 'text-white bg-blue-500 hover:bg-blue-700'}`}
+              class={`w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-3 ${currentMode === 'Dark' ? 'text-white bg-black hover:bg-[#20232a]' : 'text-white bg-blue-500 hover:bg-blue-700'}`}
               type="submit"
               onClick={edit}
             >

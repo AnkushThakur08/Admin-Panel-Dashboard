@@ -53,12 +53,14 @@ import EditAdmin from './pages/Edit/EditAdmin';
 import EditAppVersion from './pages/Edit/EditAppVersion';
 import EditAdminAchievement from './pages/Edit/EditAdminAchievement';
 import EditCategory from './pages/Edit/EditCategory';
+import EditAchievementLevel from './pages/Edit/EditAchievementLevel';
 
 // ADD PAGES
 import AddAppVersion from './pages/Add/AddAppVersion';
 import AddAdminAchievement from './pages/Add/AddAdminAchievement';
 import AddCategory from './pages/Add/AddCategory';
 import AddAdmin from './pages/Add/AddAdmin';
+import AddAchievementLevel from './pages/Add/AddAchievementLevel';
 
 // View Pages
 import ViewAdminAchievement from './pages/ViewDetails/ViewAdminAchievement';
@@ -190,6 +192,7 @@ const App = () => {
                     path="/editAdminAchievement/:id"
                     element={<EditAdminAchievement />}
                   />
+                  <Route path='/editAchievementLevel/:id/:achievementId' element={<EditAchievementLevel />} />
                   <Route
                     path="/editappversion/:id"
                     element={<EditAppVersion />}
@@ -206,6 +209,7 @@ const App = () => {
                   <Route path="/addAdmin" element={<AddAdmin />} />
 
                   <Route path="/addCategory" element={<AddCategory />} />
+                  <Route path='/addAchievementLevel/:ID' element={<AddAchievementLevel/>}/>
 
                   {/* Views Routes */}
                   <Route path="/admindetails/:id" element={<AdminDetails />} />

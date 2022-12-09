@@ -101,7 +101,7 @@ const EditAdminAchievement = () => {
           currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
         }  `}
       >
-        <Header category="Page" title="Edit Admin" />
+        <Header category="Page" title="Edit Admin Achievement" />
         {/* <div class="w-full max-w-xs  "> */}
         <form
           className={`shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full ${
