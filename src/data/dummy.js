@@ -117,6 +117,7 @@ const gridEmployeeProfile = (props) => (
   </div>
 );
 
+
 const gridEmployeeCountry = (props) => (
   <div className="flex items-center justify-center gap-2">
     <GrLocation />
