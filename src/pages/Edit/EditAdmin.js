@@ -7,7 +7,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 //REACT ICONS
-import { IoIosArrowBack } from 'react-icons/io';
+import { BsFillArrowLeftCircleFill } from 'react-icons/bs';
 
 // Components
 import { Header } from '../../components';
@@ -150,15 +150,15 @@ const EditAdmin = () => {
       <div
         className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
           currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-white'
-        } rounded-3xl`}
+        } rounded-lg`}
       >
         <Link to="/admin">
-          <IoIosArrowBack
+          <BsFillArrowLeftCircleFill
             size={25}
             className={`mb-3 ${currentMode === 'Dark' ? 'text-white' : ''}`}
           />
         </Link>
-        <Header category="Page" title="Edit Admin" />
+        <Header category="Edit" title=" Admin" />
         {/* <div className="w-full max-w-xs  "> */}
         <form
           className={` shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full ${

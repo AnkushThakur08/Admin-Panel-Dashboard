@@ -362,9 +362,9 @@ const AdminTable = () => {
       <div
         className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
           currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
-        }  rounded-3xl`}
+        } rounded-lg`}
       >
-        <Header category="Page" title="Admin" data={adminData} />
+        <Header category="Table" title="Admin" data={adminData} />
         <div style={{ float: 'right' }} className="mr-6">
           <FiFilter
             size={25}

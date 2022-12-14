@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { Header } from '../../components';
 
 // REACT ICONS
-import { IoIosArrowBack } from 'react-icons/io';
+import { BsFillArrowLeftCircleFill } from 'react-icons/bs';
 
 // Context
 import { useStateContext } from '../../contexts/ContextProvider';
@@ -72,17 +72,17 @@ const AddAppVersion = () => {
   return (
     <>
       <div
-        className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl ${
+        className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-lg ${
           currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-white'
         }`}
       >
         <Link to="/appVersion">
-          <IoIosArrowBack
+          <BsFillArrowLeftCircleFill
             size={25}
             className={`mb-3  ${currentMode === 'Dark' ? 'text-white' : ''}`}
           />
         </Link>
-        <Header category="Page" title="Add App Version" />
+        <Header category="Add" title="App Version" />
         <div className="max-w-full max-w-full">
           <form
             className={`shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full ${

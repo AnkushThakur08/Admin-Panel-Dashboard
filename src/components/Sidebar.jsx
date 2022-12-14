@@ -1,23 +1,28 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
 // React Icons
-import { SiShopware } from "react-icons/si";
-import { MdOutlineCancel } from "react-icons/md";
+import { SiShopware } from 'react-icons/si';
+import { MdOutlineCancel } from 'react-icons/md';
 
 // SyncFusion
-import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 // API DATA
-import { links } from "../data/dummy";
+import { links } from '../data/dummy';
+import { isAuthenticated } from '../helper/login/loginHelper';
 
 // Context
-import { useStateContext } from "../contexts/ContextProvider";
+import { useStateContext } from '../contexts/ContextProvider';
 
 // Logo
-import Logo from "../Assets/logo2.png";
+import Logo from '../Assets/logo2.png';
 
 const Sidebar = () => {
+  // Authentication
+  const { data } = isAuthenticated();
+  // console.log(data.adminDetails?.admin_permissions?.[0], 'LINE 24');
+
   const { currentColor, activeMenu, setActiveMenu, screenSize } =
     useStateContext();
 
@@ -28,9 +33,9 @@ const Sidebar = () => {
   };
 
   const activeLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white  text-md m-2";
+    'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white  text-md m-2';
   const normalLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2";
+    'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2';
 
   return (
     <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
@@ -44,7 +49,7 @@ const Sidebar = () => {
             >
               {/* <SiShopware /> <span>Applify</span> */}
               <img src={Logo} alt="" srcSet="" width="80" className="ml-4 " />
-              <span className="text-3xl" style={{ marginLeft: "-10px" }}>
+              <span className="text-3xl" style={{ marginLeft: '-10px' }}>
                 Applify
               </span>
             </Link>
@@ -62,25 +67,43 @@ const Sidebar = () => {
           <div className="mt-10 ">
             {links.map((item) => (
               <div key={item.title}>
+                {console.log(item)}
                 <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
                   {item.title}
                 </p>
-                {item.links.map((link) => (
-                  <NavLink
-                    to={`/${link.name}`}
-                    key={link.name}
-                    onClick={handleCloseSideBar}
-                    style={({ isActive }) => ({
-                      backgroundColor: isActive ? currentColor : "",
-                    })}
-                    className={({ isActive }) =>
-                      isActive ? activeLink : normalLink
-                    }
-                  >
-                    {link.icon}
-                    <span className="capitalize ">{link.title}</span>
-                  </NavLink>
-                ))}
+
+                {/*  {item.links.map((link) => {
+                  return (
+
+                  )
+                } )} */}
+
+                {item.links.map((link) => {
+                  return (
+                    <>
+                      {console.log(link.Permission)}
+
+                      {link.Permission == 1 ? (
+                        <NavLink
+                          to={`/${link.name}`}
+                          key={link.name}
+                          onClick={handleCloseSideBar}
+                          style={({ isActive }) => ({
+                            backgroundColor: isActive ? currentColor : '',
+                          })}
+                          className={({ isActive }) =>
+                            isActive ? activeLink : normalLink
+                          }
+                        >
+                          {link.icon}
+                          <span className="capitalize ">{link.title}</span>
+                        </NavLink>
+                      ) : (
+                        ''
+                      )}
+                    </>
+                  );
+                })}
               </div>
             ))}
           </div>

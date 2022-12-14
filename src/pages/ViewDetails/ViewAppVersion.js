@@ -7,7 +7,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Header } from '../../components';
 
 //REACT ICONS
-import { IoIosArrowBack } from 'react-icons/io';
+import { BsFillArrowLeftCircleFill } from 'react-icons/bs';
 
 // Context
 import { useStateContext } from '../../contexts/ContextProvider';
@@ -65,17 +65,17 @@ const ViewAppVersion = () => {
 
   return (
     <div
-      className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl ${
+      className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-lg${
         currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
       }`}
     >
       <Link to="/appVersion">
-        <IoIosArrowBack
+        <BsFillArrowLeftCircleFill
           size={25}
           className={`mb-3 ${currentMode === 'Dark' ? 'text-white' : ''}`}
         />
       </Link>
-      <Header category="Details" title="App Version Details" />
+      <Header category="Details" title="App Version " />
       <div class="max-w-full rounded overflow-hidden shadow-lg pb-10">
         {/* <div class="px-6 py-4">
           <span></span>

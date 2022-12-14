@@ -193,9 +193,9 @@ const AppVersionTable = () => {
     <div
       className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
         currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
-      }  rounded-3xl`}
+      } rounded-lg`}
     >
-      <Header category="Page" title="App Version" />
+      <Header category="Table" title="App Version" />
 
       <DataTable
         // title="Admin"

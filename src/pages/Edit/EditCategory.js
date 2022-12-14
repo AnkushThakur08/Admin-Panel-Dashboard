@@ -7,7 +7,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 //REACT ICONS
-import { IoIosArrowBack } from 'react-icons/io';
+import { BsFillArrowLeftCircleFill } from 'react-icons/bs';
 
 // Components
 import { Header } from '../../components';
@@ -101,17 +101,17 @@ const EditCategory = () => {
   return (
     <>
       <div
-        className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl ${
+        className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-lg ${
           currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-white'
         }`}
       >
         <Link to="/category">
-          <IoIosArrowBack
+          <BsFillArrowLeftCircleFill
             size={25}
             className={`mb-3 ${currentMode === 'Dark' ? 'text-white' : ''}`}
           />
         </Link>
-        <Header category="Page" title="Edit Category" />
+        <Header category="Edit" title=" Category" />
         {/* <div class="w-full max-w-xs  "> */}
         <form
           className={` shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full ${

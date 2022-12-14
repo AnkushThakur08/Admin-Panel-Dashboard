@@ -239,8 +239,8 @@ const AdminTable = () => {
   // };
 
   return (
-    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header category="Page" title="Admin" />
+    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-lg">
+      <Header category="Table" title="Admin" />
       <DataTable
         // title="Admin"
         columns={colunms}

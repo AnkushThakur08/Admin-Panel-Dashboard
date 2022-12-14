@@ -11,7 +11,7 @@ import { Header } from '../../components';
 import moment from 'moment-js';
 
 //REACT ICONS
-import { IoIosArrowBack } from 'react-icons/io';
+import { BsFillArrowLeftCircleFill } from 'react-icons/bs';
 
 // Context
 import { useStateContext } from '../../contexts/ContextProvider';
@@ -68,17 +68,17 @@ const UserDetails = () => {
 
   return (
     <div
-      className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl ${
+      className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-lg ${
         currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
       }`}
     >
       <Link to="/user">
-        <IoIosArrowBack
+        <BsFillArrowLeftCircleFill
           size={25}
           className={`mb-3 ${currentMode === 'Dark' ? 'text-white' : ''}`}
         />
       </Link>
-      <Header category="Details" title="User Details" />
+      <Header category="Details" title="User" />
       <div className="max-w-full rounded overflow-hidden shadow-lg pb-10">
         <div className="px-6 pt-4 pb-2">
           <table className="border-none ">
