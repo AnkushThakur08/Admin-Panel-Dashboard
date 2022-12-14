@@ -12,6 +12,8 @@ import {
   AiOutlineHome,
 } from 'react-icons/ai';
 
+import {MdOutlineBugReport, MdOutlineContentPaste} from "react-icons/md"
+
 import {
   FiShoppingBag,
   FiEdit,
@@ -717,7 +719,7 @@ export const links = [
             // name: "pie",
             name: 'reportedContent',
             title: 'Reported Content',
-            icon: <AiOutlineShoppingCart />,
+            icon: <MdOutlineContentPaste size={25} />,
             Permission:
               data.data.adminDetails?.admin_permissions?.[0].reportManagement,
           }
@@ -725,7 +727,7 @@ export const links = [
             // name: "pie",
             name: 'reportedContent',
             title: 'Reported Content',
-            icon: <AiOutlineShoppingCart />,
+            icon: <MdOutlineContentPaste size={25} />,
           },
 
       isAuthenticated()
@@ -733,7 +735,7 @@ export const links = [
             // name: "area",
             name: 'reportedBugs',
             title: 'Reported Bugs',
-            icon: <IoMdContacts />,
+            icon: <MdOutlineBugReport size={25}/>,
             Permission:
               data.data.adminDetails?.admin_permissions?.[0].reportManagement,
           }
@@ -741,7 +743,7 @@ export const links = [
             // name: "area",
             name: 'reportedBugs',
             title: 'Reported Bugs',
-            icon: <IoMdContacts />,
+            icon: <MdOutlineBugReport size={25}  />,
           },
     ],
   },
