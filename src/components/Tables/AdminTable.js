@@ -144,16 +144,16 @@ const AdminTable = () => {
   // const blockedvalue = localStorage.getItem('isBlocked');
 
   const colunms = [
-    {
-      name: (
-        <h6>
-          <b>ID</b>
-        </h6>
-      ),
-      selector: (row) => row.id,
-      sortable: true,
-      grow: 2.5,
-    },
+    // {
+    //   name: (
+    //     <h6>
+    //       <b>ID</b>
+    //     </h6>
+    //   ),
+    //   selector: (row) => row.id,
+    //   sortable: true,
+    //   grow: -2,
+    // },
     {
       name: (
         <h6>
@@ -182,7 +182,7 @@ const AdminTable = () => {
       ),
       selector: (row) => row.email,
       sortable: true,
-      grow: 1.5,
+      grow: 1,
     },
     // {
     //   name: (
@@ -306,7 +306,12 @@ const AdminTable = () => {
 
             {/* BLOCK */}
             <button
-              style={{ border: 'none', background: 'none' }}
+              style={{
+                border: 'none',
+                background: 'none',
+                paddingRight: '0px',
+                marginRight: '0px',
+              }}
               onClick={() => handleShowBlockModal(row.id, row.isBlocked)}
             >
               {row.isBlocked == 0 ? (
@@ -323,7 +328,6 @@ const AdminTable = () => {
             </button>
           </div>
         ),
-      grow: 2,
     },
   ];
 
@@ -360,7 +364,7 @@ const AdminTable = () => {
   return (
     <>
       <div
-        className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
+        className={`m-2 md:m-10 mt-24 p-2 md:p-10 mr-0 pr-0 ${
           currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
         } rounded-lg`}
       >
@@ -749,7 +753,7 @@ const AdminTable = () => {
           title="Add"
           className="fixed z-90 bottom-24 right-3.5 bg-[#1A97F5] w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl"
           onClick={() => navigate('/addAdmin')}
-          style={{backgroundColor: `${currentColor}`}}
+          style={{ backgroundColor: `${currentColor}` }}
         >
           +
         </button>
