@@ -36,8 +36,8 @@ const AddAdmin = () => {
     adminType: '',
     admin_permissions: [
       {
-        module: 'module',
-        permission: '0',
+        module: 'dashboard',
+        permission: '1',
       },
     ],
   });

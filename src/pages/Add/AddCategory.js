@@ -74,7 +74,7 @@ const AddCategory = () => {
   return (
     <>
       <div
-        className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-3xl ${
+        className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-lg ${
           currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-white'
         }`}
       >
