@@ -10,8 +10,13 @@ import avatar from '../data/avatar.jpg';
 import { Cart, Chat, Notification, UserProfile } from '.';
 import { useStateContext } from '../contexts/ContextProvider';
 
+// API
+import { isAuthenticated } from '../helper/login/loginHelper';
+
+
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   <TooltipComponent content={title} position="BottomCenter">
+    
     <button
       type="button"
       onClick={() => customFunc()}
@@ -37,6 +42,11 @@ const Navbar = () => {
     setScreenSize,
     screenSize,
   } = useStateContext();
+
+    // Authentication
+    const { data } = isAuthenticated();
+
+    console.log(data.adminDetails.firstName)
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -66,27 +76,34 @@ const Navbar = () => {
         color={currentColor}
         icon={<AiOutlineMenu />}
       />
+
+
       <div className="flex">
-        <NavButton
+
+        {/* <NavButton
           title="Cart"
           customFunc={() => handleClick('cart')}
           color={currentColor}
           icon={<FiShoppingCart />}
-        />
-        <NavButton
+        /> */}
+
+        {/* <NavButton
           title="Chat"
           dotColor="#03C9D7"
           customFunc={() => handleClick('chat')}
           color={currentColor}
           icon={<BsChatLeft />}
-        />
-        <NavButton
+        /> */}
+
+        {/* <NavButton
           title="Notification"
           dotColor="rgb(254, 201, 15)"
           customFunc={() => handleClick('notification')}
           color={currentColor}
           icon={<RiNotification3Line />}
-        />
+        /> */}
+
+
         <TooltipComponent content="Profile" position="BottomCenter">
           <div
             className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
@@ -98,9 +115,10 @@ const Navbar = () => {
               alt="user-profile"
             />
             <p>
-              <span className="text-gray-400 text-14">Hi,</span>{' '}
-              <span className="text-gray-400 font-bold ml-1 text-14">
-                Michael
+              <span className="text-gray-400 text-lg">Hi,</span>{' '}
+              <span className="text-gray-400 font-bold ml-1 text-lg">
+                {/* {isAuthenticated() ? data.adminDetails.firstName : 'Demo User'} */}
+                {data.adminDetails.firstName}
               </span>
             </p>
             <MdKeyboardArrowDown className="text-gray-400 text-14" />

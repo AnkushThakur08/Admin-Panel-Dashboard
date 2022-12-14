@@ -24,24 +24,13 @@ const ReportedBugs = () => {
   // Context
   const { currentMode } = useStateContext();
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { data, token } = isAuthenticated();
 
   const [search, setSearch] = useState('');
   const [getBugsData, setGetBugsData] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
-  // const [show, setShow] = useState(false);
-
-  /*  const handleClose = () => {
-    setShow(false);
-    localStorage.removeItem("adminId");
-  }; */
-
-  /* const handleShow = () => {
-    setShow(true);
-    localStorage.setItem("adminId", adminId);
-  }; */
 
   const preload = () => {
     reportedBugsListData(data.accessToken)
@@ -54,21 +43,6 @@ const ReportedBugs = () => {
         console.log(error);
       });
   };
-
-  /*  async function deleteAdmin() {
-    let uId = localStorage.getItem("adminId");
-    await fetch(`http://localhost:3002/admin/deleteAdmin/${uId}`, {
-      method: "DELETE",
-    }).then((result) => {
-      result.json().then((resq) => {
-        toast.success("Admin deleted successfully", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-        admin();
-        handleClose();
-      });
-    });
-  } */
 
   const colunms = [
     {
@@ -117,47 +91,6 @@ const ReportedBugs = () => {
       selector: (row) => row.status,
       sortable: true,
     },
-    {
-      name: (
-        <h6>
-          <b>Action</b>
-        </h6>
-      ),
-      selector: (row) => (
-        // row.uId === userid ? (
-        //   ""
-        // ) : (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '110px',
-          }}
-        >
-          <button
-            style={{ border: 'none', background: 'none' }}
-            // onClick={() => navigate(`/editadmin/${row.uId}`)}
-          >
-            <i className="fa-solid fa-pen fa-lg"></i>
-          </button>
-          <button
-            style={{ border: 'none', background: 'none' }}
-            // onClick={() => deleteAdmin(row.uId)}
-            // onClick={() => handleShow(row.uId)}
-          >
-            <i className="fa-regular fa-trash-can fa-lg"></i>
-          </button>
-          <button
-            style={{ border: 'none', background: 'none' }}
-            // onClick={() => blockAdmin(row.uId)}
-          >
-            <i className="fa-sharp fa-solid fa-xmark fa-lg"></i>
-          </button>
-        </div>
-      ),
-      // ),
-      grow: 1.5,
-    },
   ];
 
   const paginationComponentOptions = {
@@ -197,15 +130,15 @@ const ReportedBugs = () => {
     setFilterData(result);
   }, [search]);
 
-  // const handleRowClicked = (row) => {
-  //   navigate(`/admindetails/${row.uId}`);
-  // };
+  const handleRowClicked = (row) => {
+    navigate(`/bugDetails/${row.id}`);
+  };
 
   return (
     <div
       className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
         currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
-      }  rounded-3xl`}
+      } rounded-lg `}
     >
       <Header category="Page" title="Reported Bugs" />
       <DataTable
@@ -215,7 +148,7 @@ const ReportedBugs = () => {
         pagination
         paginationComponentOptions={paginationComponentOptions}
         fixedHeader
-        // onRowClicked={handleRowClicked}
+        onRowClicked={handleRowClicked}
         selectableRowsHighlight
         pointerOnHover
         highlightOnHover
@@ -236,6 +169,7 @@ const ReportedBugs = () => {
           />
         }
       />
+
     </div>
   );
 };

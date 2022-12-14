@@ -26,7 +26,7 @@ import { blockOrUnblockAdmin } from '../../helper/Table/adminTableHelper';
 
 const AdminTable = () => {
   // Context
-  const { currentMode } = useStateContext();
+  const { currentMode, currentColor } = useStateContext();
 
   // Authorization
   const { data } = isAuthenticated();
@@ -247,7 +247,7 @@ const AdminTable = () => {
           ''
         ),
         row.admin_permissions[0]?.systemConfiguration == 1 ? (
-          <span className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
+          <span className="bg-[#f6b1a2] text-[#BF3312] text-sm font-medium mr-2 px-2.5 py-2.5 rounded ">
             System Configuration
           </span>
         ) : (
@@ -749,6 +749,7 @@ const AdminTable = () => {
           title="Add"
           className="fixed z-90 bottom-24 right-3.5 bg-[#1A97F5] w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl"
           onClick={() => navigate('/addAdmin')}
+          style={{backgroundColor: `${currentColor}`}}
         >
           +
         </button>

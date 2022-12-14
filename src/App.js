@@ -68,6 +68,8 @@ import ViewAppVersion from './pages/ViewDetails/ViewAppVersion';
 import AdminDetails from './pages/ViewDetails/AdminDetails';
 import UserDetails from './pages/ViewDetails/UserDetails';
 import CategoryDetails from './pages/ViewDetails/CategoryDetails';
+import ReportedBugDetail from './pages/ViewDetails/ReportedBugDetail';
+import ReportedContentDetails from './pages/ViewDetails/ReportedContentDetails';
 
 // Custom CSS
 import './App.css';
@@ -214,12 +216,12 @@ const App = () => {
                   {/* Views Routes */}
                   <Route path="/admindetails/:id" element={<AdminDetails />} />
                   <Route
-                    path="viewAdminAchievement/:id"
+                    path="/viewAdminAchievement/:id"
                     element={<ViewAdminAchievement />}
                   />
 
                   <Route
-                    path="viewAppVersion/:id"
+                    path="/viewAppVersion/:id"
                     element={<ViewAppVersion />}
                   />
                   <Route
@@ -230,6 +232,8 @@ const App = () => {
                     path="/viewCategory/:id"
                     element={<CategoryDetails />}
                   />
+                <Route path="/bugDetails/:id" element={<ReportedBugDetail/>}/>
+                <Route path="/viewReportedContent/:id" element={<ReportedContentDetails/>} />
                 </Routes>
               </div>
               {/* <Footer /> */}

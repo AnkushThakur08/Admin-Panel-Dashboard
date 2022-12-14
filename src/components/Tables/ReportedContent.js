@@ -23,23 +23,14 @@ const ReportedContent = () => {
   // Context
   const { currentMode } = useStateContext();
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { data } = isAuthenticated();
 
   const [search, setSearch] = useState('');
   const [contentData, setContentData] = useState([]);
   const [filterData, setFilterData] = useState([]);
-  // const [show, setShow] = useState(false);
 
-  /*  const handleClose = () => {
-    setShow(false);
-    localStorage.removeItem("adminId");
-  }; */
 
-  /* const handleShow = () => {
-    setShow(true);
-    localStorage.setItem("adminId", adminId);
-  }; */
   const reportContent = () => {
     reportedContentListData(data.accessToken)
       .then((data) => {
@@ -52,21 +43,6 @@ const ReportedContent = () => {
         console.log(error);
       });
   };
-
-  /*  async function deleteAdmin() {
-    let uId = localStorage.getItem("adminId");
-    await fetch(`http://localhost:3002/admin/deleteAdmin/${uId}`, {
-      method: "DELETE",
-    }).then((result) => {
-      result.json().then((resq) => {
-        toast.success("Admin deleted successfully", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-        admin();
-        handleClose();
-      });
-    });
-  } */
 
   const colunms = [
     {
@@ -114,33 +90,7 @@ const ReportedContent = () => {
       selector: (row) => row.status,
       sortable: true,
     },
-    // {
-    //   name: (
-    //     <h6>
-    //       <b>Image</b>
-    //     </h6>
-    //   ),
-    //   selector: (row) =>
-    //     row.image ? (
-    //       <img
-    //         alt=""
-    //         width={80}
-    //         height={50}
-    //         style={{ objectFit: "cover", border: "1px solid" }}
-    //         src={`http://localhost:3002/${row.image}`}
-    //       />
-    //     ) : (
-    //       <img
-    //         alt=""
-    //         width={80}
-    //         height={50}
-    //         style={{ objectFit: "cover", border: "1px solid" }}
-    //         src=""
-    //         // src={profilelogo}
-    //       />
-    //     ),
-    //   sortable: true,
-    // },
+
   ];
 
   const paginationComponentOptions = {
@@ -168,25 +118,24 @@ const ReportedContent = () => {
   }, [search]);
   // console.log(admin);
 
-  // const handleRowClicked = (row) => {
-  //   navigate(`/admindetails/${row.uId}`);
-  // };
+  const handleRowClicked = (row) => {
+    navigate(`/viewReportedContent/${row.id}`);
+  };
 
   return (
     <div
       className={`m-2 md:m-10 mt-24 p-2 md:p-10 ${
         currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
-      }  rounded-3xl`}
+      }  rounded-lg`}
     >
       <Header category="Page" title="Reported Content" />
       <DataTable
-        // title="Admin"
         columns={colunms}
         data={filterData}
         pagination
         paginationComponentOptions={paginationComponentOptions}
         fixedHeader
-        // onRowClicked={handleRowClicked}
+        onRowClicked={handleRowClicked}
         selectableRowsHighlight
         highlightOnHover
         pointerOnHover
@@ -207,21 +156,6 @@ const ReportedContent = () => {
           />
         }
       />
-
-      {/* <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmation Message</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure, you want to delete this record?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={deleteAdmin}>
-            Yes
-          </Button>
-          <Button variant="secondary" onClick={handleClose}>
-            No
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
     </div>
   );
 };

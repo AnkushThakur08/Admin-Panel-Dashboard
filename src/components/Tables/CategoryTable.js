@@ -23,7 +23,7 @@ import { deleteCategoryData } from '../../helper/Table/categoryTableHelper';
 
 const CategoryTable = () => {
   // Context
-  const { currentMode } = useStateContext();
+  const { currentMode, currentColor } = useStateContext();
 
   // Navigate
   const navigate = useNavigate();
@@ -395,6 +395,7 @@ const CategoryTable = () => {
         title="Add"
         class="fixed z-90 bottom-24 right-3.5 bg-[#1A97F5] w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl"
         onClick={() => navigate('/addCategory')}
+        style={{backgroundColor: `${currentColor}`}}
       >
         +
       </button>

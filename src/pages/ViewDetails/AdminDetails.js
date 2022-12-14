@@ -150,7 +150,7 @@ const AdminDetails = () => {
                       ''
                     )}
                     {permission.systemConfiguration == 1 ? (
-                      <span class="bg-[#03C9D7] text-white-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ">
+                      <span class="bg-[#f6b1a2] text-[#BF3312] text-sm font-medium mr-2 px-2.5 py-0.5 rounded ">
                         System Configuration
                       </span>
                     ) : (
