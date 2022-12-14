@@ -65,9 +65,8 @@ const ViewAppVersion = () => {
 
   return (
     <div
-      className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-lg${
-        currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'
-      }`}
+      className={`m-2 md:m-10 mt-24 p-2 md:p-10 rounded-lg
+      ${currentMode === 'Dark' ? 'bg-[#424242]' : 'bg-[#ffffff]'}`}
     >
       <Link to="/appVersion">
         <BsFillArrowLeftCircleFill
