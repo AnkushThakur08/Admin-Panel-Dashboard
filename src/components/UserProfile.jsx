@@ -45,9 +45,9 @@ const UserProfile = () => {
           alt="user-profile"
         />
         <div>
-          <p className="font-semibold text-xl dark:text-gray-200"> {data.adminDetails.firstName +" "+ data.adminDetails.lastName} </p>
+          <p className="font-semibold text-xl dark:text-gray-200"> {isAuthenticated() ? data.adminDetails.firstName +" "+ data.adminDetails.lastName : "Demo User"}   </p>
           <p className="text-gray-500 text-sm dark:text-gray-400">  Administrator   </p>
-          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> {data.adminDetails.email} </p>
+          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> { isAuthenticated() ? data.adminDetails.email : "Demo user"} </p>
         </div>
       </div>
       <div>
