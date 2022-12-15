@@ -26,10 +26,10 @@ export const adminListData = async (token, permission, adminType) => {
 
 
 // user list
-export const userListData = async (token ) => {
-  // console.log(isBlocked, "isBlockedd")
-  return await axios
-    .get(`${API}admin/v1/users?limit=1000&skip=0`, {
+export const userListData = async (token, value ) => {
+  // console.log(isBlocked, "isBlockedd")  
+  if(value === ''){
+    return await axios.get(`${API}admin/v1/users?limit=1000&skip=0`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -44,6 +44,25 @@ export const userListData = async (token ) => {
     .catch((error) => {
       console.log(error);
     });
+
+  } else {
+    return await axios.get(`${API}admin/v1/users?limit=1000&skip=0&isBlocked=${value}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+      },
+    })
+    .then((response) => {
+      console.log(response.data.data.rows);
+      return response;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+ 
 };
 
 // admin achievement

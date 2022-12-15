@@ -72,6 +72,7 @@ const UserTable = () => {
     localStorage.setItem('isBlocked', isBlocked);
   };
 
+  
   async function blockOrUnblock() {
     let uId = localStorage.getItem('id');
     const blockValue = localStorage.getItem('isBlocked');
@@ -85,9 +86,15 @@ const UserTable = () => {
     localStorage.removeItem('id');
   }
 
+   // FILTER MODAL
+   const handleChange = (name) => (event) => {
+    setIsBlock(event.target.value);
+  };
+
   // Preload User Function
-  const preload = () => {
-    userListData(data.accessToken)
+  const preload = (value = '') => {
+    console.log("ANkush the great", value)
+    userListData(data.accessToken, value )
       .then((data) => {
         console.log('DATA', data.data.data.rows);
         setUserData(data.data.data.rows);
@@ -98,10 +105,7 @@ const UserTable = () => {
       });
   };
 
-  // FILTER MODAL
-  const handleChange = (name) => (event) => {
-    setIsBlock(event.target.value);
-  };
+ 
 
   const colunms = [
     {
@@ -467,13 +471,14 @@ const UserTable = () => {
                   </div>
                 </div>
                 {/*footer*/}
+                {console.log(isBlock)}
                 <div className="flex justify-between items-center w-full p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className=" bg-black text-white w-1/2 font-bold uppercase px-6 py-2 text-sm outline-none rounded shadow hover:shadow-lg focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {
                       setShowFilterModal(false);
-                      // preload();
+                      isBlock == 0? preload(0): preload(1) 
                       setIsBlock('');
                     }}
                   >
@@ -488,10 +493,7 @@ const UserTable = () => {
                     //   filter()
                     // }}
                     onClick={() => {
-                      // isBlock == 0 ? setIsBlock("") : setIsBlock("")
-                      // isBlock == 1 ? setIsBlock("") : setIsBlock("")
-                      setIsBlock('');
-                      // preload();
+                      preload();
                       setShowFilterModal(false);
                     }}
                   >

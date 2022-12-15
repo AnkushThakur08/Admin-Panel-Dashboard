@@ -77,3 +77,53 @@ export const addAdmin = async (formData, token) => {
       console.log(error);
     });
 };
+
+// ADMIN PROFILE UPDATE
+export const adminProfileUpdate = async (formData, token) => {
+  console.log(formData, formData.image.name , token, 3333333);
+  return fetch(`${API}admin/v1/admin/edit-profile/`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+
+    body: JSON.stringify({
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      image: formData.image.name
+    }),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+
+// CHANGE ADMIN PASSWORD
+export const changePassword = async (formData, token) => {
+  console.log(formData, token, 3333333);
+  return fetch(`${API}admin/v1/admin/profile/change-password/`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+
+    body: JSON.stringify({
+      oldPassword: formData.oldPassword,
+      password: formData.newPassword,
+    }),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

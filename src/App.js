@@ -47,6 +47,9 @@ import ReportedBugs from './components/Tables/ReportedBugs';
 import ReportedContent from './components/Tables/ReportedContent';
 import AdminAchievement from './components/Tables/AdminAchievement';
 import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
+import Dashboard from './pages/Dashboard';
+import Profile from './components/Profile&ChangePassword/Profile';
+import ChangePassword from './components/Profile&ChangePassword/ChangePassword';
 
 // Edit Pages
 import EditAdmin from './pages/Edit/EditAdmin';
@@ -147,7 +150,7 @@ const App = () => {
 
                   {/* <Route path="/dashboard" element={<Ecommerce />} /> */}
                   <Route path="/ecommerce" element={<Ecommerce />} />
-
+                  <Route path="/dashboard" element={<Dashboard />} />
                   {/* pages  */}
                   <Route path="/orders" element={<Orders />} />
                   <Route path="/user" element={<UserTable />} />
@@ -186,6 +189,9 @@ const App = () => {
                   <Route path="/color-mapping" element={<ColorMapping />} />
                   <Route path="/pyramid" element={<Pyramid />} />
                   <Route path="/stacked" element={<Stacked />} />
+
+                  <Route path='/profile' element={<Profile/>} />
+                  <Route path='/changepassword' element={<ChangePassword/>}/>
 
                   {/* EDIT ROUTES */}
 

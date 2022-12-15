@@ -13,6 +13,9 @@ import { useStateContext } from '../contexts/ContextProvider';
 // API
 import { isAuthenticated } from '../helper/login/loginHelper';
 
+// images
+import profilePicture from '../data/flower.jpeg'
+
 
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   <TooltipComponent content={title} position="BottomCenter">
@@ -111,7 +114,7 @@ const Navbar = () => {
           >
             <img
               className="rounded-full w-8 h-8"
-              src={avatar}
+              src={profilePicture}
               alt="user-profile"
             />
             <p>

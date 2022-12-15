@@ -5,11 +5,18 @@ import { Button } from '.';
 import { userProfileData } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
 import avatar from '../data/avatar.jpg';
-import { Navigate, useNavigate } from 'react-router-dom';
+import profilePicture from '../data/flower.jpeg'
+import { Navigate, useNavigate, Link } from 'react-router-dom';
+
+// API
+import { isAuthenticated } from '../helper/login/loginHelper';
 
 const UserProfile = () => {
-  const { currentColor } = useStateContext();
+  const { currentColor, currentMode } = useStateContext();
   const navigate = useNavigate();
+
+      // Authentication
+      const { data } = isAuthenticated();
 
   function logout (){
     localStorage.removeItem('jwt')
@@ -34,13 +41,13 @@ const UserProfile = () => {
       <div className="flex gap-5 items-center mt-6 border-color border-b-1 pb-6">
         <img
           className="rounded-full h-24 w-24"
-          src={avatar}
+          src={profilePicture}
           alt="user-profile"
         />
         <div>
-          <p className="font-semibold text-xl dark:text-gray-200"> Michael Roberts </p>
+          <p className="font-semibold text-xl dark:text-gray-200"> {data.adminDetails.firstName +" "+ data.adminDetails.lastName} </p>
           <p className="text-gray-500 text-sm dark:text-gray-400">  Administrator   </p>
-          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> info@shop.com </p>
+          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> {data.adminDetails.email} </p>
         </div>
       </div>
       <div>
@@ -55,8 +62,10 @@ const UserProfile = () => {
             </button>
 
             <div>
+              <Link to={`${item.path}`}>
               <p className="font-semibold dark:text-gray-200 ">{item.title}</p>
               <p className="text-gray-500 text-sm dark:text-gray-400"> {item.desc} </p>
+              </Link>
             </div>
           </div>
         ))}

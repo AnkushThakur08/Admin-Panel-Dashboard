@@ -12,6 +12,7 @@ import {
   AiOutlineHome,
 } from 'react-icons/ai';
 
+
 import {MdOutlineBugReport, MdOutlineContentPaste} from "react-icons/md"
 
 import {
@@ -34,11 +35,11 @@ import {
 } from 'react-icons/bs';
 
 import { FaUserFriends } from 'react-icons/fa';
-import { HiUserAdd } from 'react-icons/hi';
+import { HiUserAdd, HiOutlineUserCircle } from 'react-icons/hi';
 import { IoIosNotifications } from 'react-icons/io';
 import { BiCategory } from 'react-icons/bi';
 import { VscVersions } from 'react-icons/vsc';
-import { RiTrophyLine } from 'react-icons/ri';
+import { RiTrophyLine, RiLockPasswordLine } from 'react-icons/ri';
 import { BsChatLeftDots } from 'react-icons/bs';
 import { VscCommentDiscussion } from 'react-icons/vsc';
 
@@ -1084,26 +1085,28 @@ export const themeColors = [
 
 export const userProfileData = [
   {
-    icon: <BsCurrencyDollar />,
+    icon: <HiOutlineUserCircle />,
     title: 'My Profile',
-    desc: 'Account Settings',
+    desc: 'Update Profile',
     iconColor: '#03C9D7',
     iconBg: '#E5FAFB',
+    path: '/profile'
   },
   {
-    icon: <BsShield />,
-    title: 'My Inbox',
-    desc: 'Messages & Emails',
+    icon: <RiLockPasswordLine />,
+    title: 'Change Password',
+    desc: 'Change Password',
     iconColor: 'rgb(0, 194, 146)',
     iconBg: 'rgb(235, 250, 242)',
+    path: '/changepassword'
   },
-  {
-    icon: <FiCreditCard />,
-    title: 'My Tasks',
-    desc: 'To-do and Daily Tasks',
-    iconColor: 'rgb(255, 244, 229)',
-    iconBg: 'rgb(254, 201, 15)',
-  },
+  // {
+  //   icon: <FiCreditCard />,
+  //   title: 'My Tasks',
+  //   desc: 'To-do and Daily Tasks',
+  //   iconColor: 'rgb(255, 244, 229)',
+  //   iconBg: 'rgb(254, 201, 15)',
+  // },
 ];
 
 export const ordersGrid = [
