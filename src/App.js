@@ -148,6 +148,9 @@ const App = () => {
                 <Routes>
                   {/* dashboard  */}
 
+
+                  
+
                   {/* <Route path="/dashboard" element={<Ecommerce />} /> */}
                   <Route path="/ecommerce" element={<Ecommerce />} />
                   <Route path="/dashboard" element={<Dashboard />} />
