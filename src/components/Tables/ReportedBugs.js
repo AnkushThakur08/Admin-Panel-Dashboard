@@ -36,6 +36,9 @@ const ReportedBugs = () => {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [status, setStatus] = useState("");
 
+
+  
+
   const preload = () => {
     reportedBugsListData(data.accessToken, status)
       .then((data) => {
