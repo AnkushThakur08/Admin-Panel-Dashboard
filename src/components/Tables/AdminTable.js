@@ -44,10 +44,13 @@ const AdminTable = () => {
   const [showBlockModal, setShowBlockModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [adminType, setAdminType] = useState('');
+  const [filterState, setFilterState] = useState(false);
+
 
   // State for checkboxes
   const [checkBox, setCheckbox] = useState('');
-  const checkBoxValue = checkBox;
+  var checkBoxValue = checkBox;
+  console.log(checkBox, "CHECK")
 
   // DELETE MODAL
   const handleShow = (id) => {
@@ -89,9 +92,27 @@ const AdminTable = () => {
   }
 
   // Preload Admin Function
-  const preload = () => {
+  const preload = (event) => {
+    filterState === true ?
+    
+   ( adminListData(data.accessToken, checkBoxValue, adminType)
+      .then((data) => {
+    console.log("true");
+        console.log(data,"data")
+        setAdminData(data.data.rows);
+        setFilterData(data.data.rows);
+      })
+      .catch((error) => {
+        console.log(error);
+      }))
+    
+    :
+
     adminListData(data.accessToken, checkBoxValue, adminType)
       .then((data) => {
+      console.log("FALSE");
+
+        console.log(data,"data")
         setAdminData(data.data.rows);
         setFilterData(data.data.rows);
       })
@@ -101,7 +122,8 @@ const AdminTable = () => {
   };
 
   // FILTER
-  const applyFilter = () => {
+  const applyFilter = (event) => {
+    setFilterState(false);
     preload();
     setShowFilterModal(false);
     setCheckbox('');
@@ -116,16 +138,10 @@ const AdminTable = () => {
 
   console.log(adminType, '2222');
 
-  const clearFilter = (e) => {
-    setCheckbox('');
-    console.log(adminType, 'Before Delete');
-
-    setAdminType('');
-
-    console.log(adminType, 'After Delete');
-
+  // clear filter
+  const clearFilter = (event) => {
+    setFilterState(true);
     setShowFilterModal(false);
-
     preload();
   };
 
@@ -340,11 +356,7 @@ const AdminTable = () => {
   useEffect(() => {
     preload();
   }, []);
-  /* 
-  useEffect(() => {
-    clearFilter();
-  }, [checkBox]);
- */
+
   useEffect(() => {
     const result = adminData.filter((value) => {
       return (
