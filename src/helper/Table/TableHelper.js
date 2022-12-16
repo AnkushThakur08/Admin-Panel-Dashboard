@@ -182,44 +182,6 @@ export const redirectUserListData = async (token, value) => {
   }
 };
 
-// export const redirectActiveUserListData = async (token, value) => {
-//   // console.log(isBlocked, "isBlockedd")
-//   if (value === 1) {
-//     return await axios
-//       .get(`${API}admin/v1/users?limit=1000&skip=0&isBlocked=${value}`, {
-//         method: 'GET',
-//         headers: {
-//           Accept: 'application/json',
-//           'Content-Type': 'application/json',
-//           Authorization: `Bearer ${token}`,
-//         },
-//       })
-//       .then((response) => {
-//         console.log(response.data.data.rows);
-//         return response;
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   } else {
-//     return await axios
-//       .get(`${API}admin/v1/users?limit=1000&skip=0&isBlocked=${value}`, {
-//         method: 'GET',
-//         headers: {
-//           Accept: 'application/json',
-//           'Content-Type': 'application/json',
-//           Authorization: `Bearer ${token}`,
-//         },
-//       })
-//       .then((response) => {
-//         console.log(response.data.data.rows);
-//         return response;
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   }
-// };
 
 // admin achievement
 export const achievementListData = async (token) => {
@@ -282,8 +244,27 @@ export const categoryListData = async (token) => {
 };
 
 // reported bugs
-export const reportedBugsListData = async (token) => {
-  return await axios
+export const reportedBugsListData = async (token, status) => {
+  if(status){
+    return await axios
+    .get(`${API}admin/v1/reportedBugs/?limit=100&skip=0&status=${status}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      console.log(response);
+
+      return response;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }else{
+    return await axios
     .get(`${API}admin/v1/reportedBugs/?limit=100&skip=0`, {
       method: 'GET',
       headers: {
@@ -300,11 +281,33 @@ export const reportedBugsListData = async (token) => {
     .catch((error) => {
       console.log(error);
     });
+  }
+
 };
 
 // reported content
-export const reportedContentListData = async (token) => {
-  return await axios
+export const reportedContentListData = async (token, itemType) => {
+  console.log(itemType)
+  if(itemType){
+    return await axios
+    .get(`${API}admin/v1/reportedItems/?limit=100&skip=0&itemType=${itemType}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      console.log(response);
+
+      return response;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }else{
+    return await axios
     .get(`${API}admin/v1/reportedItems/?limit=100&skip=0`, {
       method: 'GET',
       headers: {
@@ -321,4 +324,6 @@ export const reportedContentListData = async (token) => {
     .catch((error) => {
       console.log(error);
     });
+  }
+
 };
