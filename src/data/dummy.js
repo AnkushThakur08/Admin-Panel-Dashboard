@@ -12,8 +12,7 @@ import {
   AiOutlineHome,
 } from 'react-icons/ai';
 
-
-import {MdOutlineBugReport, MdOutlineContentPaste} from "react-icons/md"
+import { MdOutlineBugReport, MdOutlineContentPaste } from 'react-icons/md';
 
 import {
   FiShoppingBag,
@@ -117,7 +116,6 @@ const gridEmployeeProfile = (props) => (
     <p>{props.Name}</p>
   </div>
 );
-
 
 const gridEmployeeCountry = (props) => (
   <div className="flex items-center justify-center gap-2">
@@ -545,7 +543,8 @@ export const links = [
     links: [
       isAuthenticated()
         ? {
-            name: 'ecommerce',
+            // name: 'ecommerce',
+            name: 'dashboard',
             title: 'Dashboard',
             icon: <AiOutlineHome size={25} />,
             Permission:
@@ -704,8 +703,6 @@ export const links = [
     ],
   },
 
-  
-
   {
     title:
       isAuthenticated() &&
@@ -737,7 +734,7 @@ export const links = [
             // name: "area",
             name: 'reportedBugs',
             title: 'Reported Bugs',
-            icon: <MdOutlineBugReport size={25}/>,
+            icon: <MdOutlineBugReport size={25} />,
             Permission:
               data.data.adminDetails?.admin_permissions?.[0].reportManagement,
           }
@@ -745,7 +742,7 @@ export const links = [
             // name: "area",
             name: 'reportedBugs',
             title: 'Reported Bugs',
-            icon: <MdOutlineBugReport size={25}  />,
+            icon: <MdOutlineBugReport size={25} />,
           },
     ],
   },
@@ -1090,7 +1087,7 @@ export const userProfileData = [
     desc: 'Update Profile',
     iconColor: '#03C9D7',
     iconBg: '#E5FAFB',
-    path: '/profile'
+    path: '/profile',
   },
   {
     icon: <RiLockPasswordLine />,
@@ -1098,7 +1095,7 @@ export const userProfileData = [
     desc: 'Change Password',
     iconColor: 'rgb(0, 194, 146)',
     iconBg: 'rgb(235, 250, 242)',
-    path: '/changepassword'
+    path: '/changepassword',
   },
   // {
   //   icon: <FiCreditCard />,

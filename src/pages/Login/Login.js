@@ -71,7 +71,7 @@ const Login = () => {
             console.log('Ankush');
 
             setTimeout(() => {
-              navigate('/ecommerce');
+              navigate('/dashboard');
               navigate(0);
             }, 3000);
           });

@@ -173,6 +173,15 @@ const Dashboard = () => {
               height="190px"
             />
           </div>
+
+          <div>
+            <div className="flex justify-around mt-5">
+              <p>Android : {deviceData?.[0]?.count}</p>
+
+              <p>IOS : {deviceData?.[1]?.count} </p>
+              <p>WEB : {deviceData?.[2]?.count} </p>
+            </div>
+          </div>
           <hr className="mt-4" />
           <div className="mt-4 flex justify-around text-lg">
             <h1>Total User</h1>
@@ -194,6 +203,11 @@ const Dashboard = () => {
               // legendVisiblity={false}
               height="190px"
             />
+          </div>
+          <div>
+            <div className="flex justify-around mt-5">
+              <p>Others : {loginType?.[0]?.count}</p>
+            </div>
           </div>
 
           <hr className="mt-4" />
@@ -525,6 +539,15 @@ const Dashboard = () => {
               height="190px"
             />
           </div>
+
+          <div>
+            <div className="flex justify-around mt-5">
+              <p>Pending : {bugs?.[0]?.count}</p>
+
+              <p>Approved : {bugs?.[1]?.count} </p>
+              <p>Declined : {bugs?.[2]?.count} </p>
+            </div>
+          </div>
           <hr className="mt-4" />
           <div className="mt-4 flex justify-around text-lg">
             <h1>Bugs Reported</h1>
@@ -542,6 +565,16 @@ const Dashboard = () => {
               // legendVisiblity={false}
               height="190px"
             />
+          </div>
+
+          <div>
+            <div className="flex justify-around mt-5">
+              <p>Oth:{items?.[0]?.count}</p>
+
+              <p>Declined:{items?.[1]?.count} </p>
+              <p>Pending:{items?.[2]?.count} </p>
+              <p>Approve:{items?.[3]?.count} </p>
+            </div>
           </div>
           <hr className="mt-4" />
           <div className="mt-4 flex justify-around text-lg">
