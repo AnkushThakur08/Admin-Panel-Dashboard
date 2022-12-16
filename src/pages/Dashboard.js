@@ -17,6 +17,9 @@ import {
 import { useStateContext } from '../contexts/ContextProvider';
 import product9 from '../data/product9.jpg';
 
+// React Router
+import { useNavigate, Link } from 'react-router-dom';
+
 // API
 import { getAllUser } from '../helper/Dashboard/dashboard';
 
@@ -35,7 +38,10 @@ const DropDown = ({ currentMode }) => (
 );
 
 const Dashboard = () => {
+  // Context
   const { currentColor, currentMode } = useStateContext();
+
+  const navigate = useNavigate();
 
   // BLOCK & UnBlock User
   const [values, setValues] = useState({
@@ -124,7 +130,8 @@ const Dashboard = () => {
       <div className="flex flex-wrap lg:flex-nowrap justify-around ">
         {/* Chart-1 */}
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-2xl md:w-400 p-8 m-3 ">
-          <div className="w-full">
+          <div className="w-full ">
+            {/* <Link to="/user"> */}
             <Pie
               id="pie-chart1"
               data={activeUserData}
@@ -132,8 +139,23 @@ const Dashboard = () => {
               // legendVisiblity={false}
               height="190px"
             />
+            {/* </Link> */}
+
+            <div>
+              <div className="flex justify-around mt-5">
+                <Link to="/user/Active">
+                  <p>Active User : {values.datas?.[0]?.count}</p>
+                </Link>
+
+                <Link to="/user/InActive">
+                  <p>InActive User : {values.datas?.[1]?.count} </p>
+                </Link>
+              </div>
+            </div>
           </div>
+
           <hr className="mt-4" />
+
           <div className="mt-4 flex justify-around text-lg">
             <h1>Total User</h1>
             <h3>{values.datas?.[0]?.count + values.datas?.[1]?.count}</h3>

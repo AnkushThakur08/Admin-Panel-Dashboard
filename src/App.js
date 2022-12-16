@@ -74,6 +74,10 @@ import CategoryDetails from './pages/ViewDetails/CategoryDetails';
 import ReportedBugDetail from './pages/ViewDetails/ReportedBugDetail';
 import ReportedContentDetails from './pages/ViewDetails/ReportedContentDetails';
 
+// Redirect Pages
+import ActiveUser from './pages/Redirect Pages/ActiveUser';
+import InActiveUser from './pages/Redirect Pages/InActiveUser';
+
 // Custom CSS
 import './App.css';
 
@@ -148,9 +152,6 @@ const App = () => {
                 <Routes>
                   {/* dashboard  */}
 
-
-                  
-
                   {/* <Route path="/dashboard" element={<Ecommerce />} /> */}
                   <Route path="/ecommerce" element={<Ecommerce />} />
                   <Route path="/dashboard" element={<Dashboard />} />
@@ -193,8 +194,8 @@ const App = () => {
                   <Route path="/pyramid" element={<Pyramid />} />
                   <Route path="/stacked" element={<Stacked />} />
 
-                  <Route path='/profile' element={<Profile/>} />
-                  <Route path='/changepassword' element={<ChangePassword/>}/>
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/changepassword" element={<ChangePassword />} />
 
                   {/* EDIT ROUTES */}
 
@@ -203,7 +204,10 @@ const App = () => {
                     path="/editAdminAchievement/:id"
                     element={<EditAdminAchievement />}
                   />
-                  <Route path='/editAchievementLevel/:id/:achievementId' element={<EditAchievementLevel />} />
+                  <Route
+                    path="/editAchievementLevel/:id/:achievementId"
+                    element={<EditAchievementLevel />}
+                  />
                   <Route
                     path="/editappversion/:id"
                     element={<EditAppVersion />}
@@ -220,7 +224,10 @@ const App = () => {
                   <Route path="/addAdmin" element={<AddAdmin />} />
 
                   <Route path="/addCategory" element={<AddCategory />} />
-                  <Route path='/addAchievementLevel/:ID' element={<AddAchievementLevel/>}/>
+                  <Route
+                    path="/addAchievementLevel/:ID"
+                    element={<AddAchievementLevel />}
+                  />
 
                   {/* Views Routes */}
                   <Route path="/admindetails/:id" element={<AdminDetails />} />
@@ -241,8 +248,19 @@ const App = () => {
                     path="/viewCategory/:id"
                     element={<CategoryDetails />}
                   />
-                <Route path="/bugDetails/:id" element={<ReportedBugDetail/>}/>
-                <Route path="/viewReportedContent/:id" element={<ReportedContentDetails/>} />
+                  <Route
+                    path="/bugDetails/:id"
+                    element={<ReportedBugDetail />}
+                  />
+                  <Route
+                    path="/viewReportedContent/:id"
+                    element={<ReportedContentDetails />}
+                  />
+
+                  {/* Redirect Routes */}
+
+                  <Route path="/user/Active" element={<ActiveUser />} />
+                  <Route path="/user/InActive" element={<InActiveUser />} />
                 </Routes>
               </div>
               {/* <Footer /> */}
