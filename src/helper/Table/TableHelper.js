@@ -1,30 +1,89 @@
 import axios from 'axios';
 import { API } from '../../backend';
-// import {adminListData} from "../Helper/ApiCall.js"
 
-// Admin list api
-export const adminListData = async (token, permission, adminType) => {
-  console.log('permission', adminType);
-  const role = adminType.adminType;
-  console.log('role', role);
+// ADMIN LIST DATA
+export const adminListData = async (token, permission = '', adminType = '') => {
+  console.log('permission', permission);
+  console.log('ADMINTYPE', adminType);
 
-  return await fetch(
-    `${API}admin/v1/admin/list?limit=100&skip=0&accessPermissions=${permission}&adminType=${adminType}`,
-    {
+  if (permission && adminType) {
+    // If BOTH ARE THERE
+    return await fetch(
+      `${API}admin/v1/admin/list?limit=100&skip=0&accessPermissions=${permission}&adminType=${adminType}`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  // Clear Filter
+  else if (permission === '' && adminType === '') {
+    return await fetch(`${API}admin/v1/admin/list?limit=100&skip=0`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-    }
-  )
-    .then((response) => {
-      return response.json();
     })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  // If ONLY CHECKBOXES
+  else if (permission) {
+    return await fetch(
+      `${API}admin/v1/admin/list?limit=100&skip=0&accessPermissions=${permission}`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((response) => {
+        console.log('HERE!!!!!!');
+        return response.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  // ONLY ADMIN TYPE
+  else if (adminType) {
+    return await fetch(
+      `${API}admin/v1/admin/list?limit=100&skip=0&&adminType=${adminType}`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 };
 
 // user list
