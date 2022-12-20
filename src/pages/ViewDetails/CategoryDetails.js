@@ -7,7 +7,6 @@ import { Link, useParams } from 'react-router-dom';
 import { Header } from '../../components';
 
 // DATE FORMATTER
-
 import moment from 'moment-js';
 
 //REACT ICONS

@@ -237,10 +237,11 @@ const UserTable = () => {
   useEffect(() => {
     const result = userData.filter((value) => {
       return (
-        value.firstName.toLowerCase().match(search.toLowerCase()) ||
-        value.email.toLowerCase().match(search.toLowerCase()) ||
-        value.phoneNumber.match(search) ||
-        value.id.toLowerCase().match(search.toLowerCase())
+        value.firstName?.toLowerCase().match(search.toLowerCase()) ||
+        value.lastName?.toLowerCase().match(search.toLowerCase()) ||
+        value.email?.toLowerCase().match(search.toLowerCase()) ||
+        value.phoneNumber?.match(search) ||
+        value.id?.toLowerCase().match(search.toLowerCase())
       );
     });
     setFilterData(result);

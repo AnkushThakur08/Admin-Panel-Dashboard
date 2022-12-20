@@ -18,7 +18,10 @@ import { useStateContext } from '../../contexts/ContextProvider';
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
 import { createCategory } from '../../helper/Table/categoryTableHelper';
+import {getSignedURL} from '../../helper/ImageHelper/ImageHelper'
 
+// GLOBAL VARIABLE
+var uploadURL;
 const AddCategory = () => {
   // Context
   const { currentMode } = useStateContext();
@@ -32,7 +35,9 @@ const AddCategory = () => {
   const [values, setValues] = useState({
     name: '',
     image: '',
+    directory: 'admin/'
   });
+  
 
   // Destructure
   const { name, image } = values;
@@ -47,12 +52,25 @@ const AddCategory = () => {
   };
 
   //   Handle Submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!image || !name) {
       return toast.error('Please Fill Out The Required Fields.');
     }
-    createCategory(data.accessToken, values).then((data) => {
+    // get UploadURL FROM S3BUCKET
+    await getSignedURL(data.accessToken, values).then((data)=>{
+      if(data.message == 'success'){
+        console.log(data.data.fileName, 'CATEGORY DATA')
+         uploadURL = data.data.fileName;
+        console.log(data.message);
+
+      } else {
+        toast.error(data.message);
+      }
+    })
+
+    // ADD CATEGORY
+    createCategory(data.accessToken, values, uploadURL).then((data) => {
       if (data.message == 'success') {
         setValues({
           ...values,
