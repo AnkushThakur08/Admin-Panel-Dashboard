@@ -9,17 +9,22 @@ import { useNavigate } from 'react-router-dom';
 // React Toastify
 import { toast } from 'react-toastify';
 
+// DATE FORMATTER
+import moment from 'moment-js';
+
 // Components
 import { Header } from '../../components';
 
 // Context
 import { useStateContext } from '../../contexts/ContextProvider';
 
+
 // API
 import { categoryListData } from '../../helper/Table/TableHelper';
 import { isAuthenticated } from '../../helper/login/loginHelper';
 import { blockOrUnblockCategories } from '../../helper/Table/categoryTableHelper';
 import { deleteCategoryData } from '../../helper/Table/categoryTableHelper';
+import { imageAWSURL } from '../../backend';
 
 const CategoryTable = () => {
   // Context
@@ -125,36 +130,36 @@ const CategoryTable = () => {
           <b>Created At</b>
         </h6>
       ),
-      selector: (row) => row.createdAt,
+      selector: (row) => moment(row.createdAt).format(),
       sortable: true,
     },
-    // {
-    //   name: (
-    //     <h6>
-    //       <b>Image</b>
-    //     </h6>
-    //   ),
-    //   selector: (row) =>
-    //     row.image ? (
-    //       <img
-    //         alt=""
-    //         width={80}
-    //         height={50}
-    //         style={{ objectFit: "cover", border: "1px solid" }}
-    //         src={`http://localhost:3002/${row.image}`}
-    //       />
-    //     ) : (
-    //       <img
-    //         alt=""
-    //         width={80}
-    //         height={50}
-    //         style={{ objectFit: "cover", border: "1px solid" }}
-    //         src=""
-    //         // src={profilelogo}
-    //       />
-    //     ),
-    //   sortable: true,
-    // },
+    {
+      name: (
+        <h6>
+          <b>Image</b>
+        </h6>
+      ),
+      selector: (row) =>
+        row.image ? (
+          <img
+            alt=""
+            width={80}
+            height={50}
+            style={{ objectFit: "cover", border: "1px solid" }}
+            src={`${imageAWSURL}${row.image}`}
+          />
+        ) : (
+          <img
+            alt=""
+            width={80}
+            height={50}
+            style={{ objectFit: "cover", border: "1px solid" }}
+            src=""
+            // src={profilelogo}
+          />
+        ),
+      sortable: true,
+    },
     {
       name: (
         <h6>
@@ -162,9 +167,6 @@ const CategoryTable = () => {
         </h6>
       ),
       selector: (row) => (
-        // row.uId === userid ? (
-        //   ""
-        // ) : (
         <div
           style={{
             display: 'flex',

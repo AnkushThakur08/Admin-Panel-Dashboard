@@ -22,8 +22,8 @@ export const categoryIndividualData = async (token, id) => {
 };
 
 // Create Category
-export const createCategory = async (token, category) => {
-  console.log('TOKEN', token);
+export const createCategory = async (token, category, uploadURL) => {
+  console.log('TOKEN', token, uploadURL);
   console.log('CATEGORY', category);
   return await fetch(`${API}admin/v1/categories/`, {
     method: 'POST',
@@ -34,7 +34,7 @@ export const createCategory = async (token, category) => {
     },
     body: JSON.stringify({
       name: category.name,
-      image: category.image.name,
+      image: uploadURL,
     }),
   })
     .then((response) => {
