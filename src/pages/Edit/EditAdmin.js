@@ -244,11 +244,11 @@ const EditAdmin = () => {
                 transition
                 ease-in-out
                 m-0
-                focus:text-gray-700  focus:border-blue-600 focus:outline-none
+                 focus:outline-none
                 ${
                   currentMode === 'Dark'
                     ? 'bg-[#424242] text-white focus:text-white focus:border-white'
-                    : 'bg-white text-black'
+                    : 'bg-white text-black focus:border-blue-600 '
                 }
               `}
                 onChange={onChange}
@@ -284,7 +284,7 @@ const EditAdmin = () => {
                   className={`form-check-label mr-1.5 mb-2 inline-block  ${
                     currentMode === 'Dark'
                       ? 'text-white'
-                      : 'text-gray-800 opacity-50'
+                      : 'text-gray-800 opacity-300'
                   }`}
                   for="inlineCheckbox1"
                 >
@@ -311,7 +311,7 @@ const EditAdmin = () => {
                   className={`form-check-label mr-1.5 inline-block  ${
                     currentMode === 'Dark'
                       ? 'text-white'
-                      : 'text-gray-800 opacity-50'
+                      : 'text-gray-800 opacity-300'
                   }`}
                   for="inlineCheckbox2"
                 >
@@ -340,7 +340,7 @@ const EditAdmin = () => {
                   className={`form-check-label mr-1.5 mb-2 inline-block ${
                     currentMode === 'Dark'
                       ? 'text-white'
-                      : 'text-gray-800 opacity-50'
+                      : 'text-gray-800 opacity-300'
                   }`}
                   for="inlineCheckbox1"
                 >
@@ -366,7 +366,7 @@ const EditAdmin = () => {
                   className={`form-check-label mr-1.5 inline-block ${
                     currentMode === 'Dark'
                       ? 'text-white'
-                      : 'text-gray-800 opacity-50'
+                      : 'text-gray-800 opacity-300'
                   }`}
                   for="inlineCheckbox2"
                 >
@@ -395,7 +395,7 @@ const EditAdmin = () => {
                   className={`form-check-label mr-1.5 mb-2 inline-block ${
                     currentMode === 'Dark'
                       ? 'text-white'
-                      : 'text-gray-800 opacity-50'
+                      : 'text-gray-800 opacity-300'
                   }`}
                   for="inlineCheckbox1"
                 >
@@ -422,7 +422,7 @@ const EditAdmin = () => {
                   className={`form-check-label mr-1.5 inline-block ${
                     currentMode === 'Dark'
                       ? 'text-white'
-                      : 'text-gray-800 opacity-50'
+                      : 'text-gray-800 opacity-300'
                   }`}
                   for="inlineCheckbox2"
                 >

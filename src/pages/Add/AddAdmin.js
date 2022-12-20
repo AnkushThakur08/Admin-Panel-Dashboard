@@ -204,19 +204,37 @@ const AddAdmin = () => {
                  transition
                  ease-in-out
                  m-0
-                 focus:text-gray-700  focus:border-blue-600 focus:outline-none
+                focus:outline-none
                  ${
                    currentMode === 'Dark'
-                     ? 'bg-[#424242] text-white focus:text-white focus:border-white'
-                     : 'bg-white text-black'
+                     ? 'bg-[#424242] text-white focus:text-white focus:border-white focus:border-white'
+                     : 'bg-white text-black focus:border-blue-600'
                  }
                `}
                 onChange={onChange}
                 value={adminType}
                 name="adminType"
               >
-                <option value="SUPER_ADMIN">Super Admin</option>
-                <option value="SUB_ADMIN">Sub Admin</option>
+                <option
+                  className={`${
+                    currentMode === 'Dark'
+                      ? 'bg-[#424242] text-white'
+                      : 'bg-white'
+                  }`}
+                  value="SUPER_ADMIN"
+                >
+                  Super Admin
+                </option>
+                <option
+                  className={`${
+                    currentMode === 'Dark'
+                      ? 'bg-[#424242] text-white'
+                      : 'bg-white'
+                  }`}
+                  value="SUB_ADMIN"
+                >
+                  Sub Admin
+                </option>
               </select>
             </div>
           </div>

@@ -1,15 +1,36 @@
 import React, { useState } from 'react';
-import { ScheduleComponent, ViewsDirective, ViewDirective, Day, Week, WorkWeek, Month, Agenda, Inject, Resize, DragAndDrop } from '@syncfusion/ej2-react-schedule';
+import {
+  ScheduleComponent,
+  ViewsDirective,
+  ViewDirective,
+  Day,
+  Week,
+  WorkWeek,
+  Month,
+  Agenda,
+  Inject,
+  Resize,
+  DragAndDrop,
+} from '@syncfusion/ej2-react-schedule';
 import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 
 import { scheduleData } from '../data/dummy';
 import { Header } from '../components';
+
+// Context
+import { useStateContext } from '../contexts/ContextProvider';
+
+// CSS
+import './Calender.css';
 
 // eslint-disable-next-line react/destructuring-assignment
 const PropertyPane = (props) => <div className="mt-5">{props.children}</div>;
 
 const Scheduler = () => {
   const [scheduleObj, setScheduleObj] = useState();
+
+  // Context
+  const { currentMode } = useStateContext();
 
   const change = (args) => {
     scheduleObj.selectedDate = args.value;
@@ -22,7 +43,11 @@ const Scheduler = () => {
   };
 
   return (
-    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+    <div
+      className={`m-2 md:m-10 mt-24 p-2 md:p-10  rounded ${
+        currentMode === 'Dark' ? 'bg-[#424242]' : ' bg-white '
+      } `}
+    >
       <Header category="App" title="Calendar" />
       <ScheduleComponent
         height="650px"
@@ -32,15 +57,21 @@ const Scheduler = () => {
         dragStart={onDragStart}
       >
         <ViewsDirective>
-          { ['Day', 'Week', 'WorkWeek', 'Month', 'Agenda'].map((item) => <ViewDirective key={item} option={item} />)}
+          {['Day', 'Week', 'WorkWeek', 'Month', 'Agenda'].map((item) => (
+            <ViewDirective key={item} option={item} />
+          ))}
         </ViewsDirective>
-        <Inject services={[Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop]} />
+        <Inject
+          services={[Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop]}
+        />
       </ScheduleComponent>
       <PropertyPane>
-        <table
-          style={{ width: '100%', background: 'white' }}
-        >
-          <tbody>
+        <table style={{ width: '100%', background: 'white' }}>
+          <tbody
+            className={`${
+              currentMode ? 'bg-[#424242] text-white' : 'bg-white'
+            }`}
+          >
             <tr style={{ height: '50px' }}>
               <td style={{ width: '100%' }}>
                 <DatePickerComponent

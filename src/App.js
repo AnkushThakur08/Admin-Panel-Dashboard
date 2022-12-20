@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 // React Router
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // React Toastify
 import { ToastContainer, toast } from 'react-toastify';
@@ -46,6 +46,7 @@ import UserTable from './components/Tables/UserTable';
 import ReportedBugs from './components/Tables/ReportedBugs';
 import ReportedContent from './components/Tables/ReportedContent';
 import AdminAchievement from './components/Tables/AdminAchievement';
+import NotificationTable from './components/Tables/NotificationTable';
 import ForgetPassword from './pages/ForgetPassword/ForgetPassword';
 import Dashboard from './pages/Dashboard';
 import Profile from './components/Profile&ChangePassword/Profile';
@@ -64,6 +65,7 @@ import AddAdminAchievement from './pages/Add/AddAdminAchievement';
 import AddCategory from './pages/Add/AddCategory';
 import AddAdmin from './pages/Add/AddAdmin';
 import AddAchievementLevel from './pages/Add/AddAchievementLevel';
+import AddNotification from './pages/Add/AddNotification';
 
 // View Pages
 import ViewAdminAchievement from './pages/ViewDetails/ViewAdminAchievement';
@@ -73,6 +75,7 @@ import UserDetails from './pages/ViewDetails/UserDetails';
 import CategoryDetails from './pages/ViewDetails/CategoryDetails';
 import ReportedBugDetail from './pages/ViewDetails/ReportedBugDetail';
 import ReportedContentDetails from './pages/ViewDetails/ReportedContentDetails';
+import ViewNotification from './pages/ViewDetails/ViewNotification';
 
 // Redirect Pages
 import ActiveUser from './pages/Redirect Pages/ActiveUser';
@@ -112,6 +115,7 @@ const App = () => {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/resetPassword" element={<ForgetPassword />} />
+            <Route path="*" element={<Navigate replace to="/login" />} />
           </Routes>
         ) : (
           <div className="flex relative dark:bg-main-dark-bg">
@@ -150,43 +154,14 @@ const App = () => {
                 {themeSettings && <ThemeSettings />}
 
                 <Routes>
-                  {/* dashboard  */}
-
-                  {/* <Route path="/dashboard" element={<Ecommerce />} /> */}
-                  <Route path="/ecommerce" element={<Ecommerce />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  {/* pages  */}
-                  <Route path="/orders" element={<Orders />} />
-                  <Route path="/user" element={<UserTable />} />
-
-                  <Route path="/employees" element={<Employees />} />
-                  <Route path="/admin" element={<AdminTable />} />
-                  <Route path="/appVersion" element={<AppVersionTable />} />
-                  <Route path="/category" element={<Category />} />
-
-                  <Route
-                    path="/adminAchievement"
-                    element={<AdminAchievement />}
-                  />
-
-                  <Route path="/customers" element={<Customers />} />
-
-                  {/* apps  */}
+                  {/* <Route path="/ecommerce" element={<Ecommerce />} /> */}
+                  {/* <Route path="/orders" element={<Orders />} /> */}
                   {/* <Route path="/kanban" element={<Kanban />} /> */}
                   <Route path="/editor" element={<Editor />} />
-                  <Route path="/calendar" element={<Calendar />} />
+                  <Route path="/customers" element={<Customers />} />
                   <Route path="/color-picker" element={<ColorPicker />} />
-
-                  {/* charts  */}
                   <Route path="/line" element={<Line />} />
                   <Route path="/area" element={<Area />} />
-                  <Route path="/reportedBugs" element={<ReportedBugs />} />
-
-                  <Route
-                    path="/reportedContent"
-                    element={<ReportedContent />}
-                  />
-
                   <Route path="/bar" element={<Bar />} />
                   <Route path="/pie" element={<Pie />} />
                   <Route path="/financial" element={<Financial />} />
@@ -194,11 +169,31 @@ const App = () => {
                   <Route path="/pyramid" element={<Pyramid />} />
                   <Route path="/stacked" element={<Stacked />} />
 
+                  {/* dashboard  */}
+
+                  <Route path="/dashboard" element={<Dashboard />} />
+
+                  {/* pages  */}
+                  <Route path="/user" element={<UserTable />} />
+                  <Route path="/employees" element={<Employees />} />
+                  <Route path="/admin" element={<AdminTable />} />
+                  <Route path="/appVersion" element={<AppVersionTable />} />
+                  <Route path="/category" element={<Category />} />
+                  <Route path="/notification" element={<NotificationTable />} />
+                  <Route
+                    path="/adminAchievement"
+                    element={<AdminAchievement />}
+                  />
+                  <Route path="/calendar" element={<Calendar />} />
+                  <Route path="/reportedBugs" element={<ReportedBugs />} />
+                  <Route
+                    path="/reportedContent"
+                    element={<ReportedContent />}
+                  />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/changepassword" element={<ChangePassword />} />
 
                   {/* EDIT ROUTES */}
-
                   <Route path="/editadmin/:id" element={<EditAdmin />} />
                   <Route
                     path="/editAdminAchievement/:id"
@@ -212,7 +207,6 @@ const App = () => {
                     path="/editappversion/:id"
                     element={<EditAppVersion />}
                   />
-
                   <Route path="/editCategory/:id" element={<EditCategory />} />
 
                   {/* ADD ROUTES */}
@@ -222,8 +216,11 @@ const App = () => {
                     element={<AddAdminAchievement />}
                   />
                   <Route path="/addAdmin" element={<AddAdmin />} />
-
                   <Route path="/addCategory" element={<AddCategory />} />
+                  <Route
+                    path="/addNotification"
+                    element={<AddNotification />}
+                  />
                   <Route
                     path="/addAchievementLevel/:ID"
                     element={<AddAchievementLevel />}
@@ -257,8 +254,12 @@ const App = () => {
                     element={<ReportedContentDetails />}
                   />
 
-                  {/* Redirect Routes */}
+                  <Route
+                    path="/ViewNotification/:id"
+                    element={<ViewNotification />}
+                  />
 
+                  {/* Redirect Routes */}
                   <Route path="/user/Active" element={<ActiveUser />} />
                   <Route path="/user/InActive" element={<InActiveUser />} />
                 </Routes>

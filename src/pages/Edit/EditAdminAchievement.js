@@ -154,11 +154,11 @@ const EditAdminAchievement = () => {
                  transition
                  ease-in-out
                  m-0
-                 focus:text-gray-700  focus:border-blue-600 focus:outline-none
+                   focus:outline-none
                  ${
                    currentMode === 'Dark'
                      ? 'bg-[#424242] text-white focus:text-white focus:border-white'
-                     : 'bg-white text-black'
+                     : 'bg-white text-black  focus:border-blue-600'
                  }
                `}
                 onChange={onChange}

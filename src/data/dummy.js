@@ -586,7 +586,7 @@ export const links = [
 
       isAuthenticated()
         ? {
-            name: 'customers',
+            name: 'notification',
             title: 'Notification',
             icon: <IoIosNotifications size={25} />,
             Permission:
@@ -594,7 +594,7 @@ export const links = [
                 .notificationManagement,
           }
         : {
-            name: 'customers',
+            name: 'notification',
             title: 'Notification',
             icon: <IoIosNotifications size={25} />,
           },
