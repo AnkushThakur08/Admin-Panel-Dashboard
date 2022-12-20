@@ -18,8 +18,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
 import { createCategory } from '../../helper/Table/categoryTableHelper';
-import {getSignedURL, AWSput} from '../../helper/ImageHelper/ImageHelper'
-
+import { getSignedURL, AWSput } from '../../helper/ImageHelper/ImageHelper';
 
 // GLOBAL VARIABLE
 var uploadURL;
@@ -38,9 +37,8 @@ const AddCategory = () => {
   const [values, setValues] = useState({
     name: '',
     image: '',
-    directory: 'admin/'
+    directory: 'admin/',
   });
-  
 
   // Destructure
   const { name, image } = values;
@@ -61,22 +59,22 @@ const AddCategory = () => {
       return toast.error('Please Fill Out The Required Fields.');
     }
     // get UploadURL FROM S3BUCKET
-    await getSignedURL(data.accessToken, values).then((data)=>{
-      if(data.message == 'success'){
-        console.log(data.data.fileName, 'CATEGORY DATA')
-         uploadURL = data.data.fileName;
-         AWSURL = data.data.uploadURL 
-         key = data.data.key
+    await getSignedURL(data.accessToken, values).then((data) => {
+      if (data.message == 'success') {
+        console.log(data.data.fileName, 'CATEGORY DATA');
+        uploadURL = data.data.fileName;
+        AWSURL = data.data.uploadURL;
+        console.log('KEYONE', data.data.Key);
+        key = data.data.Key;
         console.log(data.message);
-
       } else {
         toast.error(data.message);
       }
-    })
+    });
 
-    AWSput(data.accessToken, uploadURL,key, AWSURL).then((data)=>{
-console.log(data)
-    })
+    await AWSput(uploadURL, key, values.image, AWSURL).then((data) => {
+      console.log(data);
+    });
 
     // ADD CATEGORY
     createCategory(data.accessToken, values, uploadURL).then((data) => {

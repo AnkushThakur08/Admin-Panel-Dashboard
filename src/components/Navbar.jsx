@@ -12,14 +12,13 @@ import { useStateContext } from '../contexts/ContextProvider';
 
 // API
 import { isAuthenticated } from '../helper/login/loginHelper';
+import { imageAWSURL } from '../backend';
 
 // images
-import profilePicture from '../data/flower.jpeg'
-
+import profilePicture from '../data/flower.jpeg';
 
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   <TooltipComponent content={title} position="BottomCenter">
-    
     <button
       type="button"
       onClick={() => customFunc()}
@@ -46,10 +45,10 @@ const Navbar = () => {
     screenSize,
   } = useStateContext();
 
-    // Authentication
-    const { data } = isAuthenticated();
+  // Authentication
+  const { data } = isAuthenticated();
 
-    console.log(data.adminDetails.firstName)
+  console.log(data.adminDetails.firstName);
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -80,9 +79,7 @@ const Navbar = () => {
         icon={<AiOutlineMenu />}
       />
 
-
       <div className="flex">
-
         {/* <NavButton
           title="Cart"
           customFunc={() => handleClick('cart')}
@@ -106,7 +103,6 @@ const Navbar = () => {
           icon={<RiNotification3Line />}
         /> */}
 
-
         <TooltipComponent content="Profile" position="BottomCenter">
           <div
             className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
@@ -114,6 +110,11 @@ const Navbar = () => {
           >
             <img
               className="rounded-full w-8 h-8"
+              // src={
+              //   isAuthenticated()
+              //     ? `${imageAWSURL}${data.adminDetails.image}`
+              //     : `${profilePicture}`
+              // }
               src={profilePicture}
               alt="user-profile"
             />

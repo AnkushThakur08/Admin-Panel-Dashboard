@@ -5,24 +5,25 @@ import { Button } from '.';
 import { userProfileData } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
 import avatar from '../data/avatar.jpg';
-import profilePicture from '../data/flower.jpeg'
+import profilePicture from '../data/flower.jpeg';
 import { Navigate, useNavigate, Link } from 'react-router-dom';
 
 // API
 import { isAuthenticated } from '../helper/login/loginHelper';
+import { imageAWSURL } from '../backend';
 
 const UserProfile = () => {
   const { currentColor, currentMode } = useStateContext();
   const navigate = useNavigate();
 
-      // Authentication
-      const { data } = isAuthenticated();
+  // Authentication
+  const { data } = isAuthenticated();
 
-  function logout (){
-    localStorage.removeItem('jwt')
+  function logout() {
+    localStorage.removeItem('jwt');
     setTimeout(() => {
-      navigate("/login")
-      navigate(0)
+      navigate('/login');
+      navigate(0);
     }, 1000);
   }
 
@@ -41,18 +42,37 @@ const UserProfile = () => {
       <div className="flex gap-5 items-center mt-6 border-color border-b-1 pb-6">
         <img
           className="rounded-full h-24 w-24"
+          // src={
+          //   isAuthenticated()
+          //     ? `${imageAWSURL}${data.adminDetails.image}`
+          //     : `${profilePicture}`
+          // }
           src={profilePicture}
           alt="user-profile"
         />
         <div>
-          <p className="font-semibold text-xl dark:text-gray-200"> {isAuthenticated() ? data.adminDetails.firstName +" "+ data.adminDetails.lastName : "Demo User"}   </p>
-          <p className="text-gray-500 text-sm dark:text-gray-400">  Administrator   </p>
-          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> { isAuthenticated() ? data.adminDetails.email : "Demo user"} </p>
+          <p className="font-semibold text-xl dark:text-gray-200">
+            {' '}
+            {isAuthenticated()
+              ? data.adminDetails.firstName + ' ' + data.adminDetails.lastName
+              : 'Demo User'}{' '}
+          </p>
+          <p className="text-gray-500 text-sm dark:text-gray-400">
+            {' '}
+            Administrator{' '}
+          </p>
+          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400">
+            {' '}
+            {isAuthenticated() ? data.adminDetails.email : 'Demo user'}{' '}
+          </p>
         </div>
       </div>
       <div>
         {userProfileData.map((item, index) => (
-          <div key={index} className="flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#42464D]">
+          <div
+            key={index}
+            className="flex gap-5 border-b-1 border-color p-4 hover:bg-light-gray cursor-pointer  dark:hover:bg-[#42464D]"
+          >
             <button
               type="button"
               style={{ color: item.iconColor, backgroundColor: item.iconBg }}
@@ -63,8 +83,13 @@ const UserProfile = () => {
 
             <div>
               <Link to={`${item.path}`}>
-              <p className="font-semibold dark:text-gray-200 ">{item.title}</p>
-              <p className="text-gray-500 text-sm dark:text-gray-400"> {item.desc} </p>
+                <p className="font-semibold dark:text-gray-200 ">
+                  {item.title}
+                </p>
+                <p className="text-gray-500 text-sm dark:text-gray-400">
+                  {' '}
+                  {item.desc}{' '}
+                </p>
               </Link>
             </div>
           </div>
@@ -79,10 +104,15 @@ const UserProfile = () => {
           width="full"
           onClick={logout}
         /> */}
-        <input  type="button" value="Logout" onClick={logout} style={{backgroundColor: `${currentColor}`}} className="p-2 w-full text-center text-white text-lg font-semibold rounded-lg cursor-pointer" />
+        <input
+          type="button"
+          value="Logout"
+          onClick={logout}
+          style={{ backgroundColor: `${currentColor}` }}
+          className="p-2 w-full text-center text-white text-lg font-semibold rounded-lg cursor-pointer"
+        />
       </div>
     </div>
-
   );
 };
 
