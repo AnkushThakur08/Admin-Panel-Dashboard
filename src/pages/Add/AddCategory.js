@@ -18,10 +18,13 @@ import { useStateContext } from '../../contexts/ContextProvider';
 // API
 import { isAuthenticated } from '../../helper/login/loginHelper';
 import { createCategory } from '../../helper/Table/categoryTableHelper';
-import {getSignedURL} from '../../helper/ImageHelper/ImageHelper'
+import {getSignedURL, AWSput} from '../../helper/ImageHelper/ImageHelper'
+
 
 // GLOBAL VARIABLE
 var uploadURL;
+var AWSURL;
+var key;
 const AddCategory = () => {
   // Context
   const { currentMode } = useStateContext();
@@ -62,11 +65,17 @@ const AddCategory = () => {
       if(data.message == 'success'){
         console.log(data.data.fileName, 'CATEGORY DATA')
          uploadURL = data.data.fileName;
+         AWSURL = data.data.uploadURL 
+         key = data.data.key
         console.log(data.message);
 
       } else {
         toast.error(data.message);
       }
+    })
+
+    AWSput(data.accessToken, uploadURL,key, AWSURL).then((data)=>{
+console.log(data)
     })
 
     // ADD CATEGORY

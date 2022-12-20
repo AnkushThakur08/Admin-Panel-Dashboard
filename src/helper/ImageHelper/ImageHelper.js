@@ -14,6 +14,7 @@ export const getSignedURL = async (token, data) => {
       body: JSON.stringify({
         directory: "admin/",
         fileName: data.image.name,
+        contentType: data.image.type
       }),
     })
       .then((response) => {
@@ -22,3 +23,24 @@ export const getSignedURL = async (token, data) => {
       .catch((error) => console.log(error));
   };
   
+
+
+  export const AWSput = async (token, data ,key, AWSURL) => {
+    console.log(token, AWSURL,key, "doirectory", data.directory);
+    return await fetch(`${AWSURL}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'image/png',
+        // Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        fileName: data,
+        key: key
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((error) => console.log(error));
+  };
