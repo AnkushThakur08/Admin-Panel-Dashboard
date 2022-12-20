@@ -18,7 +18,6 @@ import { Header } from '../../components';
 // Context
 import { useStateContext } from '../../contexts/ContextProvider';
 
-
 // API
 import { categoryListData } from '../../helper/Table/TableHelper';
 import { isAuthenticated } from '../../helper/login/loginHelper';
@@ -145,7 +144,12 @@ const CategoryTable = () => {
             alt=""
             width={80}
             height={50}
-            style={{ objectFit: "cover", border: "1px solid" }}
+            style={{
+              objectFit: 'cover',
+              // border: '1px solid',
+              // borderRadius: '50px',
+              padding: '15px 5px',
+            }}
             src={`${imageAWSURL}${row.image}`}
           />
         ) : (
@@ -153,7 +157,7 @@ const CategoryTable = () => {
             alt=""
             width={80}
             height={50}
-            style={{ objectFit: "cover", border: "1px solid" }}
+            style={{ objectFit: 'cover', border: '1px solid' }}
             src=""
             // src={profilelogo}
           />
@@ -397,7 +401,7 @@ const CategoryTable = () => {
         title="Add"
         class="fixed z-90 bottom-24 right-3.5 bg-[#1A97F5] w-14 h-14 p-2 rounded-full drop-shadow-lg flex justify-center items-center text-white text-4xl hover:drop-shadow-3xl"
         onClick={() => navigate('/addCategory')}
-        style={{backgroundColor: `${currentColor}`}}
+        style={{ backgroundColor: `${currentColor}` }}
       >
         +
       </button>
