@@ -19,6 +19,14 @@
 - Mysql
 
 ---
+# Description
+- Designed a Fully Fledged Admin Panel with multiple role system
+- Worked with Graphs, Filters, Search & Permission privileges
+- Implemented Multiple colored Themes
+- Login System based on Permission privileges
+- Admin can Block, unBlock, delete, edit, view, and Create the user
+
+---
 ## Demo Credential
 - UserName = atpara99@gmail.com
 - Password = Ankush@123
